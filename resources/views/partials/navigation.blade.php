@@ -1,3 +1,3 @@
 <nav>
-    <p>Test for navigation</p>
+    <a>Test for navigation</a>
 </nav>

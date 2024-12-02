@@ -1,3 +1,3 @@
 <x-layout title="index">
-    <p>test</p>
+    <p>Hier staat de main text</p>
 </x-layout>
