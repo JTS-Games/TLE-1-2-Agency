@@ -18,7 +18,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/index', function() {
-    return view('indxex');
+    return view('index');
 })->name('index');
 
 require __DIR__.'/auth.php';
