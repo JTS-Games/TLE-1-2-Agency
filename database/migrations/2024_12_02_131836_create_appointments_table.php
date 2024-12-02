@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('afspraken', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('register_id');
             $table->foreign('register_id')->references('id')->on('aanmelding');

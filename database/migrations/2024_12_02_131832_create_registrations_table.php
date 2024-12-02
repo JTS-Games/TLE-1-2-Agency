@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('registrations', function (Blueprint $table) {
+        Schema::create('aanmelding', function (Blueprint $table) {
             $table->id();
 
             $table->bigInteger('job_application_id');
