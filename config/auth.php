@@ -40,7 +40,7 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
+        //Company gard toegevoegd zodat er een auth gemaakt kan worden voor bedrijven.
         'company' => [
             'driver' => 'session',
             'provider' => 'companies',
@@ -69,7 +69,7 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
-
+        //De auth wordt hier gemaakt zodat deze in de model gebruikt kan worden en daarna kan je in controllers de auth toepassen op functies
         'companies' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_COMPANY_MODEL', App\Models\Company::class),
