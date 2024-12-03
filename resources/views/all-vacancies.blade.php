@@ -1,5 +1,5 @@
 <x-layout title="Alle vacatures">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+    <div class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4 justify-between">
         @foreach($allVacancies as $vacancy)
             <div
                 class="flex flex-col border border-gray-300 rounded-lg shadow-lg p-6 bg-white transition-transform transform hover:scale-105">

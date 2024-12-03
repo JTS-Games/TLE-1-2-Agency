@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'RadikalTrial';
+    src: url("/public/fonts/RadikalTrial-Regular-BF642254c157251.otf") format('opentype');;
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'RadikalTrial';
+    src: url("/public/fonts/RadikalTrial-Bold-BF642254c05f85f.otf") format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RadikalTrial';
+    src: url("/public/fonts/RadikalTrial-LightItalic-BF642254c191d1a.otf") format('opentype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+body {
+    font-family: 'RadikalTrial', sans-serif;
+}
