@@ -8,7 +8,8 @@
 
 </head>
 <x-layout title="index">
-    <div>
-        <h1 class="size-9 text-center">Hoe jouw verhaal verschil maakt </h1>
-    </div>
+    {{--
+    Roshan -- I will be adding the homepage layout of design
+    --}}
+
 </x-layout>
