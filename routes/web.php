@@ -35,3 +35,4 @@ Route::get('/inspiration', [InspirationController::class, 'inspiration'])->name(
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/admin.php';

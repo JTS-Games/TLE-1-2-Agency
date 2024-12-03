@@ -16,6 +16,19 @@ class VacancyController extends Controller
         return view('all-vacancies', compact('allVacancies'));
     }
 
+    public function indexAdmin(Request $request) {
+        if (!$request->user()) {
+            abort(401);
+        }
+
+        if (!$request->user()->isAdmin()) {
+            abort(403);
+        }
+
+        $allVacancies = Vacancy::all();
+        return view('admin.vacancies', compact('allVacancies'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */

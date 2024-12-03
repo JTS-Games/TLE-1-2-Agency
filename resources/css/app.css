@@ -26,3 +26,37 @@
 * {
     font-family: 'RadikalTrial', sans-serif;
 }
+
+h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+table {
+    margin-inline: auto;
+}
+
+tr:nth-child(even) {
+    background-color: #ededed;
+}
+
+th {
+    background-color: #272727;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: start;
+}
+
+th,
+td {
+    padding: .5rem .8rem;
+}
+
+nav {
+    margin-bottom: 4rem;
+}
+
+footer {
+    margin-top: 6rem;
+}
