@@ -1,13 +1,15 @@
 <x-layout title="screening">
-    <div class="flex justify-center items-center min-h-screen mt-4">
+    <div class="flex items-center justify-center py-10">
+        <h1 class="text-6xl font-bold text-gray-800 text-center">Pending screenings</h1>
+    </div>
+
+    <div class="flex justify-center items-center mt-4">
         <ul class="w-1/4 space-y-5">
             @foreach($companies as $company)
                 <li class="bg-green-200 rounded-3xl p-4 flex flex-col items-center text-center shadow">
                     <p class="font-bold text-lg uppercase">{{ $company->name }}</p>
                     <div class="my-3">
-                        <a href="#" class="bg-pink-600 text-white py-1 px-4 rounded-full text-sm shadow-md hover:bg-pink-700">
-                            Bekijk details
-                        </a>
+                        <a href="#" class="bg-pink-600 text-white py-1 px-4 rounded-full text-sm shadow-md hover:bg-pink-700">Bekijk details</a>
                     </div>
                     <div class="flex justify-center space-x-4">
                         <div>

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('coc_extract');
             $table->boolean('verified');
             $table->string('password');
+            $table->timestamps();
         });
 
     }

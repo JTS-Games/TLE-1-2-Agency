@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Termwind\Components\Dd;
 
 class CompanyController extends Controller
 {
@@ -54,6 +55,7 @@ class CompanyController extends Controller
     public function update(Request $request, Company $company)
     {
         $company->verified = 1;
+        $company->save();
         return redirect()->back();
     }
 
