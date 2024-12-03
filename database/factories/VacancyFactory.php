@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Company;
 use App\Models\Vacancy;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,14 +19,17 @@ class VacancyFactory extends Factory
      * @return array<string, mixed>
      */
     protected $model = Vacancy::class;
+
     public function definition(): array
     {
         return [
-            'job_title'=>fake()->title(),
-            'description'=>fake()->text(),
-            'paycheck'=>fake()->numberBetween(1000,5000),
-            'contract_term'=>fake()->numberBetween(1,12),
-            'company_id'=>fake()->numberBetween(1,100)
+            'job_title' => fake()->title(),
+            'description' => fake()->text(),
+            'paycheck' => fake()->numberBetween(1000, 5000),
+            'contract_term' => fake()->numberBetween(1, 12),
+            'company_id' => Company::factory()->create()->id,
+            'location' => fake()->address(),
+            'working_hours' => fake()->numberBetween(1, 100)
         ];
     }
 }

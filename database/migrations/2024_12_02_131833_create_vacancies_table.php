@@ -16,9 +16,11 @@ return new class extends Migration {
             $table->binary('image')->nullable();
             $table->string('job_title');
             $table->text('description');
+            $table->text('location');
             $table->integer('paycheck');
             $table->integer('contract_term');
-            $table->foreignId('company_id');
+            $table->integer('working_hours');
+            $table->foreignId('company_id')->nullable()->constrained();
             $table->timestamps();
         });
 
