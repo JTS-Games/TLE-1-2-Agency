@@ -1,4 +1,4 @@
-<footer class="bg-green-900 text-white py-8">
+ <footer class="bg-green-900 text-white py-8">
     <div class="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-8 px-4">
         <div>
             <p class="font-bold text-yellow-300 mb-4">Voor werkzoekenden</p>
