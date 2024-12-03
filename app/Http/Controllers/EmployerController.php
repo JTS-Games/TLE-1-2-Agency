@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class EmployerController extends Controller
@@ -46,5 +48,25 @@ class EmployerController extends Controller
         $company->save();
 
         return redirect()->route('companies.index', compact('company', 'request'));
+    }
+
+    public function showLoginForm()
+    {
+        return view('employer.login');
+    }
+
+    public function login(Request $request){
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
+
+        if (Auth::guard('company')->attempt(['email' => $request->email, 'password' => $request->password])) {
+            // Inloggen succesvol voor bedrijf
+            return redirect('/');
+        } else {
+            // Inloggen mislukt voor bedrijf
+            return redirect('/company/login');
+        }
     }
 }
