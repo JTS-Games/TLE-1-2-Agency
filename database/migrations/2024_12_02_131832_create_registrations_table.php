@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
 
-        Schema::create('aanmelding', function (Blueprint $table) {
+
+        Schema::create('registrations', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('job_application_id');
-            $table->bigInteger('user_id');
+            $table->foreignId('vacancy_id')->constrained();
+            $table->foreignId('user_id')->constrained();
 
         });
 
-        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('aanmelding');
+        Schema::dropIfExists('registrations');
     }
 };

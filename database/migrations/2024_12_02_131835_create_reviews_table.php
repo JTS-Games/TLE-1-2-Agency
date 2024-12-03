@@ -11,20 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
 
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->bigInteger('company_id');
-            $table->foreign('company_id')->references('id')->on('bedrijven');
-            $table->string('description');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('company_id')->constrained();
+            $table->text('description');
             $table->string('stars');
             $table->date('date');
+            $table->timestamps();
         });
 
-        Schema::enableForeignKeyConstraints();
     }
 
     /**

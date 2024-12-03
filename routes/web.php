@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Vacancy;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,7 +19,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/index', function() {
-    return view('index');
+    $allVacancies = Vacancy::all();
+    return view('index',compact('allVacancies'));
 })->name('index');
 
 require __DIR__.'/auth.php';
