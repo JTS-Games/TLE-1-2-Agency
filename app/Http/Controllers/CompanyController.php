@@ -62,6 +62,14 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
+        if (!$request->user()){
+            abort(401);
+        }
+
+        if (!$request->user()->isAdmin()){
+            abort(403);
+        }
+
         $company->verified = 1;
         $company->save();
         return redirect()->back();
@@ -70,8 +78,16 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id, Request $request)
     {
+        if (!$request->user()){
+            abort(401);
+        }
+
+        if (!$request->user()->isAdmin()){
+            abort(403);
+        }
+
         $company = Company::find($id);
         $company->delete();
         return redirect()->back();
