@@ -11,19 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
 
-        Schema::create('bedrijven', function (Blueprint $table) {
+
+        Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->text('description');
             $table->string('location_hq');
-            $table->string('kvk_waardering');
+            $table->string('coc_extract');
             $table->boolean('verified');
             $table->string('password');
         });
 
-        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bedrijven');
+        Schema::dropIfExists('companies');
     }
 };

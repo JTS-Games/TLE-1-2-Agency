@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
 
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('vacancies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('registration_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('company_id')->constrained();
-            $table->date('date');
+            $table->string('job_title');
             $table->text('description');
-            $table->boolean('verified');
+            $table->integer('paycheck');
+            $table->integer('contract_term');
+            $table->foreignId('company_id');
+            $table->timestamps();
         });
 
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('appointments');
+        Schema::dropIfExists('vacancies');
     }
 };
