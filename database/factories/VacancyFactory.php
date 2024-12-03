@@ -28,6 +28,8 @@ class VacancyFactory extends Factory
             'paycheck' => fake()->numberBetween(1000, 5000),
             'contract_term' => fake()->numberBetween(1, 12),
             'company_id' => Company::factory()->create()->id,
+            // i asked this through chat gpt because i got an error for contrained key. This resolved the issue. If we ever want to use dummy data from another table
+            // We can use this way to create a "fake" id
             'location' => fake()->address(),
             'working_hours' => fake()->numberBetween(1, 100)
         ];

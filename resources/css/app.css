@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @font-face {
     font-family: 'RadikalTrial';
     src: url("/public/fonts/RadikalTrial-Regular-BF642254c157251.otf") format('opentype');;
@@ -24,6 +23,6 @@
     font-style: italic;
 }
 
-body {
+* {
     font-family: 'RadikalTrial', sans-serif;
 }

@@ -32,6 +32,6 @@ Route::resource('/vacancies', VacancyController::class);
 // User Controllers
 Route::get('/about', [AboutUsController::class, 'about'])->name('about');
 Route::get('/inspiration', [InspirationController::class, 'inspiration'])->name('inspiration');
-Route::get('/contact', [ContactController::class, 'contact'])->name('contact');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 require __DIR__ . '/auth.php';
