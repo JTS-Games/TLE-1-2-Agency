@@ -11,8 +11,16 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        if (!$request->user()){
+            abort(401);
+        }
+
+        if (!$request->user()->isAdmin()){
+            abort(403);
+        }
+
         $companies = Company::where('verified', 0)->get();
         return view('admin.registrations-overview', compact('companies'));
     }
