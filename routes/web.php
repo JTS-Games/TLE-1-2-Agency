@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\InspirationController;
 use App\Http\Controllers\ProfileController;
@@ -26,6 +27,7 @@ Route::get('/index', function () {
     return view('index');
 })->name('index');
 
+Route::resource('/companies', CompanyController::class);
 
 // This one could be used for the employee and employers, the vacancies controller.
 Route::resource('/vacancies', VacancyController::class);
