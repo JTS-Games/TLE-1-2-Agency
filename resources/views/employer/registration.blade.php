@@ -86,7 +86,7 @@
 
             <!-- Submit Button -->
             <div class="flex justify-center">
-                <button type="submit" class="bg-pink-800 text-white px-8 py-3 rounded-lg shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-500 transform hover:scale-105 transition duration-300 ease-in-out">
+                <button type="submit" class="bg-pink-800 text-white px-8 py-3 rounded-lg shadow-lg hover:bg-pink-900 focus:outline-none focus:ring-4 focus:ring-purple-500 transform hover:scale-105 transition duration-300 ease-in-out">
                     Vraag screening aan
                 </button>
             </div>
