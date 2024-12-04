@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\InspirationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
@@ -22,13 +24,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
 Route::get('/index', function () {
     return view('index');
 })->name('index');
 
+Route::resource('/screenings', AdminController::class);
 
 // This one could be used for the employee and employers, the vacancies controller.
 Route::resource('/vacancies', VacancyController::class);
+//employer registration route
+Route::resource('companies', EmployerController::class);
+Route::get('/company/login', [EmployerController::class, 'showLoginForm'])->name('company.login.form');
+Route::post('/company/login', [EmployerController::class, 'login'])->name('company.login');
 // User Controllers
 Route::get('/about', [AboutUsController::class, 'about'])->name('about');
 Route::get('/inspiration', [InspirationController::class, 'inspiration'])->name('inspiration');

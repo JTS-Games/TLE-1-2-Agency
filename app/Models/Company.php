@@ -2,19 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Company extends Model
+class Company extends Model implements Authenticatable
 {
+    use AuthenticatableTrait;
     use HasFactory;
-
     public function appointments(): HasMany
     {
         return $this->hasMany(Appointment::class);
     }
-
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
