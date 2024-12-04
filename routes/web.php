@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
-use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\InspirationController;
