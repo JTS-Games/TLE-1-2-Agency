@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('location_hq');
             $table->string('coc_extract');
-            $table->boolean('verified');
+            $table->boolean('verified')->default(false);
             $table->string('password');
             $table->timestamps();
         });

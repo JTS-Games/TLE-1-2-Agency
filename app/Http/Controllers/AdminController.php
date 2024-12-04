@@ -60,7 +60,7 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Company $company)
+    public function update(string $id,Request $request)
     {
 
         if (!$request->user()){
@@ -70,9 +70,10 @@ class AdminController extends Controller
         if (!$request->user()->isAdmin()){
             abort(403);
         }
-
+        $company = Company::find($id);
         $company->verified = 1;
         $company->save();
+
         return redirect()->back();
     }
 

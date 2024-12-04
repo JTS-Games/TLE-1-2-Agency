@@ -17,7 +17,6 @@
                                 @csrf
                                 @method('PATCH')
                                 <button type="submit" class="bg-green-600 text-white rounded-full py-1 px-4 shadow-md hover:bg-green-700 flex items-center space-x-1">
-                                    <span>✔</span>
                                     <span>Verify</span>
                                 </button>
                             </form>
@@ -27,7 +26,6 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="bg-red-600 text-white rounded-full py-1 px-4 shadow-md hover:bg-red-700 flex items-center space-x-1">
-                                    <span>✖</span>
                                     <span>Dismiss</span>
                                 </button>
                             </form>
