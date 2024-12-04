@@ -44,9 +44,17 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Company $company)
+    public function show(string $id, Request $request)
     {
-        //
+        if (!$request->user()){
+            abort(401);
+        }
+
+        if (!$request->user()->isAdmin()){
+            abort(403);
+        }
+        $company = Company::find($id);
+        return view('admin.details', compact('company'));
     }
 
     /**
