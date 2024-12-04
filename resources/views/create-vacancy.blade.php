@@ -24,7 +24,7 @@
 
 
                     <div>
-                        <label for="description" class="block font-radikal text-[rgb(49,61,41)]">Omschrijving:</label>
+                        <label for="description" class="block font-radikal text-[rgb(49,61,41)]">Functie omschrijving:</label>
                         <textarea id="description" name="description" rows="3" placeholder="Voeg hier extra informatie toe" class="mt-1 block w-full border border-black rounded-lg p-2"></textarea>
                     </div>
 
