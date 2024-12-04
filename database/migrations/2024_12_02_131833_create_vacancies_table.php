@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->text('description');
             $table->text('location');
             $table->integer('paycheck');
-            $table->string('competence');
+            $table->string('competence')->nullable();
             $table->integer('contract_term');
             $table->integer('working_hours');
             $table->foreignId('company_id')->nullable()->constrained();
