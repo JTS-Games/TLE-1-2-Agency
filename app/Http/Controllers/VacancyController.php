@@ -72,9 +72,8 @@ class VacancyController extends Controller
     public function update(Request $request, Vacancy $vacancy)
     {
 
-        validator(
-            [$request->only('job_title', 'image', 'paycheck', 'contract_term', 'company_id')],
-            // Rules for the requested key.
+        request()->validate(
+        // Rules for the requested key.
             [
                 'job_title' => 'required|string|max:100',
                 'description' => 'required',
@@ -102,10 +101,13 @@ class VacancyController extends Controller
         $vacancy->working_hours = $request->input('working_hours');
 
         // De company id moet hier nog aangepast met authorisatie.
+
+
         $file = $request->file('image');
         if (isset($file)) {
             $originalName = $file->getClientOriginalName();
-            $vacancy->image = $file->storeAs('images', $originalName, 'public');
+            $path = $file->storeAs('images', $originalName, 'public');
+            $vacancy->image = $path;
         }
 
 
