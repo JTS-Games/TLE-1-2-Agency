@@ -34,7 +34,7 @@ class EmployerController extends Controller
             'regex:/[@$!%*?&]/', // minstens één speciaal teken
             'max:255',],
 
-            'email'=>['required', 'string', 'max:255']
+            'email'=>['required', 'string', 'max:255', 'email']
         ]);
 
         $company= new Company();
