@@ -79,4 +79,18 @@ class VacancyController extends Controller
         $vacancy-> delete();
         return redirect()->route('admin.vacancies.index');
     }
+    public function suspicious(Request $request)
+    {
+        if (!$request->user()) {
+            abort(401, 'Je moet ingelogd zijn.');
+        }
+
+        if (!$request->user()->isAdmin()) {
+            abort(403, 'Alleen admins hebben toegang tot deze pagina.');
+        }
+
+        $suspiciousVacancies = Vacancy::where('is_suspicious', true)->get();
+
+        return view('admin.suspicious-vacancies', compact('suspiciousVacancies'));
+    }
 }

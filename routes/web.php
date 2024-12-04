@@ -33,6 +33,6 @@ Route::resource('/vacancies', VacancyController::class);
 Route::get('/about', [AboutUsController::class, 'about'])->name('about');
 Route::get('/inspiration', [InspirationController::class, 'inspiration'])->name('inspiration');
 Route::get('/contact', [ContactController::class, 'contact'])->name('contact');
-
+Route::get('/admin/suspicious-vacancies', [VacancyController::class, 'suspicious'])->name('admin.vacancies.suspicious');
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
