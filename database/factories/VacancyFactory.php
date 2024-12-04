@@ -22,6 +22,7 @@ class VacancyFactory extends Factory
 
     public function definition(): array
     {
+        // Dit is van belang om elke keer aan te passen als je kolommen toevoegt aan de database
         return [
             'job_title' => fake()->title(),
             'description' => fake()->text(),

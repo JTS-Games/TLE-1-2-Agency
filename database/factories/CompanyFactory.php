@@ -16,6 +16,8 @@ class CompanyFactory extends Factory
      */
     public function definition(): array
     {
+
+        // Dit is van belang om elke keer aan te passen als je kolommen toevoegt aan de database
         return [
             'name' => fake()->company(),
             'image' => null,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
 
@@ -59,9 +60,10 @@ class VacancyController extends Controller
      */
     public function edit(Vacancy $vacancy)
     {
+        $companies = Company::all();
         // Load the details from the form
         // request the old information and put it in the form
-        return view('edit-vacancy', compact('vacancy'));
+        return view('edit-vacancy', compact('vacancy', 'companies'));
     }
 
     /**
@@ -70,11 +72,47 @@ class VacancyController extends Controller
     public function update(Request $request, Vacancy $vacancy)
     {
 
-        $request->input('job_title');
-        $request->input('description');
-        $request->input('paycheck');
-        $request->input('contract_');
-        $request->input('job_title');
+        validator(
+            [$request->only('job_title', 'image', 'paycheck', 'contract_term', 'company_id')],
+            // Rules for the requested key.
+            [
+                'job_title' => 'required|string|max:100',
+                'description' => 'required',
+                'paycheck' => 'required|numeric',
+                'contract_term' => 'required|string|max:255',
+            ],
+            [
+                'job_title.required' => 'Please enter a job title',
+                'job_title.max' => 'Title can\'t be longer than 100 characters',
+                'description.required' => 'Please enter a job description',
+                'paycheck.required' => 'Please enter a paycheck',
+                'paycheck.numeric' => 'Paycheck must be a number, you can\'t put any letters',
+                'contract_term.required' => 'Please enter a contract term',
+                'contract_term.max' => 'Contract term can\'t be longer than 255 characters',
+
+            ]
+
+        );
+
+        $vacancy->job_title = $request->input('job_title');
+        $vacancy->description = $request->input('description');
+        $vacancy->paycheck = $request->input('paycheck');
+        $vacancy->contract_term = $request->input('contract_term');
+        $vacancy->location = $request->input('location');
+        $vacancy->working_hours = $request->input('working_hours');
+
+        // De company id moet hier nog aangepast met authorisatie.
+        $file = $request->file('image');
+        if (isset($file)) {
+            $originalName = $file->getClientOriginalName();
+            $vacancy->image = $file->storeAs('images', $originalName, 'public');
+        }
+
+
+        $vacancy->update();
+
+
+        return redirect()->route('vacancies.index');
     }
 
     /**
