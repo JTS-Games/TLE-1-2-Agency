@@ -34,7 +34,13 @@ class EmployerController extends Controller
             'regex:/[@$!%*?&]/', // minstens één speciaal teken
             'max:255',],
 
-            'email'=>['required', 'string', 'max:255', 'email']
+            'email' => [
+                'required',
+                'string',
+                'email', // Controleer of het een geldig e-mailadres is
+                'max:255',
+                'regex:/^[a-zA-Z0-9._%+-]+@(gmail\.com|outlook\.com|yahoo\.com|hotmail\.com|live\.com)$/',
+            ],
         ]);
 
         $company= new Company();
