@@ -23,6 +23,7 @@ class CompanyFactory extends Factory
         // Dit is van belang om elke keer aan te passen als je kolommen toevoegt aan de database
         return [
             'name' => fake()->company(),
+            'email' => fake()->unique()->safeEmail(),
             'image' => null,
             'description' => fake()->paragraph(),
             'location_hq' => fake()->city(),
