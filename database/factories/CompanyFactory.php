@@ -19,15 +19,16 @@ class CompanyFactory extends Factory
      */
     public function definition(): array
     {
-        {
-            return [
-                'name' => fake()->company(), // Genereert een bedrijfsnaam
-                'description' => fake()->paragraph(2), // Genereert een beschrijving met twee alinea's
-                'location_hq' => fake()->city(), // Genereert een stad voor de hoofdkwartier locatie
-                'coc_extract' => fake()->sentence(8), // Genereert een kort extract van de CoC
-                'verified' => fake()->boolean(), // Genereert een willekeurige boolean voor verified (true/false)
-                'password' => bcrypt('password123'), // Stel een standaard gehashed wachtwoord in
-            ];
-        }
+
+        // Dit is van belang om elke keer aan te passen als je kolommen toevoegt aan de database
+        return [
+            'name' => fake()->company(),
+            'image' => null,
+            'description' => fake()->paragraph(),
+            'location_hq' => fake()->city(),
+            'coc_extract' => fake()->uuid(),
+            'verified' => fake()->boolean(),
+            'password' => bcrypt('password'),
+        ];
     }
 }

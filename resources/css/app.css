@@ -1,37 +1,63 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-h2 {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 1rem;
+@font-face {
+    font-family: 'RadikalTrial';
+    src: url("/public/fonts/RadikalTrial-Regular-BF642254c157251.otf") format('opentype');;
+    font-weight: normal;
+    font-style: normal;
 }
 
-table {
-    margin-inline: auto;
-}
 
-tr:nth-child(even) {
-    background-color: #ededed;
-}
-
-th {
-    background-color: #272727;
-    color: #ffffff;
+@font-face {
+    font-family: 'RadikalTrial';
+    src: url("/public/fonts/RadikalTrial-Bold-BF642254c05f85f.otf") format('opentype');
     font-weight: bold;
-    text-align: start;
+    font-style: normal;
 }
 
-th,
-td {
-    padding: .5rem .8rem;
+@font-face {
+    font-family: 'RadikalTrial';
+    src: url("/public/fonts/RadikalTrial-LightItalic-BF642254c191d1a.otf") format('opentype');
+    font-weight: 300;
+    font-style: italic;
 }
 
-nav {
-    margin-bottom: 4rem;
+* {
+    font-family: 'RadikalTrial', sans-serif;
 }
 
-footer {
-    margin-top: 6rem;
-}
+
+/*h2 {*/
+/*    text-align: center;*/
+/*    font-size: 2rem;*/
+/*    margin-bottom: 1rem;*/
+/*}*/
+
+/*table {*/
+/*    margin-inline: auto;*/
+/*}*/
+
+/*tr:nth-child(even) {*/
+/*    background-color: #ededed;*/
+/*}*/
+
+/*th {*/
+/*    background-color: #272727;*/
+/*    color: #ffffff;*/
+/*    font-weight: bold;*/
+/*    text-align: start;*/
+/*}*/
+
+/*th,*/
+/*td {*/
+/*    padding: .5rem .8rem;*/
+/*}*/
+
+/*nav {*/
+/*    margin-bottom: 4rem;*/
+/*}*/
+
+/*footer {*/
+/*    margin-top: 6rem;*/
+/*}*/

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Company;
 use App\Models\Vacancy;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,17 +19,20 @@ class VacancyFactory extends Factory
      * @return array<string, mixed>
      */
     protected $model = Vacancy::class;
+
     public function definition(): array
     {
+        // Dit is van belang om elke keer aan te passen als je kolommen toevoegt aan de database
         return [
-            'image' => fake()->imageUrl(), // Genereer een willekeurige afbeelding URL (of gebruik je eigen logica voor het opslaan van echte afbeeldingen)
-            'job_title' => fake()->jobTitle(), // Genereert een willekeurige functietitel
-            'description' => fake()->paragraph(3), // Genereert een beschrijving met 3 alinea's
-            'location' => fake()->city(), // Genereert een willekeurige stad voor de locatie
-            'paycheck' => fake()->randomNumber(5), // Genereert een willekeurig getal voor het salaris
-            'competence' => fake()->word(), // Genereert een willekeurig woord voor de competentie
-            'contract_term' => fake()->randomDigitNotNull(), // Genereert een willekeurig getal voor het contracttermijn (bijvoorbeeld 12 maanden)
-            'working_hours' => fake()->randomNumber(2), // Genereert een willekeurig getal voor werkuren
+            'job_title' => fake()->title(),
+            'description' => fake()->text(),
+            'paycheck' => fake()->numberBetween(1000, 5000),
+            'contract_term' => fake()->numberBetween(1, 12),
+            'company_id' => Company::factory()->create()->id,
+            // i asked this through chat gpt because i got an error for contrained key. This resolved the issue. If we ever want to use dummy data from another table
+            // We can use this way to create a "fake" id
+            'location' => fake()->address(),
+            'working_hours' => fake()->numberBetween(1, 100)
         ];
     }
 }
