@@ -10,7 +10,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Vacancy extends Model
 {
     use HasFactory;
-    protected $fillable = ['job_title','description','paycheck','contract_term','company_id'];
+
+    protected $fillable = [
+        'image',
+        'job_title',
+        'description',
+        'location',
+        'paycheck',
+        'competence',
+        'contract_term',
+        'working_hours',
+        'company_id',
+    ];
     public function registrations():hasMany
     {
         return $this->hasMany(Registration::class);
