@@ -9,7 +9,9 @@
 
 <x-layout title="index">
     <body class="bg-[#f1f9f6] font-sans">
-    <h1>Log in met uw bedrijfsaccount</h1>
+    <h1 class="text-4xl font-bold text-center text-black mt-8">
+        Log in met uw bedrijfsaccount
+    </h1>
     <div class="max-w-4xl mx-auto p-8 bg-white rounded-xl shadow-xl mt-10">
         <h2 class="text-2xl font-semibold text-[#2F4F4F] text-center mb-8">Vul uw inlog gegevens in</h2>
 
@@ -34,7 +36,7 @@
                 @endif
             </div>
             <div class="flex justify-center">
-                <button type="submit" class="bg-purple-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-500 transform hover:scale-105 transition duration-300 ease-in-out">
+                <button type="submit" class="bg-pink-800 text-white px-6 py-3 rounded-full shadow-lg hover:bg-pink-900 focus:outline-none focus:ring-4 focus:ring-purple-500 transform hover:scale-105 transition duration-300 ease-in-out">
                     Inloggen
                 </button>
             </div>
