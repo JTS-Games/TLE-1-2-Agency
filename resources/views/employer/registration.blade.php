@@ -32,7 +32,7 @@
 
             <!-- Wachtwoord -->
             <div class="mb-6">
-                <label for="password" class="block text-lg text-[#2F4F4F]">Wachtwoord <br>Vereisten:<br>-hoofdletter<br>-kleine letter<br>-speciaal teken<br>-getal<br>-minimaal 8 tekens lang</label>
+                <label for="password" class="block text-lg text-[#2F4F4F]">Wachtwoord <br>Vereisten:<br>-hoofdletter<br>-kleine letter<br>-speciaal teken (@$!%*?&)<br>-getal<br>-minimaal 8 tekens lang</label>
                 <input type="password" name="password" id="password" class="mt-1 block w-full border-2 border-gray-300 rounded-lg p-3 focus:border-purple-600 focus:ring-2 focus:ring-purple-500 transition duration-200" />
                 @if($errors->has('password'))
                     <div class="text-red-500 mt-1">{{ $errors->first('password') }}</div>
