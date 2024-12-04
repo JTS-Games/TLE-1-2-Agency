@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
+use function Pest\Laravel\delete;
 
 class VacancyController extends Controller
 {
@@ -74,6 +75,8 @@ class VacancyController extends Controller
      */
     public function destroy(Vacancy $vacancy)
     {
-        //
+
+        $vacancy-> delete();
+        return redirect()->route('admin.vacancies.index');
     }
 }

@@ -1,4 +1,4 @@
-<x-layout title="Alle vacatures">
+<x-layout title="Mijn Vacatures">
     @dump($allVacancies)
     @foreach($allVacancies as $vacancy)
         <div>
