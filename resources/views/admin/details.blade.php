@@ -25,7 +25,7 @@
             <!-- KVK Certificate -->
             <div class="border-b pb-4">
                 <p class="text-sm text-gray-600 font-medium">KVK-Certificaat</p>
-                <h1 class="text-lg text-gray-700">{{$company->coc_extract}}</h1>
+                <img src="{{$company->coc_extract}}" alt="KVK-Waardering" class="text-lg text-gray-700">
             </div>
 
             <!-- Email -->
