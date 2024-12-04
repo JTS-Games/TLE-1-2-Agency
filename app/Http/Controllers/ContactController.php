@@ -6,5 +6,10 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
-    //
+    public function index()
+    {
+        return view('contact');
+    }
+
+    // Hier moet nog de store komen ?? sh
 }
