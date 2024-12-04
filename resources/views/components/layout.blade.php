@@ -9,7 +9,7 @@
     <title>{{$title}}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
+<body class="bg-basic-cream">
 @include('partials.navigation')
 {{$slot}}
 @include('partials.footer')

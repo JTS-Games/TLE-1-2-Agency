@@ -1,4 +1,4 @@
-database.sqlite
+/database/database.sqlite
 /.phpunit.cache
 /node_modules
 /public/build
@@ -8,7 +8,6 @@ database.sqlite
 /storage/pail
 /vendor
 .env
-.env.example
 .env.backup
 .env.production
 .phpactor.json

@@ -12,10 +12,27 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Radikal', ...defaultTheme.fontFamily.sans],
+            },
+            colors: {
+                primary: {
+                    violet: '#AA0160',
+                    violet_hover: '#8e014f',
+                    violet_dark: '#7C1A51', // Correct color code if different
+                    yellow: '#FAEC02',
+                    moss_medium: '#92AA83',
+                    moss_light: '#E2ECC8',
+                    moss_dark: '#2E342A',
+                },
+                basic: {
+                    white: '#FFFFFF',
+                    cream: '#FBFCF6',
+                },
+                others: {
+                    stroke_thin: '#DFDFDF',
+                },
             },
         },
     },
-
     plugins: [forms],
 };
