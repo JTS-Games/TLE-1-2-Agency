@@ -18,21 +18,22 @@ class EmployerController extends Controller
     }
 
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
-            'type' =>['required', 'string', 'max:255'],
-            'description'=>['required','string', 'max:1000'],
-            'kvkWaardering'=>['required','string', 'max:1000'],
+            'type' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:1000'],
+            'kvkWaardering' => ['required', 'string', 'max:1000'],
 
-            'password'=>['required','string','max:255',
-            'min:8', // minimaal 8 tekens
-            'regex:/[A-Z]/', // minstens één hoofdletter
-            'regex:/[a-z]/', // minstens één kleine letter
-            'regex:/[0-9]/', // minstens één cijfer
-            'regex:/[@$!%*?&]/', // minstens één speciaal teken
-            'max:255',],
+            'password' => ['required', 'string', 'max:255',
+                'min:8', // minimaal 8 tekens
+                'regex:/[A-Z]/', // minstens één hoofdletter
+                'regex:/[a-z]/', // minstens één kleine letter
+                'regex:/[0-9]/', // minstens één cijfer
+                'regex:/[@$!%*?&]/', // minstens één speciaal teken
+                'max:255',],
 
             'email' => [
                 'required',
@@ -43,13 +44,13 @@ class EmployerController extends Controller
             ],
         ]);
 
-        $company= new Company();
+        $company = new Company();
         $company->name = $request->input('name');
         $company->location_hq = $request->input('location');
         $company->coc_extract = $request->input('kvkWaardering');
         $company->description = $request->input('description');
         $company->password = Hash::make($request->input('password'));
-        $company->email= $request->input('email');
+        $company->email = $request->input('email');
 
         $company->save();
 
@@ -61,18 +62,23 @@ class EmployerController extends Controller
         return view('employer.login');
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:6',
         ]);
 
-        if (Auth::guard('company')->attempt(['email' => $request->email, 'password' => $request->password])) {
-            // Inloggen succesvol voor bedrijf
-            return redirect('/');
+
+        $credentials = ['email' => $request->email, 'password' => $request->password, 'verified' => true];
+        if (Auth::guard('company')->attempt($credentials)) {
+            return redirect('/vacancies'); // deze moet linken naar vacancies
         } else {
-            // Inloggen mislukt voor bedrijf
-            return redirect('/company/login');
+            $company = Company::where('email', $request->email)->first();
+            if ($company && !$company->verified) {
+                return redirect('/company/login')->withErrors(['verification' => 'Uw account is nog niet geverifieerd.']);
+            }
+            return redirect('/company/login')->withErrors(['login' => 'Onjuiste inloggegevens.']);
         }
     }
 }
