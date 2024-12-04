@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Vacancy;
-use App\Models\Company;
 use Illuminate\Http\Request;
 
 
