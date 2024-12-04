@@ -2,7 +2,7 @@
 
     <div class="flex flex-col w-11/12 md:w-3/4 lg:w-2/3 m-auto bg-white shadow-md rounded-lg overflow-hidden my-20 transition-transform transform hover:scale-110">
 
-        <img src="{{asset('images/openhiring-logo.png')}}" alt="afbeelding van {{$vacancy->job_title}}"
+        <img src="{{asset('storage/'.$vacancy->image)}}" alt="afbeelding van {{basename($vacancy->image)}}"
 
              class="h-60 w-full object-cover object-top">
 
