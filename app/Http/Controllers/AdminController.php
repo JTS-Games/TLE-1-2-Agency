@@ -21,6 +21,7 @@ class AdminController extends Controller
         }
 
         $companies = Company::where('verified', 0)->get();
+
         return view('admin.registrations-overview', compact('companies'));
     }
 

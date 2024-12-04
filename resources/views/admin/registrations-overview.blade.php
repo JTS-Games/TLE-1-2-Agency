@@ -13,7 +13,7 @@
                     </div>
                     <div class="flex justify-center space-x-4">
                         <div>
-                            <form action="{{ route('companies.update', $company) }}" method="POST">
+                            <form action="{{ route('screenings.update', $company) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
                                 <button type="submit" class="bg-green-600 text-white rounded-full py-1 px-4 shadow-md hover:bg-green-700 flex items-center space-x-1">
@@ -23,7 +23,7 @@
                             </form>
                         </div>
                         <div>
-                            <form action="{{ route('companies.destroy', $company) }}" method="POST">
+                            <form action="{{ route('screenings.destroy', $company) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="bg-red-600 text-white rounded-full py-1 px-4 shadow-md hover:bg-red-700 flex items-center space-x-1">
