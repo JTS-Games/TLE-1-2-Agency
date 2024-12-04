@@ -27,7 +27,7 @@ Route::get('/index', function () {
     return view('index');
 })->name('index');
 
-Route::resource('/companies', AdminController::class);
+Route::resource('/screenings', AdminController::class);
 
 // This one could be used for the employee and employers, the vacancies controller.
 Route::resource('/vacancies', VacancyController::class);
