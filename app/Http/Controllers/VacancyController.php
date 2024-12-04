@@ -16,7 +16,8 @@ class VacancyController extends Controller
         return view('all-vacancies', compact('allVacancies'));
     }
 
-    public function indexAdmin(Request $request) {
+    public function indexAdmin(Request $request)
+    {
         if (!$request->user()) {
             abort(401);
         }
@@ -58,7 +59,9 @@ class VacancyController extends Controller
      */
     public function edit(Vacancy $vacancy)
     {
-        //
+        // Load the details from the form
+        // request the old information and put it in the form
+        return view('edit-vacancy', compact('vacancy'));
     }
 
     /**
@@ -66,7 +69,12 @@ class VacancyController extends Controller
      */
     public function update(Request $request, Vacancy $vacancy)
     {
-        //
+
+        $request->input('job_title');
+        $request->input('description');
+        $request->input('paycheck');
+        $request->input('contract_');
+        $request->input('job_title');
     }
 
     /**
