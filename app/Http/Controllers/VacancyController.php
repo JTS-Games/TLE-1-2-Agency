@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Vacancy;
-use App\Models\Company;
 use Illuminate\Http\Request;
 
 
@@ -78,6 +77,7 @@ class VacancyController extends Controller
 
         return redirect()->route('vacancies.index');
     }
+
     /**
      * Display the specified resource.
      */
