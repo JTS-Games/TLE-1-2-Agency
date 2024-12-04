@@ -12,7 +12,6 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        /*
         if (!$request->user()){
             abort(401);
         }
@@ -20,7 +19,7 @@ class AdminController extends Controller
         if (!$request->user()->isAdmin()){
             abort(403);
         }
-*/
+
         $companies = Company::where('verified', 0)->get();
         return view('admin.registrations-overview', compact('companies'));
     }
@@ -62,7 +61,7 @@ class AdminController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        /*
+
         if (!$request->user()){
             abort(401);
         }
@@ -70,7 +69,7 @@ class AdminController extends Controller
         if (!$request->user()->isAdmin()){
             abort(403);
         }
-*/
+
         $company->verified = 1;
         $company->save();
         return redirect()->back();
@@ -81,7 +80,7 @@ class AdminController extends Controller
      */
     public function destroy(string $id, Request $request)
     {
-        /*
+
         if (!$request->user()){
             abort(401);
         }
@@ -89,7 +88,7 @@ class AdminController extends Controller
         if (!$request->user()->isAdmin()){
             abort(403);
         }
-*/
+
         $company = Company::find($id);
         $company->delete();
         return redirect()->back();
