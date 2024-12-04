@@ -26,6 +26,10 @@ Route::get('/index', function () {
     return view('index');
 })->name('index');
 
+Route::get('/employer-vacancies', function () {
+    $allVacancies = App\Models\Vacancy::all();  // Fetch all vacancies from the database
+    return view('employer-vacancies', compact('allVacancies'));  // Pass the variable to the view
+})->name('employer-vacancies');
 
 // This one could be used for the employee and employers, the vacancies controller.
 Route::resource('/vacancies', VacancyController::class);

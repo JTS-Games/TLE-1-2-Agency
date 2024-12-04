@@ -71,12 +71,23 @@ class VacancyController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified vacanty from the database.
      */
     public function destroy(Vacancy $vacancy)
     {
+        $user = auth()->user();
 
-        $vacancy-> delete();
-        return redirect()->route('admin.vacancies.index');
+        // Check if the user is an admin or the company that owns the vacancy
+        if ($user->isAdmin() || $vacancy->company_id === $user->company_id) {
+            // Delete the vacancy
+            $vacancy->delete();
+
+            // Redirect to the vacancies index (admin view or company's own vacancies view)
+            return redirect()->route('admin.vacancies.index');
+        }
+
+        // If the user is neither an admin nor the owner of the vacancy, abort with a 403 Forbidden status
+        abort(403, 'You do not have permission to delete this vacancy.');
     }
+
 }
