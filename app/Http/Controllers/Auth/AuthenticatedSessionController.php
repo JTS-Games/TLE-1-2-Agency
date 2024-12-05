@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if (auth()->check() && auth()->user()->admin == 1) {
+        if (auth()->check() && auth()->user()->isAdmin()) {
             return redirect()->intended(route('admin.vacancies.index'));
         } else {
             return redirect()->intended(route('dashboard', absolute: false));
