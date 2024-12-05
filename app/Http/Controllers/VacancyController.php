@@ -37,8 +37,11 @@ class VacancyController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
+        if (!$request->user()) {
+            abort(401);
+        }
         $companies = Company::all();
         return view('create-vacancy', compact('companies'));
     }
