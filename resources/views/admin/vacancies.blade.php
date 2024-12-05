@@ -1,4 +1,3 @@
-@php use Carbon\Carbon; @endphp
 <x-layout title="OpenHiring | Vacatures">
     <h2>Alle vacatures</h2>
     <table>
