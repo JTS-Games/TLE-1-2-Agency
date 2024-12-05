@@ -28,7 +28,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        if (auth()->check() && auth()->user()->admin === 1) {
+            return redirect()->intended(route('admin.vacancies.index'));
+        } else {
+            return redirect()->intended(route('dashboard', absolute: false));
+
+        }
+        // This needs to be changed into a malware !!!!!!!!!!
     }
 
     /**
