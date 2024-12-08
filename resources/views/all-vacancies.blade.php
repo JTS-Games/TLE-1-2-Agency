@@ -20,6 +20,13 @@
                        class="mt-auto inline-block bg-primary-violet text-white  font-semibold py-2 px-4 rounded hover:bg-primary-yellow transition hover:text-primary-violet duration-200">
                         Wijzig vacature
                     </a>
+                    <form action="{{ route('vacancies.destroy', $vacancy) }}" method="POST" style="display: inline;" onsubmit="return confirm('Weet jij zeker of jij deze vacature wil verwijderen?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="mt-auto bg-primary-violet text-white font-semibold py-2 px-4 rounded hover:bg-primary-yellow transition hover:text-primary-violet duration-200">
+                            Verwijder vacature
+                        </button>
+                    </form>
                 </div>
             </div>
         @endforeach

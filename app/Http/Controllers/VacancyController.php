@@ -155,12 +155,29 @@ class VacancyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Vacancy $vacancy)
+    public function destroy(Request $request, Vacancy $vacancy)
     {
+        // Check if the user is logged in
+        if (!$request->user()) {
+            abort(401, 'Je moet ingelogd zijn.');
+        }
 
-        $vacancy-> delete();
-        return redirect()->route('admin.vacancies.index');
+        // Delete the vacancy
+        $vacancy->delete();
+
+        // Redirect based on user type
+        if ($request->user()->isAdmin()) {
+            // Admin account
+            return redirect()->route('admin.vacancies.index');
+        } elseif ($request->user()->company_id) {
+            // Company account
+            return redirect()->route('vacancies.index');
+        } else {
+            // Unauthorized access fallback
+            abort(403, 'Toegang geweigerd.');
+        }
     }
+
     public function suspicious(Request $request)
     {
         if (!$request->user()) {
