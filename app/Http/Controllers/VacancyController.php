@@ -84,9 +84,10 @@ class VacancyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Vacancy $vacancy)
+    public function show(Vacancy $vacancy, Company $company)
     {
-        return view('single-vacancy', compact('vacancy'));
+        $company = $vacancy->company;
+        return view('single-vacancy', compact('vacancy', 'company'));
     }
 
     /**

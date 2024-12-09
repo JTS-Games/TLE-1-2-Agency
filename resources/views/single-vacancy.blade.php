@@ -5,11 +5,12 @@
         <img src="{{asset('storage/'.$vacancy->image)}}" alt="afbeelding van {{basename($vacancy->image)}}"
 
              class="h-60 w-full object-cover object-top">
-
-
         <div class="p-8">
             <div>
                 <h1 class="text-4xl font-bold text-gray-800 mb-2">Functie titel: {{$vacancy->job_title}}</h1>
+                <h3 class="text-xl  text-gray-700 mb-4">
+                    <b>Bedrijf:</b> {{$company->name}}
+                </h3>
                 <h3 class="text-xl  text-gray-700 mb-4">
                     <b>Functieomschrijving:</b> {{$vacancy->description}}
                 </h3>
