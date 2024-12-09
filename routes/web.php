@@ -4,6 +4,7 @@ use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\FilterController;
 use App\Http\Controllers\InspirationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
@@ -37,6 +38,9 @@ Route::resource('/vacancies', VacancyController::class);
 Route::resource('companies', EmployerController::class);
 Route::get('/company/login', [EmployerController::class, 'showLoginForm'])->name('company.login.form');
 Route::post('/company/login', [EmployerController::class, 'login'])->name('company.login');
+//filter routes.
+Route::get('/', [FilterController::class, 'index']);
+
 // User Controllers
 Route::get('/about', [AboutUsController::class, 'about'])->name('about');
 Route::get('/inspiration', [InspirationController::class, 'inspiration'])->name('inspiration');
