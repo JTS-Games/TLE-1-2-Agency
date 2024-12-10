@@ -39,7 +39,7 @@ Route::resource('companies', EmployerController::class);
 Route::get('/company/login', [EmployerController::class, 'showLoginForm'])->name('company.login.form');
 Route::post('/company/login', [EmployerController::class, 'login'])->name('company.login');
 //filter routes.
-Route::get('/', [FilterController::class, 'index']);
+Route::get('/', [FilterController::class, 'index'])->name('userHomepage');
 
 // User Controllers
 Route::get('/about', [AboutUsController::class, 'about'])->name('about');
