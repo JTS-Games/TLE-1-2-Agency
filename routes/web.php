@@ -9,6 +9,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
 use App\Models\Vacancy;
 use Illuminate\Support\Facades\Route;
+use App\Mail\TestEmail;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return view('index');
@@ -41,6 +43,11 @@ Route::post('/company/login', [EmployerController::class, 'login'])->name('compa
 Route::get('/about', [AboutUsController::class, 'about'])->name('about');
 Route::get('/inspiration', [InspirationController::class, 'inspiration'])->name('inspiration');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+
+Route::get('/test-email', function () {
+    Mail::to('a@live.nl')->send(new TestEmail());
+    return 'Test email verzonden!';
+});
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
