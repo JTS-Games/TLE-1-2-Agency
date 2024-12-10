@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Qualification;
 use App\Models\Vacancy;
 
 use Illuminate\Http\Request;
@@ -19,6 +20,25 @@ class VacancyController extends Controller
         $allCompanies = Company::all();
         return view('all-vacancies', compact('allVacancies', 'allCompanies'));
     }
+
+
+    // create a view for the user to apply for the vacancy
+    public function registrationForVacancy(Request $request, Vacancy $vacancy)
+    {
+        if (auth()->check()) {
+            return view('registration-for-vacancy', compact('vacancy'));
+        } else {
+            return redirect()->route('login');
+        }
+    }
+
+    public function storeVacancyRegistration(Request $request, Vacancy $vacancy)
+    {
+        return view('registration-for-vacancy');
+
+        // redirect de persoon naar zijn profiel met zijn of haar vacatures waarvoor hij of zij heeft aangemeld.
+    }
+
 
     public function indexAdmin(Request $request)
     {
@@ -37,13 +57,15 @@ class VacancyController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create(Request $request, Vacancy $vacancy)
     {
         if (!$request->user()) {
             abort(401);
         }
-        $companies = Company::all();
-        return view('create-vacancy', compact('companies'));
+//        $companies = Company::all();
+
+        $qualifications = Qualification::all();
+        return view('create-vacancy', compact('vacancy', 'qualifications'));
     }
 
     /**
@@ -57,9 +79,9 @@ class VacancyController extends Controller
             'description' => 'required|string|max:500',
             'location' => 'required|string|max:255',
             'paycheck' => 'required|string|max:100',
-            'competence' => 'required|string|max:255',
             'contract_term' => 'required|string|max:100',
             'working_hours' => 'required|string|max:100',
+            'qualifications' => 'required', 'min:1',
         ]);
 
 
@@ -71,22 +93,26 @@ class VacancyController extends Controller
         $fileName = $file->getClientOriginalName();
         $path = $file->storeAs('images', $fileName, 'public');
         $vacancy->image = $path;
-        $vacancy->competence = $request->input('competence');
         $vacancy->working_hours = $request->input('working_hours');
         $vacancy->contract_term = $request->input('contract_term');
+
 
 //
 
         $vacancy->save();
 
+        $qualifications = $request->input('qualifications');
+        $vacancy->qualifications()->attach($qualifications);
+
         return redirect()->route('vacancies.index');
     }
+
     /**
      * Display the specified resource.
      */
-    public function show(Vacancy $vacancy)
+    public function show(Vacancy $vacancy, Company $company)
     {
-        return view('single-vacancy', compact('vacancy'));
+        return view('single-vacancy', compact('vacancy', 'company'));
     }
 
     /**

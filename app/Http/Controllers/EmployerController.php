@@ -40,7 +40,7 @@ class EmployerController extends Controller
                 'string',
                 'email', // Controleer of het een geldig e-mailadres is
                 'max:255',
-                'regex:/^[a-zA-Z0-9._%+-]+@(gmail\.com|outlook\.com|yahoo\.com|hotmail\.com|live\.com)$/',
+                'regex:/^[a-zA-Z0-9._%+-]+@(.com)$/',
             ],
         ]);
 
