@@ -7,6 +7,7 @@ use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\InspirationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
+use App\Models\Registration;
 use App\Models\Vacancy;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +16,8 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $userRegistration = Registration::where('user_id', auth()->id())->get();
+    return view('dashboard', compact('userRegistration'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
