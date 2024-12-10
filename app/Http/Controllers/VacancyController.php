@@ -70,10 +70,10 @@ class VacancyController extends Controller
         if (!$request->user()) {
             abort(401);
         }
-//        $companies = Company::all();
+        $companies = Company::all();
 
         $qualifications = Qualification::all();
-        return view('create-vacancy', compact('vacancy', 'qualifications'));
+        return view('create-vacancy', compact('vacancy', 'qualifications', 'companies'));
     }
 
     public function indexAdmin(Request $request)
@@ -88,18 +88,6 @@ class VacancyController extends Controller
 
         $allVacancies = Vacancy::all();
         return view('admin.vacancies', compact('allVacancies'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request)
-    {
-        if (!$request->user()) {
-            abort(401);
-        }
-        $companies = Company::all();
-        return view('create-vacancy', compact('companies'));
     }
 
     /**
