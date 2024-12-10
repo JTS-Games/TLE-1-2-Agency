@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Qualification;
+use App\Models\Registration;
 use App\Models\Vacancy;
 
 use Illuminate\Http\Request;
@@ -20,6 +22,49 @@ class VacancyController extends Controller
         return view('all-vacancies', compact('allVacancies', 'allCompanies'));
     }
 
+
+    // create a view for the user to apply for the vacancy
+    public function registrationForVacancy(Request $request, Vacancy $vacancy)
+    {
+        $user = auth()->user();
+        if (isset($user)) {
+            return view('registration-for-vacancy', compact('vacancy'));
+        } else {
+            return redirect()->route('login');
+        }
+    }
+
+    public function storeVacancyRegistration(Request $request, Vacancy $vacancy, Registration $registration)
+    {
+
+        $user = auth()->user();
+        if (isset($user)) {
+            $registration->create([
+                'vacancy_id' => $vacancy->id,
+                'user_id' => $user->id,
+            ]);
+            return redirect()->route('dashboard');
+        } else {
+            return redirect()->route('/');
+        }
+
+        // redirect de persoon naar zijn profiel met zijn of haar vacatures waarvoor hij of zij heeft aangemeld.
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(Request $request, Vacancy $vacancy)
+    {
+        if (!$request->user()) {
+            abort(401);
+        }
+//        $companies = Company::all();
+
+        $qualifications = Qualification::all();
+        return view('create-vacancy', compact('vacancy', 'qualifications'));
+    }
+
     public function indexAdmin(Request $request)
     {
         if (!$request->user()) {
@@ -35,18 +80,6 @@ class VacancyController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request)
-    {
-        if (!$request->user()) {
-            abort(401);
-        }
-        $companies = Company::all();
-        return view('create-vacancy', compact('companies'));
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request, Vacancy $vacancy)
@@ -57,9 +90,9 @@ class VacancyController extends Controller
             'description' => 'required|string|max:500',
             'location' => 'required|string|max:255',
             'paycheck' => 'required|string|max:100',
-            'competence' => 'required|string|max:255',
             'contract_term' => 'required|string|max:100',
             'working_hours' => 'required|string|max:100',
+            'qualifications' => 'required', 'min:1',
         ]);
 
 
@@ -71,22 +104,25 @@ class VacancyController extends Controller
         $fileName = $file->getClientOriginalName();
         $path = $file->storeAs('images', $fileName, 'public');
         $vacancy->image = $path;
-        $vacancy->competence = $request->input('competence');
         $vacancy->working_hours = $request->input('working_hours');
         $vacancy->contract_term = $request->input('contract_term');
+
 
 //
 
         $vacancy->save();
 
+        $qualifications = $request->input('qualifications');
+        $vacancy->qualifications()->attach($qualifications);
+
         return redirect()->route('vacancies.index');
     }
+
     /**
      * Display the specified resource.
      */
     public function show(Vacancy $vacancy, Company $company)
     {
-        $company = $vacancy->company;
         return view('single-vacancy', compact('vacancy', 'company'));
     }
 
