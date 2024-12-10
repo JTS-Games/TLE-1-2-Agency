@@ -48,7 +48,17 @@
                     </a>
                 @endif
             @endauth
+            <form action="{{ route('vacancies.destroy', $vacancy) }}" method="POST" style="display: inline;" onsubmit="return confirm('Weet jij zeker of jij deze vacature wil verwijderen?');">
+                @csrf
+                @method('DELETE')
 
+                @if ($company->id == $vacancy->company_id)
+                    <button type="submit"
+                            class="bg-primary-violet text-white rounded-full px-24 py-3 text-lg text-right hover:bg-primary-yellow hover:text-primary-violet">
+                        Verwijder vacature
+                    </button>
+                @endif
+            </form>
         </div>
     </div>
 
