@@ -49,7 +49,7 @@ class VacancyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Vacancy $vacancy)
+    public function store(Request $request, Vacancy $vacancy, Company $company)
     {
         $validated = $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif',
@@ -60,8 +60,8 @@ class VacancyController extends Controller
             'competence' => 'required|string|max:255',
             'contract_term' => 'required|string|max:100',
             'working_hours' => 'required|string|max:100',
+            'company_id' => 'required|string|max:100',
         ]);
-
 
         $vacancy->job_title = $request->input('job_title');
         $vacancy->description = $request->input('description');
@@ -74,8 +74,7 @@ class VacancyController extends Controller
         $vacancy->competence = $request->input('competence');
         $vacancy->working_hours = $request->input('working_hours');
         $vacancy->contract_term = $request->input('contract_term');
-
-//
+        $vacancy->company_id = $request->input('company_id');
 
         $vacancy->save();
 
