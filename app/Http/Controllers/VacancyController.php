@@ -216,6 +216,12 @@ class VacancyController extends Controller
      */
     public function destroy(Vacancy $vacancy)
     {
-        //
+        // Verwijder the vacancy
+        $vacancy->delete();
+
+        // Redirect back with a success message
+        return redirect()->route('vacancies.index');
     }
+
+
 }
