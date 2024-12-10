@@ -10,17 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-
-
-        Schema::create('registrations', function (Blueprint $table) {
+        Schema::create('qualifications', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('vacancy_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->string('name'); // naam van vereiste of kwalificatie
+            $table->string('type'); // Stel je wilt gaan filteren op rijbewijs,opleiding of welke kwalificiatie ook
             $table->timestamps();
-
         });
-
     }
 
     /**
@@ -28,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('registrations');
+        Schema::dropIfExists('qualifications');
     }
 };
