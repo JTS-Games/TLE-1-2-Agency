@@ -6,7 +6,8 @@ use App\Models\Company;
 use App\Models\Qualification;
 use App\Models\Registration;
 use App\Models\Vacancy;
-
+use App\Mail\VacancyRegistrationConfirmationMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 
@@ -53,6 +54,10 @@ class VacancyController extends Controller
                 'vacancy_id' => $vacancy->id,
                 'user_id' => $user->id,
             ]);
+
+            Mail::to($user->email)
+                ->send(new VacancyRegistrationConfirmationMail($vacancy));
+
 
             return redirect()->route('dashboard');
         } else {
@@ -141,10 +146,18 @@ class VacancyController extends Controller
      */
     public function edit(Vacancy $vacancy)
     {
-        $companies = Company::all();
-        // Load the details from the form
-        // request the old information and put it in the form
-        return view('edit-vacancy', compact('vacancy', 'companies'));
+
+        // Dit moet nog aangepast worden naar auth->company ...
+//        if (auth()->check() && ($vacancy->company_id === $vacancy->company->id || auth()->user()->isAdmin())) {
+//            $companies = Company::all();
+//            return view('edit-vacancy', compact('vacancy'));
+//        } else {
+//            return redirect()->route('/');
+//            // Load the details from the form
+//            // request the old information and put it in the form
+////            return view('edit-vacancy', compact('vacancy', 'companies'));
+//        }
+
     }
 
     /**
