@@ -32,17 +32,22 @@
                 @endforeach
             </ul>
 
-            <form action="{{ route('vacancies.registration.store',$vacancy)}}" method="POST"
-                  enctype="multipart/form-data">
+            <form action="{{ route('vacancies.registration.store',$vacancy)}}" method="POST" enctype="multipart/form-data">
                 @csrf
-
-
                 <button type="submit"
                         class="w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-primary-violet hover:bg-primary-yellow transition duration-200 hover:text-primary-violet">
                     Bevestig Aanmelding
                 </button>
             </form>
         </div>
-
     </div>
+
+    <!-- Laat pop-up zien met Javascript als hij word klaar gezet in VacancyController -->
+    @if(session('error'))
+        <script>
+            window.onload = function() {
+                alert("{{ session('error') }}");
+            };
+        </script>
+    @endif
 </x-layout>
