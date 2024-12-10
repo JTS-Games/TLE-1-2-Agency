@@ -23,7 +23,7 @@ class FilterController extends Controller
 
                 if (isset($search)) {
                     $query->where(function ($subQuery) use ($search) {
-                        $subQuery->whereAny(['name', 'paycheck', 'location'], 'LIKE', "%$search%");
+                        $subQuery->whereAny(['job_title', 'paycheck', 'location'], 'LIKE', "%$search%");
                     });
                 }
 
