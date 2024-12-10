@@ -131,10 +131,18 @@ class VacancyController extends Controller
      */
     public function edit(Vacancy $vacancy)
     {
-        $companies = Company::all();
-        // Load the details from the form
-        // request the old information and put it in the form
-        return view('edit-vacancy', compact('vacancy', 'companies'));
+
+        // Dit moet nog aangepast worden naar auth->company ...
+//        if (auth()->check() && ($vacancy->company_id === $vacancy->company->id || auth()->user()->isAdmin())) {
+//            $companies = Company::all();
+//            return view('edit-vacancy', compact('vacancy'));
+//        } else {
+//            return redirect()->route('/');
+//            // Load the details from the form
+//            // request the old information and put it in the form
+////            return view('edit-vacancy', compact('vacancy', 'companies'));
+//        }
+
     }
 
     /**
