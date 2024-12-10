@@ -32,8 +32,7 @@
                 @endforeach
             </ul>
 
-            <!-- Registratie formulier -->
-            <form action="{{ route('vacancies.registration.store',[$vacancy,auth()->user()->id]) }}" method="POST"
+            <form action="{{ route('vacancies.registration.store',$vacancy)}}" method="POST"
                   enctype="multipart/form-data">
                 @csrf
 
