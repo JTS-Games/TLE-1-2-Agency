@@ -49,7 +49,7 @@ Route::get('/inspiration', [InspirationController::class, 'inspiration'])->name(
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 Route::get('/test-email', function () {
-    Mail::to('a@live.nl')->send(new TestEmail());
+    Mail::to('Emregulec70@gmail.com')->send(new TestEmail());
     return 'Test email verzonden!';
 });
 

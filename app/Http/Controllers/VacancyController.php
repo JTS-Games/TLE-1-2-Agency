@@ -6,7 +6,8 @@ use App\Models\Company;
 use App\Models\Qualification;
 use App\Models\Registration;
 use App\Models\Vacancy;
-
+use App\Mail\VacancyRegistrationConfirmationMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 
@@ -43,6 +44,10 @@ class VacancyController extends Controller
                 'vacancy_id' => $vacancy->id,
                 'user_id' => $user->id,
             ]);
+
+            Mail::to($user->email)
+                ->send(new VacancyRegistrationConfirmationMail($vacancy));
+
             return redirect()->route('dashboard');
         } else {
             return redirect()->route('/');
