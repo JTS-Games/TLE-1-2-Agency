@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Qualification;
+use App\Models\Registration;
 use App\Models\Vacancy;
 
 use Illuminate\Http\Request;
@@ -25,33 +26,29 @@ class VacancyController extends Controller
     // create a view for the user to apply for the vacancy
     public function registrationForVacancy(Request $request, Vacancy $vacancy)
     {
-        if (auth()->check()) {
+        $user = auth()->user();
+        if (isset($user)) {
             return view('registration-for-vacancy', compact('vacancy'));
         } else {
             return redirect()->route('login');
         }
     }
 
-    public function storeVacancyRegistration(Request $request, Vacancy $vacancy)
+    public function storeVacancyRegistration(Request $request, Vacancy $vacancy, Registration $registration)
     {
-        return view('registration-for-vacancy');
+
+        $user = auth()->user();
+        if (isset($user)) {
+            $registration->create([
+                'vacancy_id' => $vacancy->id,
+                'user_id' => $user->id,
+            ]);
+            return redirect()->route('dashboard');
+        } else {
+            return redirect()->route('/');
+        }
 
         // redirect de persoon naar zijn profiel met zijn of haar vacatures waarvoor hij of zij heeft aangemeld.
-    }
-
-
-    public function indexAdmin(Request $request)
-    {
-        if (!$request->user()) {
-            abort(401);
-        }
-
-        if (!$request->user()->isAdmin()) {
-            abort(403);
-        }
-
-        $allVacancies = Vacancy::all();
-        return view('admin.vacancies', compact('allVacancies'));
     }
 
     /**
@@ -66,6 +63,20 @@ class VacancyController extends Controller
 
         $qualifications = Qualification::all();
         return view('create-vacancy', compact('vacancy', 'qualifications'));
+    }
+
+    public function indexAdmin(Request $request)
+    {
+        if (!$request->user()) {
+            abort(401);
+        }
+
+        if (!$request->user()->isAdmin()) {
+            abort(403);
+        }
+
+        $allVacancies = Vacancy::all();
+        return view('admin.vacancies', compact('allVacancies'));
     }
 
     /**

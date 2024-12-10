@@ -35,7 +35,7 @@ Route::resource('/screenings', AdminController::class);
 Route::resource('/vacancies', VacancyController::class);
 
 Route::get('/vacancies/{vacancy}/aanmelden', [VacancyController::class, 'registrationForVacancy'])->name('vacancies.registration');
-Route::post('/aanmelden-vacature', [VacancyController::class, 'storeVacancyRegistration'])->name('vacancies.registration.store');
+Route::post('/aanmelden-vacature/{vacancy}', [VacancyController::class, 'storeVacancyRegistration'])->name('vacancies.registration.store');
 //employer registration route
 Route::resource('companies', EmployerController::class);
 Route::get('/company/login', [EmployerController::class, 'showLoginForm'])->name('company.login.form');
