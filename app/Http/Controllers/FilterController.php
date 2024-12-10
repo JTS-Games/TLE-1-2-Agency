@@ -18,16 +18,21 @@ class FilterController extends Controller
         $vacancy = Vacancy::query();
 
         // Als er een zoekopdracht is, pas het filter toe op 'name', 'paycheck' en 'location'
-        if ($search) {
-            $vacancy->where(function($query) use ($search) {
-                $query->WhereAny(['name','paycheck','location'], 'LIKE', "%$search%");
-            });
-        }
+        if (isset($search) || isset($qualificationSearch)) {
+            $vacancy->where(function ($query) use ($search, $qualificationSearch) {
 
-        // Als er een kwalificatie is geselecteerd, filter dan op de qualifications
-        if ($qualificationSearch) {
-            $vacancy->whereHas('qualifications', function ($qualificationQuery) use ($qualificationSearch) {
-                $qualificationQuery->where('qualification_id', $qualificationSearch);
+                if (isset($search)) {
+                    $query->where(function ($subQuery) use ($search) {
+                        $subQuery->whereAny(['name', 'paycheck', 'location'], 'LIKE', "%$search%");
+                    });
+                }
+
+
+                if (isset($qualificationSearch)) {
+                    $query->whereHas('qualifications', function ($qualificationQuery) use ($qualificationSearch) {
+                        $qualificationQuery->where('qualification_id', $qualificationSearch);
+                    });
+                }
             });
         }
 
