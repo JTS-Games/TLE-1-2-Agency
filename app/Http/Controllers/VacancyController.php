@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Qualification;
+use App\Models\Registration;
 use App\Models\Vacancy;
-
+use App\Mail\VacancyRegistrationConfirmationMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 
@@ -25,20 +27,59 @@ class VacancyController extends Controller
     // create a view for the user to apply for the vacancy
     public function registrationForVacancy(Request $request, Vacancy $vacancy)
     {
-        if (auth()->check()) {
+        $user = auth()->user();
+        if (isset($user)) {
             return view('registration-for-vacancy', compact('vacancy'));
         } else {
             return redirect()->route('login');
         }
     }
 
-    public function storeVacancyRegistration(Request $request, Vacancy $vacancy)
+    public function storeVacancyRegistration(Request $request, Vacancy $vacancy, Registration $registration)
     {
-        return view('registration-for-vacancy');
+        $user = auth()->user();
+        if (isset($user)) {
+            // Check voor het eerste resultaat waar user_id and vacancy_id overeenkomen met de user en vacature
+            $existingRegistration = Registration::where('vacancy_id', $vacancy->id)
+                ->where('user_id', $user->id)
+                ->first();
 
-        // redirect de persoon naar zijn profiel met zijn of haar vacatures waarvoor hij of zij heeft aangemeld.
+            if ($existingRegistration) {
+                // Zet de error message klaar voor pop-up in registratiepagina
+                return back()->with('error', 'U heeft al geregistreerd voor deze vacature.');
+            }
+
+            // Creeer the new registration
+            $registration->create([
+                'vacancy_id' => $vacancy->id,
+                'user_id' => $user->id,
+            ]);
+
+            Mail::to($user->email)
+                ->send(new VacancyRegistrationConfirmationMail($vacancy));
+
+
+            return redirect()->route('dashboard');
+        } else {
+            return redirect()->route('/');
+        }
     }
 
+
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(Request $request, Vacancy $vacancy)
+    {
+        if (!$request->user()) {
+            abort(401);
+        }
+        $companies = Company::all();
+
+        $qualifications = Qualification::all();
+        return view('create-vacancy', compact('vacancy', 'qualifications', 'companies'));
+    }
 
     public function indexAdmin(Request $request)
     {
@@ -55,20 +96,6 @@ class VacancyController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request, Vacancy $vacancy)
-    {
-        if (!$request->user()) {
-            abort(401);
-        }
-//        $companies = Company::all();
-
-        $qualifications = Qualification::all();
-        return view('create-vacancy', compact('vacancy', 'qualifications'));
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request, Vacancy $vacancy)
@@ -82,6 +109,7 @@ class VacancyController extends Controller
             'contract_term' => 'required|string|max:100',
             'working_hours' => 'required|string|max:100',
             'qualifications' => 'required', 'min:1',
+            'company_id' => 'required|string|max:100',
         ]);
 
 
@@ -95,9 +123,7 @@ class VacancyController extends Controller
         $vacancy->image = $path;
         $vacancy->working_hours = $request->input('working_hours');
         $vacancy->contract_term = $request->input('contract_term');
-
-
-//
+        $vacancy->company_id = $request->input('company_id');
 
         $vacancy->save();
 
@@ -106,12 +132,12 @@ class VacancyController extends Controller
 
         return redirect()->route('vacancies.index');
     }
-
     /**
      * Display the specified resource.
      */
     public function show(Vacancy $vacancy, Company $company)
     {
+        $company = $vacancy->company;
         return view('single-vacancy', compact('vacancy', 'company'));
     }
 
@@ -120,10 +146,18 @@ class VacancyController extends Controller
      */
     public function edit(Vacancy $vacancy)
     {
-        $companies = Company::all();
-        // Load the details from the form
-        // request the old information and put it in the form
-        return view('edit-vacancy', compact('vacancy', 'companies'));
+
+        // Dit moet nog aangepast worden naar auth->company ...
+//        if (auth()->check() && ($vacancy->company_id === $vacancy->company->id || auth()->user()->isAdmin())) {
+//            $companies = Company::all();
+//            return view('edit-vacancy', compact('vacancy'));
+//        } else {
+//            return redirect()->route('/');
+//            // Load the details from the form
+//            // request the old information and put it in the form
+////            return view('edit-vacancy', compact('vacancy', 'companies'));
+//        }
+
     }
 
     /**

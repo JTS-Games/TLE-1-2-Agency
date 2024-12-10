@@ -8,15 +8,19 @@ use App\Http\Controllers\FilterController;
 use App\Http\Controllers\InspirationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
+use App\Models\Registration;
 use App\Models\Vacancy;
 use Illuminate\Support\Facades\Route;
+use App\Mail\TestEmail;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return view('index');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $userRegistration = Registration::where('user_id', auth()->id())->get();
+    return view('dashboard', compact('userRegistration'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -34,6 +38,9 @@ Route::resource('/screenings', AdminController::class);
 
 // This one could be used for the employee and employers, the vacancies controller.
 Route::resource('/vacancies', VacancyController::class);
+
+Route::get('/vacancies/{vacancy}/aanmelden', [VacancyController::class, 'registrationForVacancy'])->name('vacancies.registration');
+Route::post('/aanmelden-vacature/{vacancy}', [VacancyController::class, 'storeVacancyRegistration'])->name('vacancies.registration.store');
 //employer registration route
 Route::resource('companies', EmployerController::class);
 Route::get('/company/login', [EmployerController::class, 'showLoginForm'])->name('company.login.form');
@@ -46,6 +53,11 @@ Route::get('/user-homepage/{qualification?}', [FilterController::class, 'genreFi
 Route::get('/about', [AboutUsController::class, 'about'])->name('about');
 Route::get('/inspiration', [InspirationController::class, 'inspiration'])->name('inspiration');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+
+Route::get('/test-email', function () {
+    Mail::to('Emregulec70@gmail.com')->send(new TestEmail());
+    return 'Test email verzonden!';
+});
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

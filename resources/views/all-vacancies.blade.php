@@ -16,10 +16,13 @@
                        class="mt-auto inline-block bg-primary-violet text-white  font-semibold py-2 px-4 rounded hover:bg-primary-yellow transition hover:text-primary-violet duration-200">
                         Bekijk vacature
                     </a>
-                    <a href="{{route('vacancies.edit', $vacancy)}}"
-                       class="mt-auto inline-block bg-primary-violet text-white  font-semibold py-2 px-4 rounded hover:bg-primary-yellow transition hover:text-primary-violet duration-200">
-                        Wijzig vacature
-                    </a>
+                    @auth
+
+                        <a href="{{route('vacancies.edit', $vacancy)}}"
+                           class="mt-auto inline-block bg-primary-violet text-white  font-semibold py-2 px-4 rounded hover:bg-primary-yellow transition hover:text-primary-violet duration-200">
+                            Wijzig vacature
+                        </a>
+                    @endauth
                 </div>
             </div>
         @endforeach
