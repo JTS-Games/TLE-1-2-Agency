@@ -91,6 +91,18 @@ class VacancyController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create(Request $request)
+    {
+        if (!$request->user()) {
+            abort(401);
+        }
+        $companies = Company::all();
+        return view('create-vacancy', compact('companies'));
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request, Vacancy $vacancy)
@@ -104,6 +116,7 @@ class VacancyController extends Controller
             'contract_term' => 'required|string|max:100',
             'working_hours' => 'required|string|max:100',
             'qualifications' => 'required', 'min:1',
+            'company_id' => 'required|string|max:100',
         ]);
 
 
@@ -117,9 +130,7 @@ class VacancyController extends Controller
         $vacancy->image = $path;
         $vacancy->working_hours = $request->input('working_hours');
         $vacancy->contract_term = $request->input('contract_term');
-
-
-//
+        $vacancy->company_id = $request->input('company_id');
 
         $vacancy->save();
 
@@ -128,12 +139,12 @@ class VacancyController extends Controller
 
         return redirect()->route('vacancies.index');
     }
-
     /**
      * Display the specified resource.
      */
     public function show(Vacancy $vacancy, Company $company)
     {
+        $company = $vacancy->company;
         return view('single-vacancy', compact('vacancy', 'company'));
     }
 
