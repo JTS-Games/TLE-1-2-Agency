@@ -35,7 +35,7 @@
                 Ga terug
             </a>
 
-            <!-- Check if the user is authenticated and has already registered for this vacancy -->
+            <!--  -->
             @auth
                 @php
                     $alreadyRegistered = \App\Models\Registration::where('user_id', auth()->id())->where('vacancy_id', $vacancy->id)->exists();

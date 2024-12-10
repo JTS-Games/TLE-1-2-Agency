@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <!-- Simple JavaScript Alert for error handling -->
+    <!-- Laat pop-up zien met Javascript als hij word klaar gezet in VacancyController -->
     @if(session('error'))
         <script>
             window.onload = function() {

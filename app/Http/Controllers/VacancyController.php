@@ -38,17 +38,17 @@ class VacancyController extends Controller
     {
         $user = auth()->user();
         if (isset($user)) {
-            // Check if the user is already registered for this vacancy
+            // Check voor het eerste resultaat waar user_id and vacancy_id overeenkomen met de user en vacature
             $existingRegistration = Registration::where('vacancy_id', $vacancy->id)
                 ->where('user_id', $user->id)
                 ->first();
 
             if ($existingRegistration) {
-                // Set the error message in session without redirecting
-                return back()->with('error', 'You are already registered for this vacancy.');
+                // Zet de error message klaar voor pop-up in registratiepagina
+                return back()->with('error', 'U heeft al geregistreerd voor deze vacature.');
             }
 
-            // Create the new registration
+            // Creeer the new registration
             $registration->create([
                 'vacancy_id' => $vacancy->id,
                 'user_id' => $user->id,
