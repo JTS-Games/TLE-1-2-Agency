@@ -41,6 +41,7 @@ Route::post('/company/login', [EmployerController::class, 'login'])->name('compa
 //filter routes.
 Route::get('/', [FilterController::class, 'index'])->name('userHomepage');
 
+
 // User Controllers
 Route::get('/about', [AboutUsController::class, 'about'])->name('about');
 Route::get('/inspiration', [InspirationController::class, 'inspiration'])->name('inspiration');
