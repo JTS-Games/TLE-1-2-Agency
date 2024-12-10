@@ -36,20 +36,31 @@ class VacancyController extends Controller
 
     public function storeVacancyRegistration(Request $request, Vacancy $vacancy, Registration $registration)
     {
-
         $user = auth()->user();
         if (isset($user)) {
+            // Check if the user is already registered for this vacancy
+            $existingRegistration = Registration::where('vacancy_id', $vacancy->id)
+                ->where('user_id', $user->id)
+                ->first();
+
+            if ($existingRegistration) {
+                // Set the error message in session without redirecting
+                return back()->with('error', 'You are already registered for this vacancy.');
+            }
+
+            // Create the new registration
             $registration->create([
                 'vacancy_id' => $vacancy->id,
                 'user_id' => $user->id,
             ]);
+
             return redirect()->route('dashboard');
         } else {
             return redirect()->route('/');
         }
-
-        // redirect de persoon naar zijn profiel met zijn of haar vacatures waarvoor hij of zij heeft aangemeld.
     }
+
+
 
     /**
      * Show the form for creating a new resource.
