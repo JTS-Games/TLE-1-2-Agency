@@ -13,6 +13,12 @@ use Illuminate\Http\Request;
 
 class VacancyController extends Controller
 {
+
+    private function getLoggedInCompanyId()
+    {
+        return session('login_company_59ba36addc2b2f9401580f014c7f58ea4e30989d');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -20,6 +26,7 @@ class VacancyController extends Controller
     {
         $allVacancies = Vacancy::all();
         $allCompanies = Company::all();
+
         return view('all-vacancies', compact('allVacancies', 'allCompanies'));
     }
 
@@ -138,7 +145,8 @@ class VacancyController extends Controller
     public function show(Vacancy $vacancy, Company $company)
     {
         $company = $vacancy->company;
-        return view('single-vacancy', compact('vacancy', 'company'));
+        $loggedInCompanyId = $this->getLoggedInCompanyId();
+        return view('single-vacancy', compact('vacancy', 'company', 'loggedInCompanyId'));
     }
 
     /**
@@ -216,11 +224,15 @@ class VacancyController extends Controller
      */
     public function destroy(Vacancy $vacancy)
     {
-        // Verwijder the vacancy
-        $vacancy->delete();
+        $loggedInCompanyId = session('login_company');
+        $isAdmin = session('is_admin', false);
 
-        // Redirect back with a success message
-        return redirect()->route('vacancies.index');
+        if ($vacancy->company_id === $loggedInCompanyId || $isAdmin) {
+            $vacancy->delete();
+            return redirect()->route('vacancies.index')->with('success', 'Vacature verwijdert.');
+        }
+
+        abort(401);
     }
 
 
