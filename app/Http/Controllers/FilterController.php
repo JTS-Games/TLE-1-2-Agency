@@ -43,6 +43,6 @@ class FilterController extends Controller
         $allQualifications = Qualification::all();
 
         // Retourneer de view met de vacatures en kwalificaties
-        return view('employee.user-homepage', compact('vacancies', 'allQualifications'));
+        return view('profile.all-vacancies', compact('vacancies', 'allQualifications'));
     }
 }
