@@ -12,8 +12,6 @@ class EmployerController extends Controller
 {
     public function index()
     {
-
-
         return view('employer.registration');
     }
 
@@ -52,7 +50,7 @@ class EmployerController extends Controller
 
         $company->save();
 
-        return redirect()->route('company.login');
+        return route('company.login.form');
     }
 
     public function showLoginForm()
@@ -87,30 +85,31 @@ class EmployerController extends Controller
         $company = Auth::guard('company')->user();
         return view('employer.edit', compact('company'));
     }
-//
-//    public function update (Request $request) {
-//        if(!Auth::guard('company') || !Auth::guard('company')->user()) {
-//            return redirect()->route('index');
-//        }
-//
-//        $request->validate([
-//            'name' => ['required', 'string', 'max:255'],
-//            'location' => ['required', 'string', 'max:255'],
-//            'description' => ['required', 'string', 'max:1000']
-//        ]);
-//
-//        $newName = $request->input('name');
-//        $newLocation = $request->input('location');
-//        $newDescription = $request->input('description');
-//
-//        Auth::guard('company')->user()->name = $newName;
-//        Auth::guard('company')->user()->location_hq = $newLocation;
-//        Auth::guard('company')->user()->description = $newDescription;
-//        Auth::guard('company')->user()->save();
-//
-//        return redirect()->route('companies.index');
-//    }
-//
+
+    public function update(Request $request)
+    {
+        if (!Auth::guard('company') || !Auth::guard('company')->user()) {
+            return redirect()->route('index');
+        }
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'location' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:1000']
+        ]);
+
+        $newName = $request->input('name');
+        $newLocation = $request->input('location');
+        $newDescription = $request->input('description');
+
+        Auth::guard('company')->user()->name = $newName;
+        Auth::guard('company')->user()->location_hq = $newLocation;
+        Auth::guard('company')->user()->description = $newDescription;
+        Auth::guard('company')->user()->save();
+
+        return redirect()->route('companies.index');
+    }
+
 //    public function edit(Request $request)
 //    {
 //        if (!Auth::guard('company') || !Auth::guard('company')->user()) {
