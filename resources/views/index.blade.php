@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Dashboard</title>
+    <title>Open Hiring</title>
 </head>
 <x-layout title="index">
     <div class="container mx-auto p-6">
@@ -20,16 +20,12 @@
                 <p class="font-semibold text-gray-700">Adela</p>
                 <p class="text-sm text-gray-500">Vulploegmedewerker</p>
                 <div class="flex gap-4 mt-4">
-                    <!-- Log In als Gebruiker -->
-                    <a href="{{ route('login') }}"
-                       class="bg-white border border-gray-400 rounded-full px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100">
-                        Log In als Gebruiker
-                    </a>
-                    <!-- Registreer als Gebruiker -->
-                    <a href="{{ route('register') }}"
-                       class="bg-white border border-gray-400 rounded-full px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100">
-                        Registreer als Gebruiker
-                    </a>
+
+                    {{--                    <!-- Registreer als Gebruiker -->--}}
+                    {{--                    <a href="{{ route('register') }}"--}}
+                    {{--                       class="bg-white border border-gray-400 rounded-full px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100">--}}
+                    {{--                        Registreer als Gebruiker--}}
+                    {{--                    </a>--}}
                 </div>
             </div>
             <div class="bg-white rounded-lg shadow p-6 max-w-md flex flex-col items-center text-left">
@@ -42,14 +38,14 @@
                 <p class="font-semibold text-gray-700">Gaby Westekalen</p>
                 <p class="text-sm text-gray-500">GWS de Schoonmaker</p>
                 <div class="flex gap-4">
-                    <a href="{{ route('company.login.form') }}"
-                       class="bg-white border border-gray-400 rounded-full px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100">
-                        Log In als Bedrijf
-                    </a>
-                    <a href="{{ route('companies.index') }}"
-                       class="bg-white border border-gray-400 rounded-full px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100">
-                        Registreer als Bedrijf
-                    </a>
+                    {{--                    <a href="{{ route('company.login.form') }}"--}}
+                    {{--                       class="bg-white border border-gray-400 rounded-full px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100">--}}
+                    {{--                        Log In als Bedrijf--}}
+                    {{--                    </a>--}}
+                    {{--                    <a href="{{ route('companies.index') }}"--}}
+                    {{--                       class="bg-white border border-gray-400 rounded-full px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100">--}}
+                    {{--                        Registreer als Bedrijf--}}
+                    {{--                    </a>--}}
                 </div>
             </div>
         </section>
