@@ -40,7 +40,7 @@ class EmployerController extends Controller
                 'string',
                 'email', // Controleer of het een geldig e-mailadres is
                 'max:255',
-                'regex:/^[a-zA-Z0-9._%+-]+@(.com)$/',
+                'regex:/^[a-zA-Z0-9._%+-]+@(gmail\.com|outlook\.com|yahoo\.com|hotmail\.com|live\.com)$/',
             ],
         ]);
 
@@ -80,36 +80,5 @@ class EmployerController extends Controller
             }
             return redirect('/company/login')->withErrors(['login' => 'Onjuiste inloggegevens.']);
         }
-    }
-
-    public function edit (Request $request) {
-        if(!Auth::guard('company') || !Auth::guard('company')->user()) {
-            return redirect()->route('index');
-        }
-        $company = Auth::guard('company')->user();
-        return view('employer.edit', compact('company'));
-    }
-
-    public function update (Request $request) {
-        if(!Auth::guard('company') || !Auth::guard('company')->user()) {
-            return redirect()->route('index');
-        }
-
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'location' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:1000']
-        ]);
-
-        $newName = $request->input('name');
-        $newLocation = $request->input('location');
-        $newDescription = $request->input('description');
-
-        Auth::guard('company')->user()->name = $newName;
-        Auth::guard('company')->user()->location_hq = $newLocation;
-        Auth::guard('company')->user()->description = $newDescription;
-        Auth::guard('company')->user()->save();
-
-        return redirect()->route('companies.index');
     }
 }
