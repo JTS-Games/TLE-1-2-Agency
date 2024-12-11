@@ -49,6 +49,8 @@ Route::post('/company/login', [EmployerController::class, 'login'])->name('compa
 Route::get('/user-homepage', [FilterController::class, 'index'])->name('userHomepage');
 Route::get('/user-homepage/{qualification?}', [FilterController::class, 'genreFilter'])->name('userHomepage');
 
+Route::get('/company/edit', [EmployerController::class, 'edit'])->name('company.edit');
+Route::patch('/company/update', [EmployerController::class, 'update'])->name('company.update');
 // User Controllers
 Route::get('/about', [AboutUsController::class, 'about'])->name('about');
 Route::get('/inspiration', [InspirationController::class, 'inspiration'])->name('inspiration');
