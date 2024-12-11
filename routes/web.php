@@ -49,7 +49,6 @@ Route::get('/company/login', [EmployerController::class, 'showLoginForm'])->name
 Route::post('/company/login', [EmployerController::class, 'login'])->name('company.login');
 //filter routes.
 
-
 Route::get('/company/edit', [EmployerController::class, 'edit'])->name('company.edit');
 Route::patch('/company/update', [EmployerController::class, 'update'])->name('company.update');
 // User Controllers

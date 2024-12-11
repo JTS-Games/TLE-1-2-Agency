@@ -80,9 +80,8 @@ class EmployerController extends Controller
         }
     }
 
-    public function edit(Request $request)
-    {
-        if (!Auth::guard('company') || !Auth::guard('company')->user()) {
+    public function edit (Request $request) {
+        if(!Auth::guard('company') || !Auth::guard('company')->user()) {
             return redirect()->route('index');
         }
         $company = Auth::guard('company')->user();
