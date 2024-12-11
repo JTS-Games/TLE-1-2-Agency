@@ -20,7 +20,7 @@ class VacancyController extends Controller
     {
         $allVacancies = Vacancy::all();
         $allCompanies = Company::all();
-        return view('all-vacancies', compact('allVacancies', 'allCompanies'));
+        return view('profile.all-vacancies', compact('allVacancies', 'allCompanies'));
     }
 
 
