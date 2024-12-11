@@ -15,7 +15,7 @@
         <!-- Dropdown: Kwalificaties -->
         <div class="flex gap-4 mb-4">
             <!-- Dropdown: 70% van de breedte -->
-            <div class="w-[70%]">
+            <div class="w-[65%]">
                 <select name="qualification_id" id="qualification" class="block w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option value="0">Alle kwalificaties</option>
                     @foreach($allQualifications as $qualification)
@@ -27,7 +27,7 @@
             </div>
 
             <!-- Reset knop: 30% van de breedte -->
-            <div class="w-[30%]">
+            <div class="w-[35%]">
                 <a href="{{ route('vacancies.index') }}" class="inline-block w-full bg-primary-yellow text-primary-violet font-semibold py-3 px-6 rounded-md hover:bg-primary-violet transition hover:text-white duration-200">
                     Reset filter
                 </a>
