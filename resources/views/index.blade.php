@@ -46,7 +46,7 @@
                        class="bg-white border border-gray-400 rounded-full px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100">
                         Log In als Bedrijf
                     </a>
-                    <a href="{{ route('companies.index') }}"
+                    <a href="{{ route('companies.create') }}"
                        class="bg-white border border-gray-400 rounded-full px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100">
                         Registreer als Bedrijf
                     </a>
