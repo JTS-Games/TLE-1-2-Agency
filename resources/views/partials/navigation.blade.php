@@ -1,42 +1,18 @@
 <nav>
-    <div class="flex flex-row justify-evenly items-center">
+    <div class="flex flex-row justify-evenly  items-center">
         <a href="{{route('vacancies.index')}}"
            class="bg-primary-violet text-white rounded-full px-6 py-2 text-base hover:bg-primary-yellow hover:text-primary-violet">
-            Alle vacatures
-        </a>
-
+            Alle vacatures</a>
         <a href="#"
            class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet">
-            Over Open Hiring
-        </a>
-
+            Over Open Hiring</a>
         <a href="{{route('index')}}"><img src="{{asset('images/openhiring-logo.png')}}" width="100" height="100"
                                           alt="Open Hiring logo"></a>
-
         <a href="#"
            class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet">
-            Inspiratie
-        </a>
-
+            Inspiratie</a>
         <a href="{{route('contact')}}"
            class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet">
-            Contact
-        </a>
-
-        @auth
-            <a href="{{route('dashboard')}}"
-
-               class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow
-            hover:text-primary-violet">
-                Mijn Profiel
-            </a>
-        @endauth
-
-        @guest
-            <a href="{{route('login')}}"
-               class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet">
-                Inloggen
-            </a>
-        @endguest
+            Contact</a>
     </div>
 </nav>

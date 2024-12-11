@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
-use App\Models\Registration;
-use App\Models\Vacancy;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,10 +16,8 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-
-
         return view('profile.edit', [
-            'user' => $request->user()
+            'user' => $request->user(),
         ]);
     }
 
@@ -61,7 +57,4 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
-
-
 }
-

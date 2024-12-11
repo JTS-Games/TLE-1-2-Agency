@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Vacancy extends Model
@@ -18,23 +17,18 @@ class Vacancy extends Model
         'description',
         'location',
         'paycheck',
+        'competence',
         'contract_term',
         'working_hours',
         'company_id',
     ];
-
-    public function registrations(): hasMany
+    public function registrations():hasMany
     {
         return $this->hasMany(Registration::class);
     }
 
-    public function company(): belongsTo
+    public function company():belongsTo
     {
         return $this->belongsTo(Company::class);
-    }
-
-    public function qualifications(): BelongsToMany
-    {
-        return $this->belongsToMany(Qualification::class, 'qualification_vacancy');
     }
 }
