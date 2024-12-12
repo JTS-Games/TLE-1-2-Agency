@@ -36,22 +36,22 @@
             </ul>
         </div>
 
-        <div class="flex justify-center gap-20">
+        <div class="flex flex-col md:flex-row justify-center md:gap-20 gap-4 mt-6">
 
             <a href="{{route('vacancies.index')}}"
-               class="bg-primary-violet text-white rounded-full px-24 py-3 text-lg text-right hover:bg-primary-yellow hover:text-primary-violet">
+               class="bg-primary-violet text-white rounded-full px-8 py-3 text-lg text-center hover:bg-primary-yellow hover:text-primary-violet transition">
                 Ga terug
             </a>
 
-
             @if(!$alreadyRegistered)
                 <a href="{{route('vacancies.registration',$vacancy)}}"
-                   class="bg-primary-violet text-white rounded-full px-24 py-3 text-lg text-right hover:bg-primary-yellow hover:text-primary-violet">
+                   class="bg-primary-violet text-white rounded-full px-8 py-3 text-lg text-center hover:bg-primary-yellow hover:text-primary-violet transition">
                     Aanmelden
                 </a>
             @endif
 
         </div>
+
     </div>
 
 </x-layout>
