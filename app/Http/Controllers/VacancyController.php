@@ -7,6 +7,7 @@ use App\Models\Qualification;
 use App\Models\Registration;
 use App\Models\Vacancy;
 use App\Mail\VacancyRegistrationConfirmationMail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
@@ -89,6 +90,8 @@ class VacancyController extends Controller
      */
     public function store(Request $request, Vacancy $vacancy, Company $company)
     {
+
+        $company= Auth::guard('company')->user();
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif',
             'job_title' => 'required|string|max:255',
@@ -98,8 +101,9 @@ class VacancyController extends Controller
             'contract_term' => 'required|string|max:100',
             'working_hours' => 'required|string|max:100',
             'qualifications' => 'required', 'min:1',
-            'company_id' => 'required|string|max:100',
         ]);
+
+
 
         $vacancy->job_title = $request->input('job_title');
         $vacancy->description = $request->input('description');
@@ -111,7 +115,7 @@ class VacancyController extends Controller
         $vacancy->image = $path;
         $vacancy->working_hours = $request->input('working_hours');
         $vacancy->contract_term = $request->input('contract_term');
-        $vacancy->company_id = $request->input('company_id');
+        $vacancy->company_id = $company->id;
 
         $vacancy->save();
 
@@ -119,6 +123,7 @@ class VacancyController extends Controller
         $vacancy->qualifications()->attach($qualifications);
 
         return redirect()->route('vacancies.index');
+
     }
 
     /**
