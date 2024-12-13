@@ -16,7 +16,7 @@ class FilterController extends Controller
 
         // Begin de query op het Vacancy-model
         $vacancy = Vacancy::query();
-
+        $vacancy->where('is_created', 1);
         // Als er een zoekopdracht is, pas het filter toe op 'name', 'paycheck' en 'location'
         if (isset($search) || isset($qualificationSearch)) {
             $vacancy->where(function ($query) use ($search, $qualificationSearch) {

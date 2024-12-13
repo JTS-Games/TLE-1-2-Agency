@@ -117,13 +117,27 @@ class VacancyController extends Controller
         $vacancy->contract_term = $request->input('contract_term');
         $vacancy->company_id = $company->id;
 
+        $vacancy->is_created = 0;
         $vacancy->save();
 
         $qualifications = $request->input('qualifications');
         $vacancy->qualifications()->attach($qualifications);
 
-        return redirect()->route('vacancies.index');
+        return redirect()->route('preview-vacancy', ['vacancyId' => $vacancy->id]);
 
+    }
+    public function preview($vacancyId)
+    {
+        $vacancy = Vacancy::find($vacancyId);
+        return view('preview-vacancy', compact('vacancy'));
+    }
+    public function confirmCreation($vacancyId)
+    {
+        $vacancy = Vacancy::find($vacancyId);
+        $vacancy->is_created = 1;
+        $vacancy->save();
+
+        return redirect()->route('vacancies.index');
     }
 
     /**
@@ -131,7 +145,9 @@ class VacancyController extends Controller
      */
     public function show(Vacancy $vacancy, Company $company)
     {
-
+        if ($vacancy->is_created != 1) {
+            abort(404);
+        }
         $alreadyRegistered = Registration::where('user_id', auth()->id())->where('vacancy_id', $vacancy->id)->exists();
 
         $company = $vacancy->company;
@@ -141,71 +157,75 @@ class VacancyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Vacancy $vacancy)
+    public function edit(Vacancy $vacancy, Qualification $qualification )
     {
+        if ($vacancy->company_id !== Auth::guard('company')->user()->id) {
+            return redirect()->route('vacancies.index')->withErrors(['message' => 'Je hebt geen toestemming om deze vacature te bewerken.']);
+        }
 
-        // Dit moet nog aangepast worden naar auth->company ...
-//        if (auth()->check() && ($vacancy->company_id === $vacancy->company->id || auth()->user()->isAdmin())) {
-//            $companies = Company::all();
-//            return view('edit-vacancy', compact('vacancy'));
-//        } else {
-//            return redirect()->route('/');
-//            // Load the details from the form
-//            // request the old information and put it in the form
-////            return view('edit-vacancy', compact('vacancy', 'companies'));
-//        }
 
-    }
+        $qualifications = Qualification::all();
+            return view('edit-vacancy', compact('vacancy', 'qualifications'));
+        }
+
+
+
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Vacancy $vacancy)
     {
+        if ($vacancy->company_id !== Auth::guard('company')->user()->id) {
+            return redirect()->route('vacancies.index')->withErrors(['message' => 'Je hebt geen toestemming om deze vacature te bewerken.']);
+        }
 
-        request()->validate(
-        // Rules for the requested key.
-            [
-                'job_title' => 'required|string|max:100',
-                'description' => 'required',
-                'paycheck' => 'required|numeric',
-                'contract_term' => 'required|string|max:255',
-            ],
-            [
-                'job_title.required' => 'Please enter a job title',
-                'job_title.max' => 'Title can\'t be longer than 100 characters',
-                'description.required' => 'Please enter a job description',
-                'paycheck.required' => 'Please enter a paycheck',
-                'paycheck.numeric' => 'Paycheck must be a number, you can\'t put any letters',
-                'contract_term.required' => 'Please enter a contract term',
-                'contract_term.max' => 'Contract term can\'t be longer than 255 characters',
+        // Validate the request
+        $request->validate([
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'job_title' => 'required|string|max:255',
+            'description' => 'required|string|max:500',
+            'location' => 'required|string|max:255',
+            'paycheck' => 'required|string|max:100',
+            'contract_term' => 'required|string|max:100',
+            'working_hours' => 'required|string|max:100',
+            'qualifications' => 'required|array|min:1',
+        ]);
 
-            ]
-
-        );
 
         $vacancy->job_title = $request->input('job_title');
         $vacancy->description = $request->input('description');
-        $vacancy->paycheck = $request->input('paycheck');
-        $vacancy->contract_term = $request->input('contract_term');
         $vacancy->location = $request->input('location');
+        $vacancy->paycheck = $request->input('paycheck');
         $vacancy->working_hours = $request->input('working_hours');
+        $vacancy->contract_term = $request->input('contract_term');
 
-        // De company id moet hier nog aangepast met authorisatie.
+        // Handle image upload (only if a new image is provided)
+        if ($request->hasFile('image')) {
+            // Delete the old image if it exists
+            if ($vacancy->image && file_exists(storage_path('app/public/' . $vacancy->image))) {
+                unlink(storage_path('app/public/' . $vacancy->image));
+            }
 
-
-        $file = $request->file('image');
-        if (isset($file)) {
-            $originalName = $file->getClientOriginalName();
-            $path = $file->storeAs('images', $originalName, 'public');
+            $file = $request->file('image');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('images', $fileName, 'public');
             $vacancy->image = $path;
+        }
+        if ($vacancy->is_created != 1) {
+            $vacancy->is_created = 1;
         }
 
 
-        $vacancy->update();
+        $vacancy->save();
+
+        // Update the qualifications
+        $qualifications = $request->input('qualifications');
+        $vacancy->qualifications()->sync($qualifications); // Use sync() to ensure the qualifications are correctly updated
 
 
-        return redirect()->route('vacancies.index');
+        return redirect()->route('vacancies.index')->with('success', 'Vacancy updated successfully!');
     }
 
     /**

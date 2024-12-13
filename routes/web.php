@@ -40,6 +40,8 @@ Route::resource('/screenings', AdminController::class);
 Route::resource('/vacancies', VacancyController::class);
 Route::get('/vacancies', [FilterController::class, 'index'])->name('vacancies.index');
 Route::get('/vacancies/{qualification?}', [FilterController::class, 'genreFilter'])->name('vacancies.index');
+Route::get('/vacancy/preview/{vacancyId}', [VacancyController::class, 'preview'])->name('preview-vacancy');
+Route::post('/vacancies/confirm/{vacancyId}', [VacancyController::class, 'confirmCreation'])->name('vacancies.confirm');
 
 Route::get('/vacancies/{vacancy}/aanmelden', [VacancyController::class, 'registrationForVacancy'])->name('vacancies.registration');
 Route::post('/aanmelden-vacature/{vacancy}', [VacancyController::class, 'storeVacancyRegistration'])->name('vacancies.registration.store');
