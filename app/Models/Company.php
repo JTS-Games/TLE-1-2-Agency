@@ -12,10 +12,14 @@ class Company extends Model implements Authenticatable
 {
     use AuthenticatableTrait;
     use HasFactory;
+
+    protected $guarded = 'company';
+
     public function appointments(): HasMany
     {
         return $this->hasMany(Appointment::class);
     }
+
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);

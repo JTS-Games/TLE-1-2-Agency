@@ -17,11 +17,43 @@ class VacancyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Vacancy $vacancy, Request $request)
     {
-        $allVacancies = Vacancy::all();
-        $allCompanies = Company::all();
-        return view('profile.all-vacancies', compact('allVacancies', 'allCompanies'));
+
+        // Haal de zoekparameters op
+        $search = $request->input('search');
+        $qualificationSearch = $request->input('qualifications');
+
+        // Begin de query op het Vacancy-model
+        $vacancy = Vacancy::query();
+
+        // Als er een zoekopdracht is, pas het filter toe op 'name', 'paycheck' en 'location'
+//        if (isset($search) || isset($qualificationSearch)) {
+//            $vacancy->where(function ($query) use ($search, $qualificationSearch) {
+
+        if (isset($search)) {
+            $vacancy->where(function ($subQuery) use ($search) {
+                $subQuery->whereAny(['job_title', 'paycheck', 'location'], 'LIKE', "%$search%");
+            });
+        }
+
+
+        if (isset($qualificationSearch)) {
+            $vacancy->whereHas('qualifications', function ($qualificationQuery) use ($qualificationSearch) {
+                $qualificationQuery->where('qualification_id', $qualificationSearch);
+            });
+        }
+//            });
+
+
+        // Haal de gefilterde vacatures op
+
+        // Haal alle kwalificaties op voor de dropdown
+        $allQualifications = Qualification::all();
+
+        $allVacancies = $vacancy->get();
+//        $allCompanies = Company::all();
+        return view('profile.all-vacancies', compact('allVacancies', 'allQualifications'));
     }
 
 
@@ -88,10 +120,11 @@ class VacancyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Vacancy $vacancy, Company $company)
+    public function store(Request $request, Vacancy $vacancy)
     {
 
-        $company= Auth::guard('company')->user();
+
+        $company = Auth::guard('company')->user();
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif',
             'job_title' => 'required|string|max:255',
@@ -101,6 +134,7 @@ class VacancyController extends Controller
             'contract_term' => 'required|string|max:100',
             'working_hours' => 'required|string|max:100',
             'qualifications' => 'required', 'min:1',
+            'company_id' => 'required|string|max:100',
         ]);
 
 
@@ -151,7 +185,7 @@ class VacancyController extends Controller
         }
         $alreadyRegistered = Registration::where('user_id', auth()->id())->where('vacancy_id', $vacancy->id)->exists();
 
-        $company = $vacancy->company;
+        $company = Company::find($vacancy->company_id);
         return view('single-vacancy', compact('vacancy', 'company', 'alreadyRegistered'));
     }
 
@@ -164,6 +198,15 @@ class VacancyController extends Controller
             return redirect()->route('vacancies.index')->withErrors(['message' => 'Je hebt geen toestemming om deze vacature te bewerken.']);
         }
 
+        // Dit weergeeft een object van het bedrijf dat is ingelogd ?
+        $company = Auth::guard('company')->user();
+        // Dit moet nog aangepast worden naar auth->company ...
+        // Gebruiker moet nog ingelogd worden.
+        if (($company->id === $vacancy->company_id)) {
+            return view('edit-vacancy', compact('vacancy'));
+        } else {
+            return redirect()->route('index');
+        }
 
         $qualifications = Qualification::all();
             return view('edit-vacancy', compact('vacancy', 'qualifications'));
@@ -182,18 +225,26 @@ class VacancyController extends Controller
             return redirect()->route('vacancies.index')->withErrors(['message' => 'Je hebt geen toestemming om deze vacature te bewerken.']);
         }
 
-        // Validate the request
-        $request->validate([
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-            'job_title' => 'required|string|max:255',
-            'description' => 'required|string|max:500',
-            'location' => 'required|string|max:255',
-            'paycheck' => 'required|string|max:100',
-            'contract_term' => 'required|string|max:100',
-            'working_hours' => 'required|string|max:100',
-            'qualifications' => 'required|array|min:1',
-        ]);
+        request()->validate(
+        // Rules for the requested key.
+            [
+                'job_title' => 'required|string|max:100',
+                'description' => 'required',
+                'paycheck' => 'required|numeric',
+                'contract_term' => 'required|string|max:255',
+            ],
+            [
+                'job_title.required' => 'Please enter a job title',
+                'job_title.max' => 'Title can\'t be longer than 100 characters',
+                'description.required' => 'Please enter a job description',
+                'paycheck.required' => 'Please enter a paycheck',
+                'paycheck.numeric' => 'Paycheck must be a number, you can\'t put any letters',
+                'contract_term.required' => 'Please enter a contract term',
+                'contract_term.max' => 'Contract term can\'t be longer than 255 characters',
 
+            ]
+
+        );
 
         $vacancy->job_title = $request->input('job_title');
         $vacancy->description = $request->input('description');
@@ -201,6 +252,7 @@ class VacancyController extends Controller
         $vacancy->paycheck = $request->input('paycheck');
         $vacancy->working_hours = $request->input('working_hours');
         $vacancy->contract_term = $request->input('contract_term');
+        $vacancy->working_hours = $request->input('working_hours');
 
         // Handle image upload (only if a new image is provided)
         if ($request->hasFile('image')) {
@@ -219,7 +271,7 @@ class VacancyController extends Controller
         }
 
 
-        $vacancy->save();
+        $vacancy->update();
 
         // Update the qualifications
         $qualifications = $request->input('qualifications');
@@ -234,6 +286,19 @@ class VacancyController extends Controller
      */
     public function destroy(Vacancy $vacancy)
     {
-        //
+        $loggedInCompany = Auth::guard('company')->user();
+        $loggedInAdmin = Auth::guard('web')->user();
+
+        if (($loggedInCompany && $loggedInCompany->id == $vacancy->company_id)) {
+            $vacancy->delete();
+            return redirect()->route('company.dashboard')->with('success', 'Vacature verwijdert.');
+        }
+
+        if ($loggedInAdmin && $loggedInAdmin->isAdmin()) {
+            $vacancy->delete();
+            return redirect()->route('admin.vacancies')->with('success', 'Vacature verwijderd door een beheerder.');
+        }
+
+        abort(401);
     }
 }
