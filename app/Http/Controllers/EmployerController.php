@@ -17,7 +17,8 @@ class EmployerController extends Controller
         return view('employer.index', compact('companies'));
     }
 
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         return view('employer.registration');
     }
 
@@ -91,10 +92,9 @@ class EmployerController extends Controller
         return view('company-dashboard', compact('company', 'vacancies'));
     }
 
-    public function edit(Request $request)
+
+    public function show(Request $request, Company $company)
     {
-        if (!Auth::guard('company') || !Auth::guard('company')->user()) {
-    public function show (Request $request, Company $company) {
         if (!$company->verified) {
             abort(404);
         }
@@ -110,16 +110,18 @@ class EmployerController extends Controller
         return view('employer.show', compact('company', 'isAdmin', 'isOwner'));
     }
 
-    public function edit (Request $request) {
-        if(!Auth::guard('company') || !Auth::guard('company')->user()) {
+    public function edit(Request $request)
+    {
+        if (!Auth::guard('company') || !Auth::guard('company')->user()) {
             return redirect()->route('index');
         }
         $company = Auth::guard('company')->user();
         return view('employer.edit', compact('company'));
     }
 
-    public function update (Request $request) {
-        if(!Auth::guard('company') || !Auth::guard('company')->user()) {
+    public function update(Request $request)
+    {
+        if (!Auth::guard('company') || !Auth::guard('company')->user()) {
             return redirect()->route('index');
         }
 
@@ -141,44 +143,12 @@ class EmployerController extends Controller
         return redirect()->route('companies.index');
     }
 
-    public function destroy(Request $request, Company $company) {
+    public function destroy(Request $request, Company $company)
+    {
         if ((!Auth::guard('company')->user() || !Auth::guard('company')->user()->id === $company->id) && !$request->user()->admin == 1) {
             return redirect()->route('companies.index');
         }
         $company->delete();
         return redirect()->route('companies.index');
     }
-
-//    public function edit(Request $request)
-//    {
-//        if (!Auth::guard('company') || !Auth::guard('company')->user()) {
-//            return redirect()->route('index');
-//        }
-//        $company = Auth::guard('company')->user();
-//        return view('employer.edit', compact('company'));
-//    }
-//
-//    public function update(Request $request)
-//    {
-//        if (!Auth::guard('company') || !Auth::guard('company')->user()) {
-//            return redirect()->route('index');
-//        }
-//
-//        $request->validate([
-//            'name' => ['required', 'string', 'max:255'],
-//            'location' => ['required', 'string', 'max:255'],
-//            'description' => ['required', 'string', 'max:1000']
-//        ]);
-//
-//        $newName = $request->input('name');
-//        $newLocation = $request->input('location');
-//        $newDescription = $request->input('description');
-//
-//        Auth::guard('company')->user()->name = $newName;
-//        Auth::guard('company')->user()->location_hq = $newLocation;
-//        Auth::guard('company')->user()->description = $newDescription;
-//        Auth::guard('company')->user()->save();
-//
-//        return redirect()->route('companies.index');
-//    }
 }
