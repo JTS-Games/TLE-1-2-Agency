@@ -134,7 +134,7 @@ class VacancyController extends Controller
             'contract_term' => 'required|string|max:100',
             'working_hours' => 'required|string|max:100',
             'qualifications' => 'required', 'min:1',
-            'company_id' => 'required|string|max:100',
+//            'company_id' => 'required|string|max:100',
         ]);
 
 
@@ -156,6 +156,7 @@ class VacancyController extends Controller
 
         $qualifications = $request->input('qualifications');
         $vacancy->qualifications()->attach($qualifications);
+
 
         return redirect()->route('preview-vacancy', ['vacancyId' => $vacancy->id]);
 
@@ -252,7 +253,6 @@ class VacancyController extends Controller
         $vacancy->paycheck = $request->input('paycheck');
         $vacancy->working_hours = $request->input('working_hours');
         $vacancy->contract_term = $request->input('contract_term');
-        $vacancy->working_hours = $request->input('working_hours');
 
         // Handle image upload (only if a new image is provided)
         if ($request->hasFile('image')) {
