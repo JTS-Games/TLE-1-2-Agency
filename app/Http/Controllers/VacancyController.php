@@ -20,7 +20,7 @@ class VacancyController extends Controller
     {
         $allVacancies = Vacancy::all();
         $allCompanies = Company::all();
-        return view('all-vacancies', compact('allVacancies', 'allCompanies'));
+        return view('profile.all-vacancies', compact('allVacancies', 'allCompanies'));
     }
 
 
@@ -39,16 +39,6 @@ class VacancyController extends Controller
     {
         $user = auth()->user();
         if (isset($user)) {
-            // Check voor het eerste resultaat waar user_id and vacancy_id overeenkomen met de user en vacature
-            $existingRegistration = Registration::where('vacancy_id', $vacancy->id)
-                ->where('user_id', $user->id)
-                ->first();
-
-            if ($existingRegistration) {
-                // Zet de error message klaar voor pop-up in registratiepagina
-                return back()->with('error', 'U heeft al geregistreerd voor deze vacature.');
-            }
-
             // Creeer the new registration
             $registration->create([
                 'vacancy_id' => $vacancy->id,
@@ -65,21 +55,20 @@ class VacancyController extends Controller
         }
     }
 
-
-
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request, Vacancy $vacancy)
+    public function create(Request $request, Vacancy $vacancy, Qualification $qualification)
     {
-        if (!$request->user()) {
-            abort(401);
-        }
+//        if (!$request->user()) {
+//            abort(401);
+//        }
         $companies = Company::all();
 
         $qualifications = Qualification::all();
         return view('create-vacancy', compact('vacancy', 'qualifications', 'companies'));
     }
+
 
     public function indexAdmin(Request $request)
     {
@@ -98,9 +87,9 @@ class VacancyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Vacancy $vacancy)
+    public function store(Request $request, Vacancy $vacancy, Company $company)
     {
-        $validated = $request->validate([
+        $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif',
             'job_title' => 'required|string|max:255',
             'description' => 'required|string|max:500',
@@ -111,7 +100,6 @@ class VacancyController extends Controller
             'qualifications' => 'required', 'min:1',
             'company_id' => 'required|string|max:100',
         ]);
-
 
         $vacancy->job_title = $request->input('job_title');
         $vacancy->description = $request->input('description');
@@ -132,13 +120,17 @@ class VacancyController extends Controller
 
         return redirect()->route('vacancies.index');
     }
+
     /**
      * Display the specified resource.
      */
     public function show(Vacancy $vacancy, Company $company)
     {
+
+        $alreadyRegistered = Registration::where('user_id', auth()->id())->where('vacancy_id', $vacancy->id)->exists();
+
         $company = $vacancy->company;
-        return view('single-vacancy', compact('vacancy', 'company'));
+        return view('single-vacancy', compact('vacancy', 'company', 'alreadyRegistered'));
     }
 
     /**

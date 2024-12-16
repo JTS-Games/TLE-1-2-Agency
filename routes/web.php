@@ -4,6 +4,7 @@ use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\FilterController;
 use App\Http\Controllers\InspirationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
@@ -37,6 +38,8 @@ Route::resource('/screenings', AdminController::class);
 
 // This one could be used for the employee and employers, the vacancies controller.
 Route::resource('/vacancies', VacancyController::class);
+Route::get('/vacancies', [FilterController::class, 'index'])->name('vacancies.index');
+Route::get('/vacancies/{qualification?}', [FilterController::class, 'genreFilter'])->name('vacancies.index');
 
 Route::get('/vacancies/{vacancy}/aanmelden', [VacancyController::class, 'registrationForVacancy'])->name('vacancies.registration');
 Route::post('/aanmelden-vacature/{vacancy}', [VacancyController::class, 'storeVacancyRegistration'])->name('vacancies.registration.store');
@@ -44,6 +47,7 @@ Route::post('/aanmelden-vacature/{vacancy}', [VacancyController::class, 'storeVa
 Route::resource('companies', EmployerController::class);
 Route::get('/company/login', [EmployerController::class, 'showLoginForm'])->name('company.login.form');
 Route::post('/company/login', [EmployerController::class, 'login'])->name('company.login');
+//filter routes.
 
 Route::get('/company/edit', [EmployerController::class, 'edit'])->name('company.edit');
 Route::patch('/company/update', [EmployerController::class, 'update'])->name('company.update');
