@@ -11,16 +11,18 @@ use Illuminate\Support\Facades\Hash;
 
 class EmployerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $companies = Company::with(['vacancies'])->where('verified', '1')->get();
+        return view('employer.index', compact('companies'));
+    }
+
+    public function create(Request $request) {
         return view('employer.registration');
     }
 
-
     public function store(Request $request)
     {
-
-
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
@@ -92,15 +94,32 @@ class EmployerController extends Controller
     public function edit(Request $request)
     {
         if (!Auth::guard('company') || !Auth::guard('company')->user()) {
+    public function show (Request $request, Company $company) {
+        if (!$company->verified) {
+            abort(404);
+        }
+        $isAdmin = (bool)$request->user()->isAdmin();
+        $isCompany = Auth::guard('company')->user();
+        $isOwner = false;
+        if ($isCompany) {
+            if ($isCompany->id === $company->id) {
+                $isOwner = true;
+            }
+        }
+        $company = Company::with(['vacancies'])->where('verified', 1)->where('id', $company->id)->first();
+        return view('employer.show', compact('company', 'isAdmin', 'isOwner'));
+    }
+
+    public function edit (Request $request) {
+        if(!Auth::guard('company') || !Auth::guard('company')->user()) {
             return redirect()->route('index');
         }
         $company = Auth::guard('company')->user();
         return view('employer.edit', compact('company'));
     }
 
-    public function update(Request $request)
-    {
-        if (!Auth::guard('company') || !Auth::guard('company')->user()) {
+    public function update (Request $request) {
+        if(!Auth::guard('company') || !Auth::guard('company')->user()) {
             return redirect()->route('index');
         }
 
@@ -119,6 +138,14 @@ class EmployerController extends Controller
         Auth::guard('company')->user()->description = $newDescription;
         Auth::guard('company')->user()->save();
 
+        return redirect()->route('companies.index');
+    }
+
+    public function destroy(Request $request, Company $company) {
+        if ((!Auth::guard('company')->user() || !Auth::guard('company')->user()->id === $company->id) && !$request->user()->admin == 1) {
+            return redirect()->route('companies.index');
+        }
+        $company->delete();
         return redirect()->route('companies.index');
     }
 
