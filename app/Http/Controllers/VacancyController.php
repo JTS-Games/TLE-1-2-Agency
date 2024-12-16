@@ -244,6 +244,20 @@ class VacancyController extends Controller
      */
     public function destroy(Vacancy $vacancy)
     {
-        //
+        $loggedInCompany = Auth::guard('company')->user();
+        $loggedInAdmin = Auth::guard('web')->user();
+
+        if (($loggedInCompany && $loggedInCompany->id == $vacancy->company_id)) {
+            $vacancy->delete();
+            return redirect()->route('company.dashboard')->with('success', 'Vacature verwijdert.');
+        }
+
+        if ($loggedInAdmin && $loggedInAdmin->isAdmin()) {
+            $vacancy->delete();
+            return redirect()->route('admin.vacancies')->with('success', 'Vacature verwijderd door een beheerder.');
+        }
+
+        abort(401);
     }
+
 }

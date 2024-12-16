@@ -40,6 +40,14 @@
                                    class="bg-primary-violet text-white rounded-full px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200 inline-block">
                                     Bewerken
                                 </a>
+                                <form action="{{ route('vacancies.destroy', $vacancy) }}" method="POST" style="display: inline;" onsubmit="return confirm('Weet jij zeker of jij deze vacature wil verwijderen?');">
+                                    @csrf
+                                    @method('DELETE')
+                                        <button type="submit"
+                                                class="bg-primary-violet text-white rounded-full px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200 inline-block">
+                                            Verwijder vacature
+                                        </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
