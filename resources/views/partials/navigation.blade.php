@@ -24,14 +24,29 @@
         </a>
 
         @auth
-            @if(auth()->user() !== null )
-                <a href="{{route('dashboard')}}"
-                   class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow
+            @if(auth('web')->check())
+                <div class="relative group block">
+                    <a href="{{route('dashboard')}}"
+                       class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow
             hover:text-primary-violet hover:duration-200">
-                    Mijn Profiel
-                </a>
-            @else
-                <a href="{{route('dashboard')}}"
+                        Mijn Profiel
+                    </a>
+                    <div
+                        class="absolute hidden group-hover:block right-1 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <button type="submit"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full">
+                                Log uit
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+                {{--            @elseif(auth('company')->check())--}}
+            @elseif(Auth::guard('company')->user())
+                <a href="{{route('company.dashboard')}}"
                    class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow
             hover:text-primary-violet hover:duration-200">
                     Werkgevers Profiel

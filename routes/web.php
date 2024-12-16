@@ -4,12 +4,11 @@ use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmployerController;
-use App\Http\Controllers\FilterController;
+
 use App\Http\Controllers\InspirationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
 use App\Models\Registration;
-use App\Models\Vacancy;
 use Illuminate\Support\Facades\Route;
 use App\Mail\TestEmail;
 use Illuminate\Support\Facades\Mail;
@@ -38,17 +37,27 @@ Route::resource('/screenings', AdminController::class);
 
 // This one could be used for the employee and employers, the vacancies controller.
 Route::resource('/vacancies', VacancyController::class);
-Route::get('/vacancies', [FilterController::class, 'index'])->name('vacancies.index');
-Route::get('/vacancies/{qualification?}', [FilterController::class, 'genreFilter'])->name('vacancies.index');
+//Route::get('/vacancies', [VacancyController::class, 'index'])->name('vacancies.index');
 
 Route::get('/vacancies/{vacancy}/aanmelden', [VacancyController::class, 'registrationForVacancy'])->name('vacancies.registration');
 Route::post('/aanmelden-vacature/{vacancy}', [VacancyController::class, 'storeVacancyRegistration'])->name('vacancies.registration.store');
+
+
 //employer registration route
-Route::resource('companies', EmployerController::class);
+Route::get('/companies', [EmployerController::class, 'index'])->name('company.registration');
 Route::get('/company/login', [EmployerController::class, 'showLoginForm'])->name('company.login.form');
 Route::post('/company/login', [EmployerController::class, 'login'])->name('company.login');
-Route::get('/company/edit', [EmployerController::class, 'edit'])->name('company.edit');
-Route::patch('/company/update', [EmployerController::class, 'update'])->name('company.update');
+Route::resource('companies', EmployerController::class);
+
+Route::prefix('company')->middleware(['auth:company'])->group(function () {
+    Route::get('/dashboard', [EmployerController::class, 'employerDashboard'])->name('company.dashboard');
+    Route::get('/edit', [EmployerController::class, 'edit'])->name('company.edit');
+    Route::patch('/update', [EmployerController::class, 'update'])->name('company.update');
+    Route::get('/vacancies/create', [VacancyController::class, 'create'])->name('vacancies.create');
+    Route::post('/vacancies', [VacancyController::class, 'store'])->name('vacancies.store');
+});
+
+
 // User Controllers
 Route::get('/about', [AboutUsController::class, 'about'])->name('about');
 Route::get('/inspiration', [InspirationController::class, 'inspiration'])->name('inspiration');

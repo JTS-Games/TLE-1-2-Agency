@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 
+use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -18,6 +19,8 @@ class EmployerController extends Controller
 
     public function store(Request $request)
     {
+
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
@@ -50,7 +53,7 @@ class EmployerController extends Controller
 
         $company->save();
 
-        return route('company.login.form');
+        return redirect()->route('company.login.form');
     }
 
     public function showLoginForm()
@@ -68,7 +71,8 @@ class EmployerController extends Controller
 
         $credentials = ['email' => $request->email, 'password' => $request->password, 'verified' => true];
         if (Auth::guard('company')->attempt($credentials)) {
-            return redirect('/vacancies'); // deze moet linken naar vacancies
+            // Maak een dashboard view aan
+            return redirect()->route('company.dashboard'); // deze moet linken naar vacancies
         } else {
             $company = Company::where('email', $request->email)->first();
             if ($company && !$company->verified) {
@@ -78,8 +82,16 @@ class EmployerController extends Controller
         }
     }
 
-    public function edit (Request $request) {
-        if(!Auth::guard('company') || !Auth::guard('company')->user()) {
+    public function employerDashboard()
+    {
+        $company = auth('company')->user();
+        $vacancies = Vacancy::where('company_id', $company->id)->get();
+        return view('company-dashboard', compact('company', 'vacancies'));
+    }
+
+    public function edit(Request $request)
+    {
+        if (!Auth::guard('company') || !Auth::guard('company')->user()) {
             return redirect()->route('index');
         }
         $company = Auth::guard('company')->user();

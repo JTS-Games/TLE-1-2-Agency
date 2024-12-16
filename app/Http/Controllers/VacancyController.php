@@ -7,6 +7,7 @@ use App\Models\Qualification;
 use App\Models\Registration;
 use App\Models\Vacancy;
 use App\Mail\VacancyRegistrationConfirmationMail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
@@ -16,11 +17,43 @@ class VacancyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Vacancy $vacancy, Request $request)
     {
-        $allVacancies = Vacancy::all();
-        $allCompanies = Company::all();
-        return view('profile.all-vacancies', compact('allVacancies', 'allCompanies'));
+
+        // Haal de zoekparameters op
+        $search = $request->input('search');
+        $qualificationSearch = $request->input('qualifications');
+
+        // Begin de query op het Vacancy-model
+        $vacancy = Vacancy::query();
+
+        // Als er een zoekopdracht is, pas het filter toe op 'name', 'paycheck' en 'location'
+//        if (isset($search) || isset($qualificationSearch)) {
+//            $vacancy->where(function ($query) use ($search, $qualificationSearch) {
+
+        if (isset($search)) {
+            $vacancy->where(function ($subQuery) use ($search) {
+                $subQuery->whereAny(['job_title', 'paycheck', 'location'], 'LIKE', "%$search%");
+            });
+        }
+
+
+        if (isset($qualificationSearch)) {
+            $vacancy->whereHas('qualifications', function ($qualificationQuery) use ($qualificationSearch) {
+                $qualificationQuery->where('qualification_id', $qualificationSearch);
+            });
+        }
+//            });
+
+
+        // Haal de gefilterde vacatures op
+
+        // Haal alle kwalificaties op voor de dropdown
+        $allQualifications = Qualification::all();
+
+        $allVacancies = $vacancy->get();
+//        $allCompanies = Company::all();
+        return view('profile.all-vacancies', compact('allVacancies', 'allQualifications'));
     }
 
 
@@ -87,8 +120,11 @@ class VacancyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Vacancy $vacancy, Company $company)
+    public function store(Request $request, Vacancy $vacancy)
     {
+
+
+        $company = Auth::guard('company')->user();
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif',
             'job_title' => 'required|string|max:255',
@@ -98,7 +134,6 @@ class VacancyController extends Controller
             'contract_term' => 'required|string|max:100',
             'working_hours' => 'required|string|max:100',
             'qualifications' => 'required', 'min:1',
-            'company_id' => 'required|string|max:100',
         ]);
 
         $vacancy->job_title = $request->input('job_title');
@@ -111,25 +146,25 @@ class VacancyController extends Controller
         $vacancy->image = $path;
         $vacancy->working_hours = $request->input('working_hours');
         $vacancy->contract_term = $request->input('contract_term');
-        $vacancy->company_id = $request->input('company_id');
+        $vacancy->company_id = $company->id;
 
         $vacancy->save();
 
         $qualifications = $request->input('qualifications');
         $vacancy->qualifications()->attach($qualifications);
 
-        return redirect()->route('vacancies.index');
+        return redirect()->route('company.dashboard');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Vacancy $vacancy, Company $company)
+    public function show(Vacancy $vacancy)
     {
 
         $alreadyRegistered = Registration::where('user_id', auth()->id())->where('vacancy_id', $vacancy->id)->exists();
 
-        $company = $vacancy->company;
+        $company = Company::find($vacancy->company_id);
         return view('single-vacancy', compact('vacancy', 'company', 'alreadyRegistered'));
     }
 
@@ -138,17 +173,18 @@ class VacancyController extends Controller
      */
     public function edit(Vacancy $vacancy)
     {
+        // Load the details from the form
+        // request the old information and put it in the form
 
+        // Dit weergeeft een object van het bedrijf dat is ingelogd ?
+        $company = Auth::guard('company')->user();
         // Dit moet nog aangepast worden naar auth->company ...
-//        if (auth()->check() && ($vacancy->company_id === $vacancy->company->id || auth()->user()->isAdmin())) {
-//            $companies = Company::all();
-//            return view('edit-vacancy', compact('vacancy'));
-//        } else {
-//            return redirect()->route('/');
-//            // Load the details from the form
-//            // request the old information and put it in the form
-////            return view('edit-vacancy', compact('vacancy', 'companies'));
-//        }
+        // Gebruiker moet nog ingelogd worden.
+        if (($company->id === $vacancy->company_id)) {
+            return view('edit-vacancy', compact('vacancy'));
+        } else {
+            return redirect()->route('index');
+        }
 
     }
 

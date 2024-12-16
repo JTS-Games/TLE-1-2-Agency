@@ -40,7 +40,7 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        //Company gard toegevoegd zodat er een auth gemaakt kan worden voor bedrijven.
+        //Company guard toegevoegd zodat er een auth gemaakt kan worden voor bedrijven.
         'company' => [
             'driver' => 'session',
             'provider' => 'companies',

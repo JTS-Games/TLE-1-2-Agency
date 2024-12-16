@@ -14,7 +14,7 @@
 
 Extra Bevestiging toevoegen
 
-## Feedback onze team
+## Feedback onze team 5/12
 
 * Contact pagina specificeren
     * Duidelijk maken waarvoor dit contact formulier dient.
@@ -30,4 +30,17 @@ Extra Bevestiging toevoegen
 
 * Veel sollicitanten aan kunnen trekken
 * Beter voorbereiding. WAT WILLEN WE PRECIES LATEN ZIEN
-* Waarom we iets hebben ge
+* Waarom we iets hebben
+
+## Feedback onze team 12/12
+
+* Werknemers kunnen uitnodigen prioriteit.
+*
+
+## TOP
+
+## TIP
+
+* Button maken met je bent al aangemeld,
+* Vanaf het aanmelden en inloggen naar de vacature waar je voorheen was.
+* Werkgevers zelf hun vereiste kunnen laten toevoegen.
