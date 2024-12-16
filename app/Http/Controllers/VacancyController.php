@@ -7,6 +7,7 @@ use App\Models\Qualification;
 use App\Models\Registration;
 use App\Models\Vacancy;
 use App\Mail\VacancyRegistrationConfirmationMail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
@@ -224,12 +225,17 @@ class VacancyController extends Controller
      */
     public function destroy(Vacancy $vacancy)
     {
-        $loggedInCompanyId = session('login_company');
-        $isAdmin = session('is_admin', false);
+        $loggedInCompany = Auth::guard('company')->user();
+        $loggedInAdmin = Auth::guard('web')->user();
 
-        if ($vacancy->company_id === $loggedInCompanyId || $isAdmin) {
+        if (($loggedInCompany && $loggedInCompany->id == $vacancy->company_id)) {
             $vacancy->delete();
             return redirect()->route('vacancies.index')->with('success', 'Vacature verwijdert.');
+        }
+
+        if ($loggedInAdmin && $loggedInAdmin->isAdmin()) {
+            $vacancy->delete();
+            return redirect()->route('vacancies.index')->with('success', 'Vacature verwijderd door een beheerder.');
         }
 
         abort(401);
