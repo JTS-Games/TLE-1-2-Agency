@@ -126,10 +126,11 @@ class VacancyController extends Controller
         return redirect()->route('preview-vacancy', ['vacancyId' => $vacancy->id]);
 
     }
-    public function preview($vacancyId)
+    public function preview($vacancyId, Company $company)
     {
         $vacancy = Vacancy::find($vacancyId);
-        return view('preview-vacancy', compact('vacancy'));
+        $company = $vacancy->company;
+        return view('preview-vacancy', compact('vacancy', 'company'));
     }
     public function confirmCreation($vacancyId)
     {
