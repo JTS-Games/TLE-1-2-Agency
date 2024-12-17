@@ -23,11 +23,15 @@ class InviteNotification extends Mailable
 
     public function build()
     {
+        $acceptInviteUrl = route('appointment.show', $this->appointment->id);
+
         return $this->view('emails.invite-notification')
             ->with([
                 'name' => $this->name,
                 'vacancy' => $this->vacancy,
                 'appointment' => $this->appointment,
+                'acceptInviteUrl' => $acceptInviteUrl,
             ]);
     }
+
 }

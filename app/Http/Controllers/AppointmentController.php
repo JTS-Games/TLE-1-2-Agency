@@ -59,4 +59,24 @@ class AppointmentController extends Controller
         return redirect()->route('company.dashboard', $vacancy)
             ->with('success', 'Kandidaat succesvol uitgenodigd.');
     }
+
+    public function show(Appointment $appointment)
+    {
+        $vacancy = Vacancy::find($appointment->vacancy_id);
+        $user = User::find($appointment->user_id);
+
+        return view('accept-invite', [
+            'appointment' => $appointment,
+            'vacancy' => $vacancy,
+            'user' => $user,
+        ]);
+    }
+
+    public function accept(Appointment $appointment)
+    {
+        $appointment->verified = 1; // Mark the appointment as accepted
+        $appointment->save();
+
+        return redirect()->route('appointment.show', $appointment->id)->with('success', 'Uitnodiging succesvol geaccepteerd!');
+    }
 }

@@ -8,7 +8,7 @@
         <li><b>Salaris:</b> €{{ $vacancy->paycheck }}</li>
         <li><b>Werktijden:</b> {{ $vacancy->working_hours }} uur per week</li>
     </ul>
-    <p><a href="#">Klik hier om de uitnodiging the accepteren</a></p>
+    <p><a href="{{ $acceptInviteUrl }}">Klik hier om de uitnodiging the accepteren</a></p>
     <p>Met vriendelijke groet,</p>
     <p>Het Open Hiring Team</p>
 </x-layout>

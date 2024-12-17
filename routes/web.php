@@ -5,7 +5,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmployerController;
-
 use App\Http\Controllers\InspirationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
@@ -40,9 +39,8 @@ Route::resource('/screenings', AdminController::class);
 Route::resource('/vacancies', VacancyController::class);
 //Route::get('/vacancies', [VacancyController::class, 'index'])->name('vacancies.index');
 
-Route::get('/vacancies/{vacancy}/aanmelden', [VacancyController::class, 'registrationForVacancy'])->name('vacancies.registration');
-Route::post('/aanmelden-vacature/{vacancy}', [VacancyController::class, 'storeVacancyRegistration'])->name('vacancies.registration.store');
-
+Route::get('/appointment/{appointment}/accept', [AppointmentController::class, 'accept'])
+    ->name('appointment.accept');
 
 //employer registration route
 Route::get('/companies', [EmployerController::class, 'index'])->name('company.registration');
@@ -59,6 +57,9 @@ Route::prefix('company')->middleware(['auth:company'])->group(function () {
 });
 
 Route::post('appointments/store/{vacancy}', [AppointmentController::class, 'store'])->name('appointments.store');
+
+Route::get('/appointment/{appointment}', [AppointmentController::class, 'show'])->name('appointment.show');
+Route::post('/appointment/{appointment}/accept', [AppointmentController::class, 'accept'])->name('appointment.accept');
 
 
 // User Controllers
