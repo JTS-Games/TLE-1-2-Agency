@@ -4,7 +4,6 @@ use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmployerController;
-
 use App\Http\Controllers\InspirationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
@@ -33,6 +32,10 @@ Route::get('/index', function () {
     return view('index');
 })->name('index');
 
+Route::get('/inspiratie', function () {
+    return view('inspiration');
+})->name('inspiration');
+
 Route::resource('/screenings', AdminController::class);
 
 // This one could be used for the employee and employers, the vacancies controller.
@@ -60,7 +63,6 @@ Route::prefix('company')->middleware(['auth:company'])->group(function () {
 
 // User Controllers
 Route::get('/about', [AboutUsController::class, 'about'])->name('about');
-Route::get('/inspiration', [InspirationController::class, 'inspiration'])->name('inspiration');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 Route::get('/test-email', function () {
