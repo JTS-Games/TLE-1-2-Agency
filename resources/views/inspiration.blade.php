@@ -2,15 +2,11 @@
 <div class="container mx-auto px-4 py-10 text-gray-800">
     <h1 class="text-center text-6xl font-bold mb-8">Onze succesverhalen, uw inspiratie</h1>
 
-    <!-- Layout Grid -->
     <div class="grid grid-cols-2 gap-8">
-
-        <!-- Werkgevers Section -->
         <div>
             <h2 class="text-2xl font-bold mb-4 text-green-700">Werkgevers</h2>
 
             <div class="space-y-6">
-                <!-- Werkgever Cards -->
                 <div class="border border-gray-200 p-4 rounded-md bg-white shadow-md">
                     <div class="flex items-center">
                         <div class="w-16 h-16 bg-gray-300 rounded-full mr-4"></div>
@@ -36,15 +32,13 @@
                 </div>
             </div>
 
-            <!-- Call to Action -->
             <div class="mt-6">
-                <a class="w-full bg-pink-600 text-white py-2 rounded-md hover:bg-green-700 transition">
+                <a href="{{route('employer.registration')}}" class="w-full bg-pink-600 text-white py-2 rounded-md hover:bg-green-700 transition">
                     Geef u nu op voor Open Hiring
                 </a>
             </div>
         </div>
 
-        <!-- Werknemers Section -->
         <div>
             <h2 class="text-2xl font-bold mb-4 text-pink-700">Werknemers</h2>
 
@@ -68,12 +62,11 @@
 
             <!-- Call to Action -->
             <div class="mt-6">
-                <a class="w-full bg-pink-600 text-white py-2 rounded-md hover:bg-pink-700 transition">
+                <a href="{{route('register')}}" class="w-full bg-pink-600 text-white py-2 rounded-md hover:bg-pink-700 transition">
                     Begin nu met werk zoeken
                 </a>
             </div>
         </div>
-
     </div>
 </div>
 
