@@ -271,6 +271,12 @@ class VacancyController extends Controller
 
         return redirect()->route('vacancies.index')->with('success', 'Vacancy updated successfully!');
     }
+    public function togglePublication(Vacancy $vacancy) {
+        $vacancy->is_created = !$vacancy->is_created;
+        $vacancy->save();
+        return redirect()->route('company.dashboard')->with('success', 'Vacature status gewijzigd');
+
+    }
 
     /**
      * Remove the specified resource from storage.

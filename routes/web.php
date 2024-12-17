@@ -43,6 +43,7 @@ Route::resource('/vacancies', VacancyController::class);
 Route::get('/vacancy/preview/{vacancyId}', [VacancyController::class, 'preview'])->name('preview-vacancy');
 Route::post('/vacancies/confirm/{vacancyId}', [VacancyController::class, 'confirmCreation'])->name('vacancies.confirm');
 //Route::get('/vacancies', [VacancyController::class, 'index'])->name('vacancies.index');
+Route::post('/vacancies/{vacancy}/toggle', [VacancyController::class, 'togglePublication'])->name('vacancies.toggle');
 
 Route::get('/vacancies/{vacancy}/aanmelden', [VacancyController::class, 'registrationForVacancy'])->name('vacancies.registration');
 Route::post('/aanmelden-vacature/{vacancy}', [VacancyController::class, 'storeVacancyRegistration'])->name('vacancies.registration.store');
