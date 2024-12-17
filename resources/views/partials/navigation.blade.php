@@ -1,17 +1,14 @@
 <nav>
-    <div class="flex flex-row justify-evenly items-center">
+    <div class="flex flex-col md:flex-row justify-evenly items-center gap-4">
+
+        <a href="{{route('index')}}">
+            <img src="{{asset('images/openhiring-logo.png')}}" width="100" height="100" alt="Open Hiring logo">
+        </a>
+
         <a href="{{route('vacancies.index')}}"
            class="bg-primary-violet text-white rounded-full px-6 py-2 text-base hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
             Alle vacatures
         </a>
-
-        <a href="#"
-           class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
-            Over Open Hiring
-        </a>
-
-        <a href="{{route('index')}}"><img src="{{asset('images/openhiring-logo.png')}}" width="100" height="100"
-                                          alt="Open Hiring logo"></a>
 
         <a href="{{route('inspiration')}}"
            class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
@@ -27,7 +24,7 @@
             <div class="relative group block">
                 <a href="{{route('dashboard')}}"
                    class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow
-            hover:text-primary-violet hover:duration-200">
+                   hover:text-primary-violet hover:duration-200">
                     Mijn Profiel
                 </a>
                 <div
@@ -43,7 +40,6 @@
 
                 </div>
             </div>
-            {{--            @elseif(auth('company')->check())--}}
         @elseif(Auth::guard('company')->user())
             <a href="{{route('company.dashboard')}}"
                class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow
@@ -53,7 +49,7 @@
         @else
             <div class="relative group block">
                 <a href="#"
-                   class="bg-primary-violet text-white rounded-full px-6 py-2 text-lg hover:bg-primary-yellow hover:text-primary-violet   duration-500 hover:duration-200">
+                   class="bg-primary-violet text-white rounded-full px-6 py-2 text-lg hover:bg-primary-yellow hover:text-primary-violet duration-500 hover:duration-200">
                     Inloggen
                 </a>
 
