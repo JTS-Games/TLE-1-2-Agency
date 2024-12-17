@@ -13,7 +13,7 @@
         <a href="{{route('index')}}"><img src="{{asset('images/openhiring-logo.png')}}" width="100" height="100"
                                           alt="Open Hiring logo"></a>
 
-        <a href="#"
+        <a href="{{route('inspiration')}}"
            class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
             Inspiratie
         </a>
