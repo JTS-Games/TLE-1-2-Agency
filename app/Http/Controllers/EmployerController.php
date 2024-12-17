@@ -88,7 +88,16 @@ class EmployerController extends Controller
     public function employerDashboard()
     {
         $company = auth('company')->user();
-        $vacancies = Vacancy::where('company_id', $company->id)->get();
+        $vacancies = Vacancy::where('company_id', $company->id)
+            ->withCount([
+                'registrations', // Total registrations
+                'appointments' => function ($query) {
+                    $query->whereNotNull('id'); // Ensure appointments are counted correctly
+                },
+            ])
+            ->get();
+
+
         return view('company-dashboard', compact('company', 'vacancies'));
     }
 
@@ -98,7 +107,7 @@ class EmployerController extends Controller
         if (!$company->verified) {
             abort(404);
         }
-        $isAdmin = (bool)$request->user()->isAdmin();
+        $isAdmin = $request->user() && $request->user()->admin === '1';
         $isCompany = Auth::guard('company')->user();
         $isOwner = false;
         if ($isCompany) {

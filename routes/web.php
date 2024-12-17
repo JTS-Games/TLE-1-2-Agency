@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\ProfileController;
@@ -58,6 +59,8 @@ Route::prefix('company')->middleware(['auth:company'])->group(function () {
     Route::get('/vacancies/create', [VacancyController::class, 'create'])->name('vacancies.create');
     Route::post('/vacancies', [VacancyController::class, 'store'])->name('vacancies.store');
 });
+
+Route::post('appointments/store/{vacancy}', [AppointmentController::class, 'store'])->name('appointments.store');
 
 
 // User Controllers

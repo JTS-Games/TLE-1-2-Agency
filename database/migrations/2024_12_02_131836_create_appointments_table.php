@@ -14,12 +14,13 @@ return new class extends Migration
 
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('registration_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('company_id')->constrained();
+            $table->foreignId('vacancy_id')->constrained();
+            $table->string('description');
             $table->date('date');
-            $table->text('description');
             $table->boolean('verified');
+            $table->timestamps();
         });
 
     }
