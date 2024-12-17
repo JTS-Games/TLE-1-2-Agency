@@ -1,4 +1,5 @@
 <x-layout title="startpagina">
+<x-layout title="index">
     <div class="container mx-auto p-6">
         <section class="flex flex-col lg:flex-row gap-2 justify-evenly items-start">
 

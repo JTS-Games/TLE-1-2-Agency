@@ -5,15 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Models\Registration;
 use App\Models\Vacancy;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InviteNotification;
 
-class AppointmentController extends Controller {
-    public function store(Request $request, Vacancy $vacancy) {
+class AppointmentController extends Controller
+{
+    public function store(Request $request, Vacancy $vacancy)
+    {
         if (!Auth::guard('company')->user() || Auth::guard('company')->user()->id !== $vacancy->company_id) {
             return redirect()->route('company.dashboard')->with('error', 'U kunt geen kandidaten uitnodigen voor een ander bedrijf.');
         }
-
 
         $nextRegistrationInLine = Registration::where('vacancy_id', $vacancy->id)
             ->orderBy('created_at', 'asc')
@@ -41,6 +46,15 @@ class AppointmentController extends Controller {
         $appointment->save();
 
         $nextRegistrationInLine->delete();
+
+        // Haal user informatie vanuit de database
+        $user = User::find($nextRegistrationInLine->user_id);
+
+        if ($user) {
+            // Stuur de emails
+            Mail::to($user->email)
+                ->send(new InviteNotification($user->name, $vacancy, $appointment));
+        }
 
         return redirect()->route('company.dashboard', $vacancy)
             ->with('success', 'Kandidaat succesvol uitgenodigd.');

@@ -1,86 +1,66 @@
 <x-layout title="{{ $vacancy->job_title }}">
-    <div class="max-w-2xl mx-auto bg-basic-cream p-6 rounded-md shadow-md">
-        <form action="{{ route('vacancies.update', $vacancy) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
+    <div class="bg-[rgb(251,252,247)] min-h-screen flex items-center justify-center py-12 px-4">
+        <div class="bg-[rgb(226,236,200)] p-8 rounded-lg shadow-md w-full max-w-4xl">
+            <h1 class="text-[rgb(170,1,96)] font-bold text-3xl mb-8 font-radikal-bold text-center">Vacature Bewerken</h1>
 
-            <div class="mb-4">
-                <label for="job_title" class="block text-sm font-medium text-moss_dark">Functie Titel:</label>
-                <input type="text" id="job_title" name="job_title" value="{{ $vacancy->job_title }}"
-                       class="mt-1 block w-full px-3 py-2 border border-others-stroke_thin rounded-md shadow-sm focus:ring-primary-violet focus:border-primary-violet_dark font-sans">
-            </div>
-            @error('job_title')
-            {{$message}}
-            @enderror
+            <form action="{{ route('vacancies.update', $vacancy) }}" method="post" enctype="multipart/form-data" class="space-y-6">
+                @csrf
+                @method('PUT')
 
-            <div class="mb-4">
-                <label for="description" class="block text-sm font-medium text-moss_dark">Functie omschrijving:</label>
-                <textarea id="description" name="description" rows="4"
-                          class="mt-1 block w-full px-3 py-2 border border-others-stroke_thin rounded-md shadow-sm focus:ring-primary-violet focus:border-primary-violet_dark font-sans">{{ $vacancy->description }}</textarea>
-            </div>
-            @error('description')
-            {{$message}}
-            @enderror
-            <div class="mb-4">
-                <label for="paycheck" class="block text-sm font-medium text-moss_dark">Salaris:</label>
-                <input type="number" id="paycheck" name="paycheck" value="{{$vacancy->paycheck }}"
-                       class="mt-1 block w-full px-3 py-2 border border-others-stroke_thin rounded-md shadow-sm focus:ring-primary-violet focus:border-primary-violet_dark font-sans">
-            </div>
-            @error('paycheck')
-            {{$message}}
-            @enderror
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="image" class="block font-radikal text-[rgb(49,61,41)]">Afbeelding:</label>
+                        <input type="file" id="image" name="image" class="mt-1 block w-full border border-black rounded-lg p-2">
+                    </div>
 
-            <div class="mb-4">
-                <label for="contract_term" class="block text-sm font-medium text-moss_dark">Contract termijn
-                    (maanden):</label>
-                <input type="number" id="contract_term" name="contract_term" value="{{ $vacancy->contract_term }}"
-                       class="mt-1 block w-full px-3 py-2 border border-others-stroke_thin rounded-md shadow-sm focus:ring-primary-violet focus:border-primary-violet_dark font-sans">
-            </div>
-            @error('contract_term')
-            {{$message}}
-            @enderror
-            <div class="mb-4">
-                <label for="location" class="block text-sm font-medium text-moss_dark">Locatie:</label>
-                <input type="text" id="location" name="location" value="{{ $vacancy->location }}"
-                       class="mt-1 block w-full px-3 py-2 border border-others-stroke_thin rounded-md shadow-sm focus:ring-primary-violet focus:border-primary-violet_dark font-sans">
-            </div>
-            @error('location')
-            {{$message}}
-            @enderror
-            <div class="mb-4">
-                <label for="working_hours" class="block text-sm font-medium text-moss_dark">Working Hours:</label>
-                <input type="number" id="working_hours" name="working_hours" value="{{ $vacancy->working_hours }}"
-                       class="mt-1 block w-full px-3 py-2 border border-others-stroke_thin rounded-md shadow-sm focus:ring-primary-violet focus:border-primary-violet_dark font-sans">
-            </div>
-            @error('working_hours')
-            {{$message}}
-            @enderror
-            <div class="mb-4">
-                <label for="image" class="block text-sm font-medium text-moss_dark">Afbeelding:</label>
-                <input type="file" id="image" name="image"
-                       class="mt-1 block w-full text-moss_dark px-3 py-2 border border-others-stroke_thin rounded-md shadow-sm focus:ring-primary-violet focus:border-primary-violet_dark font-sans">
-            </div>
+                    <div>
+                        <label for="job_title" class="block font-radikal text-[rgb(49,61,41)]">Functie:</label>
+                        <input type="text" id="job_title" name="job_title" value="{{ old('job_title', $vacancy->job_title) }}" placeholder="Vul functie in" class="mt-1 block w-full border border-black rounded-lg p-2">
+                    </div>
 
+                    <div>
+                        <label for="description" class="block font-radikal text-[rgb(49,61,41)]">Functie omschrijving:</label>
+                        <textarea id="description" name="description" rows="3" placeholder="Voeg hier extra informatie toe" class="mt-1 block w-full border border-black rounded-lg p-2">{{ old('description', $vacancy->description) }}</textarea>
+                    </div>
 
-            {{--   De company id is not really of use right now , maybe it can be deleted         --}}
-            {{--            <div class="mb-4">--}}
-            {{--                <label for="company_id" class="block text-sm font-medium text-moss_dark">bedrijf:</label>--}}
-            {{--                <select id="company_id" name="companies[]"--}}
-            {{--                        class="mt-1 block w-full px-3 py-2 border border-others-stroke_thin rounded-md shadow-sm focus:ring-primary-violet focus:border-primary-violet_dark font-sans">--}}
-            {{--                    <option value="">Select a company</option>--}}
-            {{--                    @foreach ($companies as $company)--}}
-            {{--                        <option--}}
-            {{--                            value="{{ $company->id }}">{{ $company->name }}</option>--}}
-            {{--                    @endforeach--}}
-            {{--                </select>--}}
-            {{--            </div>--}}
+                    <div>
+                        <label for="location" class="block font-radikal text-[rgb(49,61,41)]">Locatie:</label>
+                        <input type="text" id="location" name="location" value="{{ old('location', $vacancy->location) }}" placeholder="Voer de locatie in" class="mt-1 block w-full border border-black rounded-lg p-2">
+                    </div>
 
-            <div class="flex justify-end">
-                <button type="submit"
-                        class="bg-primary-violet text-basic-white px-4 py-2 rounded-md shadow hover:bg-primary-violet_hover font-sans">
-                    Opslaan
-                </button>
-            </div>
-        </form>
+                    <div>
+                        <label for="paycheck" class="block font-radikal text-[rgb(49,61,41)]">Loon:</label>
+                        <input type="text" id="paycheck" name="paycheck" value="{{ old('paycheck', $vacancy->paycheck) }}" placeholder="Voer loon in" class="mt-1 block w-full border border-black rounded-lg p-2">
+                    </div>
+
+                    <div>
+                        <label for="working_hours" class="block font-radikal text-[rgb(49,61,41)]">Werkuren:</label>
+                        <input type="text" id="working_hours" name="working_hours" value="{{ old('working_hours', $vacancy->working_hours) }}" placeholder="Voer werkuren in" class="mt-1 block w-full border border-black rounded-lg p-2">
+                    </div>
+
+                    <div>
+                        <label for="contract_term" class="block font-radikal text-[rgb(49,61,41)]">Dienstverband:</label>
+                        <input type="text" id="contract_term" name="contract_term" value="{{ old('contract_term', $vacancy->contract_term) }}" placeholder="Voer dienstverband in" class="mt-1 block w-full border border-black rounded-lg p-2">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="qualifications" class="block font-radikal text-[rgb(49,61,41)]">Kwalificaties:</label>
+                    <select id="qualifications" name="qualifications[]" multiple class="mt-1 block w-full border border-black rounded-lg p-2">
+                        @foreach($qualifications as $qualification)
+                            <option value="{{ $qualification->id }}" {{ in_array($qualification->id, old('qualifications', $vacancy->qualifications->pluck('id')->toArray())) ? 'selected' : '' }}>
+                                {{ $qualification->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="flex justify-center">
+                    <button type="submit" class="px-6 py-2 rounded-lg border-2" style="background-color: #AA0160; color: white;">
+                        Bewerken
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </x-layout>
