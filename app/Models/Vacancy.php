@@ -28,6 +28,11 @@ class Vacancy extends Model
         return $this->hasMany(Registration::class);
     }
 
+    public function appointments(): hasMany
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
     public function company(): belongsTo
     {
         return $this->belongsTo(Company::class);

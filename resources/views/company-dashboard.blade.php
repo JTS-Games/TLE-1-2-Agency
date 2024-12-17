@@ -19,6 +19,8 @@
                         <th class="border px-4 py-2">Vacature Titel</th>
                         <th class="border px-4 py-2">Beschrijving</th>
                         <th class="border px-4 py-2">Locatie</th>
+                        <th class="border px-4 py-2">Registraties</th>
+                        <th class="border px-4 py-2">Volgende in wachtrij uitnodigen</th>
                         <th class="border px-4 py-2">Acties</th>
                     </tr>
                     </thead>
@@ -28,6 +30,24 @@
                             <td class="border px-4 py-2">{{ $vacancy->job_title }}</td>
                             <td class="border px-4 py-2">{{ $vacancy->description }}</td>
                             <td class="border px-4 py-2">{{ $vacancy->location }}</td>
+                            <td class="border px-4 py-2">{{ $vacancy->registrations_count }}</td>
+                            @if($vacancy->registrations_count > 0 && $vacancy->appointments_count == 0)
+                                <td>
+                                <form action="{{ route('appointments.store', $vacancy->id) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    <label for="date">Datum</label>
+                                    <input type="datetime-local" name="date" id="date">
+                                    <label for="description">Bericht</label>
+                                    <textarea name="description" id="description" cols="20" rows="5"></textarea>
+                                    <button type="submit"
+                                            class="bg-primary-violet text-white rounded-full px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200 inline-block">
+                                        Uitnodigen
+                                    </button>
+                                </form>
+                                </td>
+                            @else
+                                <td>{{$vacancy->registrations_count <= 0 ? 'Geen registraties' : 'U heeft al een kandidaat uitgenodigd'}}</td>
+                            @endif
                             <td class="border px-4 py-2">
                                 {{-- Bekijk knop --}}
                                 <a href="{{ route('vacancies.show', $vacancy->id) }}"
