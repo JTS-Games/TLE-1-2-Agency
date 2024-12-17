@@ -11,7 +11,9 @@
 
     <!-- Header -->
     <div class="bg-[#2F4F4F] text-white py-6 text-center">
-        <h1 class="text-3xl font-bold">Registreer uw bedrijf</h1>
+        <h1 class="text-6xl py-8 font-bold">Registreer uw bedrijf</h1>
+        <h2 class="text-3xl py-3"> Dit zijn de voordelen van open hiring:</h2>
+        <p class="text-xl">- Veel werkzoekenden<br>- Gemotiveerd personeel<br>- Snel extra hulp<br>- Geen lange solicitatieprocessen<br>- Een vertrouwd platform</p>
     </div>
 
     <!-- Formulier -->
