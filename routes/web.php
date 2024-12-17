@@ -45,8 +45,8 @@ Route::post('/vacancies/confirm/{vacancyId}', [VacancyController::class, 'confir
 //Route::get('/vacancies', [VacancyController::class, 'index'])->name('vacancies.index');
 Route::post('/vacancies/{vacancy}/toggle', [VacancyController::class, 'togglePublication'])->name('vacancies.toggle');
 
-Route::get('/appointment/{appointment}/accept', [AppointmentController::class, 'accept'])
-    ->name('appointment.accept');
+Route::get('/appointment/{appointment}', [AppointmentController::class, 'show'])->name('appointment.show');
+Route::post('/appointment/{appointment}/accept', [AppointmentController::class, 'accept'])->name('appointment.accept');
 
 Route::get('/vacancies/{vacancy}/aanmelden', [VacancyController::class, 'registrationForVacancy'])->name('vacancies.registration');
 Route::post('/aanmelden-vacature/{vacancy}', [VacancyController::class, 'storeVacancyRegistration'])->name('vacancies.registration.store');
