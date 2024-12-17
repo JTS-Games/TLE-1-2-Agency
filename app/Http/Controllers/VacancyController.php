@@ -26,6 +26,7 @@ class VacancyController extends Controller
 
         // Begin de query op het Vacancy-model
         $vacancy = Vacancy::query();
+        $vacancy->where('is_created', 1);
 
         // Als er een zoekopdracht is, pas het filter toe op 'name', 'paycheck' en 'location'
 //        if (isset($search) || isset($qualificationSearch)) {
@@ -198,20 +199,10 @@ class VacancyController extends Controller
         if ($vacancy->company_id !== Auth::guard('company')->user()->id) {
             return redirect()->route('vacancies.index')->withErrors(['message' => 'Je hebt geen toestemming om deze vacature te bewerken.']);
         }
-
-        // Dit weergeeft een object van het bedrijf dat is ingelogd ?
-        $company = Auth::guard('company')->user();
-        // Dit moet nog aangepast worden naar auth->company ...
-        // Gebruiker moet nog ingelogd worden.
-        if (($company->id === $vacancy->company_id)) {
-            return view('edit-vacancy', compact('vacancy'));
-        } else {
-            return redirect()->route('index');
-        }
-
         $qualifications = Qualification::all();
-            return view('edit-vacancy', compact('vacancy', 'qualifications'));
-        }
+        return view('edit-vacancy', compact('vacancy', 'qualifications'));
+    }
+
 
 
 

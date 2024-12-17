@@ -38,8 +38,8 @@ Route::resource('/screenings', AdminController::class);
 
 // This one could be used for the employee and employers, the vacancies controller.
 Route::resource('/vacancies', VacancyController::class);
-Route::get('/vacancies', [FilterController::class, 'index'])->name('vacancies.index');
-Route::get('/vacancies/{qualification?}', [FilterController::class, 'genreFilter'])->name('vacancies.index');
+//Route::get('/vacancies', [FilterController::class, 'index'])->name('vacancies.index');
+//Route::get('/vacancies/{qualification?}', [FilterController::class, 'genreFilter'])->name('vacancies.index');
 Route::get('/vacancy/preview/{vacancyId}', [VacancyController::class, 'preview'])->name('preview-vacancy');
 Route::post('/vacancies/confirm/{vacancyId}', [VacancyController::class, 'confirmCreation'])->name('vacancies.confirm');
 //Route::get('/vacancies', [VacancyController::class, 'index'])->name('vacancies.index');
