@@ -34,6 +34,10 @@ Route::get('/index', function () {
     return view('index');
 })->name('index');
 
+Route::get('/inspiratie', function () {
+    return view('inspiration');
+})->name('inspiration');
+
 Route::resource('/screenings', AdminController::class);
 
 // This one could be used for the employee and employers, the vacancies controller.
@@ -65,6 +69,7 @@ Route::prefix('company')->middleware(['auth:company'])->group(function () {
 });
 
 Route::post('appointments/store/{vacancy}', [AppointmentController::class, 'store'])->name('appointments.store');
+
 
 // User Controllers
 Route::get('/about', [AboutUsController::class, 'about'])->name('about');

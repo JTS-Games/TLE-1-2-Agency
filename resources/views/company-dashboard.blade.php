@@ -32,6 +32,13 @@
                             <td class="border px-4 py-2">{{ $vacancy->job_title }}</td>
                             <td class="border px-4 py-2">{{ $vacancy->description }}</td>
                             <td class="border px-4 py-2">{{ $vacancy->location }}</td>
+                            <td class="border px-4 py-2">
+                                @if($vacancy->is_created==1)
+                                    <span class="text-green-600">Wel gepubliceerd</span>
+                                @else
+                                    <span class="text-red-600">Niet gepubliceerd</span>
+                                @endif
+                            </td>
                             <td class="border px-4 py-2">{{ $vacancy->registrations_count }}</td>
                             @if($vacancy->registrations_count > 0 && $vacancy->appointments_count == 0)
                                 <td>
@@ -50,13 +57,7 @@
                             @else
                                 <td>{{$vacancy->registrations_count <= 0 ? 'Geen registraties' : 'U heeft al een kandidaat uitgenodigd'}}</td>
                             @endif
-                            <td class="border px-4 py-2">
-                                @if($vacancy->is_created==1)
-                                    <span class="text-green-600">Wel gepubliceerd</span>
-                                @else
-                                    <span class="text-red-600">Niet gepubliceerd</span>
-                                @endif
-                            </td>
+
                             <td class="border px-4 py-2 text-center space-x-8-0">
                                 <form action="{{ route('vacancies.toggle', $vacancy) }}" method="POST">
                                     @csrf

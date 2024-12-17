@@ -1,16 +1,15 @@
-<x-layout title="index">
+<x-layout title="startpagina">
     <div class="container mx-auto p-6">
         <section class="flex flex-col lg:flex-row gap-2 justify-evenly items-start">
 
             {{--     Hier zouden de meest recente werknemers / reviews kunnen komen  --}}
             <div class="bg-primary-moss_light rounded-lg shadow p-6 max-w-md flex flex-col items-center text-center">
-                <div class="bg-basic-cream w-20 h-20 rounded-full mb-4"></div>
+                <img src="{{asset('images/face-4.webp')}}" class="bg-basic-cream w-20 h-20 rounded-full mb-4">
                 <p class="uppercase text-sm font-bold text-gray-600 mb-2">Werknemer</p>
                 <blockquote class="text-lg font-medium text-gray-800 italic mb-4">
                     “Zonder sollicitatiegesprek is het makkelijker om aan het werk te gaan. Het is leuk, iedereen is
                     aardig. Ik heb het hier naar mijn zin.”
                 </blockquote>
-                <p class="font-semibold text-gray-700">Adela</p>
                 <p class="text-sm text-gray-500">Vulploegmedewerker</p>
                 <div class="flex gap-4 mt-4">
 
@@ -22,7 +21,7 @@
                 </div>
             </div>
             <div class="bg-white rounded-lg shadow p-6 max-w-md flex flex-col items-center text-left">
-                <div class="bg-basic-cream w-20 h-20 rounded-full mb-4"></div>
+                <img src="{{asset('images/face-2.png')}}" class="bg-basic-cream w-20 h-20 rounded-full mb-4">
                 <p class="uppercase text-sm font-bold text-primary-violet mb-2">Werkgever</p>
                 <blockquote class="text-lg font-bold text-gray-800  mb-4">
                     “Je moet je vooroordelen en aannames kunnen loslaten, maar dan zul je vaak verrast worden door de
