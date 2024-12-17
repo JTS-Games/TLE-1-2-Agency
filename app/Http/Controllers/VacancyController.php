@@ -96,7 +96,7 @@ class VacancyController extends Controller
     {
 //        if (!$request->user()) {
 //            abort(401);
-//        }
+//        }s
         $companies = Company::all();
 
         $qualifications = Qualification::all();

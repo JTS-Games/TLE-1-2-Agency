@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open Hiring</title>
-</head>
 <x-layout title="index">
     <div class="container mx-auto p-6">
         <section class="flex flex-col lg:flex-row gap-2 justify-evenly items-start">
