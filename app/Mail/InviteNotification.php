@@ -25,7 +25,8 @@ class InviteNotification extends Mailable
     {
         $acceptInviteUrl = route('appointment.show', $this->appointment->id);
 
-        return $this->view('emails.invite-notification')
+        return $this->subject('Uitnodiging Vacature')
+            ->view('emails.invite-notification')
             ->with([
                 'name' => $this->name,
                 'vacancy' => $this->vacancy,
