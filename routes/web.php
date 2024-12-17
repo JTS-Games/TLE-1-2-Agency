@@ -5,7 +5,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmployerController;
-use App\Http\Controllers\InspirationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
 use App\Models\Registration;
@@ -17,6 +16,10 @@ use Illuminate\Support\Facades\Mail;
 Route::get('/', function () {
     return view('index');
 });
+
+Route::get('/inspiratie', function () {
+    return view('inspiration');
+})->name('inspiration');
 
 Route::get('/dashboard', function () {
     $userRegistration = Registration::where('user_id', auth()->id())->get();
@@ -33,10 +36,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/index', function () {
     return view('index');
 })->name('index');
-
-Route::get('/inspiratie', function () {
-    return view('inspiration');
-})->name('inspiration');
 
 Route::resource('/screenings', AdminController::class);
 
@@ -73,7 +72,6 @@ Route::post('appointments/store/{vacancy}', [AppointmentController::class, 'stor
 
 // User Controllers
 Route::get('/about', [AboutUsController::class, 'about'])->name('about');
-Route::get('/inspiration', [InspirationController::class, 'inspiration'])->name('inspiration');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 Route::get('/test-email', function () {
