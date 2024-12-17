@@ -40,6 +40,7 @@
                     Inloggen
                 </button>
             </div>
+            <a href="{{route('companies.create')}}"> Registreer als bedrijf</a>
 
         </form>
     </div>

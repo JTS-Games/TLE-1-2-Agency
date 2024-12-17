@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->integer('paycheck');
             $table->integer('contract_term');
             $table->integer('working_hours');
+            $table->boolean('is_created')->default(false);
             $table->foreignId('company_id')->nullable()->constrained();
             $table->timestamps();
         });

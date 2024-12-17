@@ -19,9 +19,11 @@
                         <th class="border px-4 py-2">Vacature Titel</th>
                         <th class="border px-4 py-2">Beschrijving</th>
                         <th class="border px-4 py-2">Locatie</th>
+                        <th class="border px-4 py-2">Status</th>
                         <th class="border px-4 py-2">Registraties</th>
                         <th class="border px-4 py-2">Volgende in wachtrij uitnodigen</th>
                         <th class="border px-4 py-2">Acties</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -49,6 +51,22 @@
                                 <td>{{$vacancy->registrations_count <= 0 ? 'Geen registraties' : 'U heeft al een kandidaat uitgenodigd'}}</td>
                             @endif
                             <td class="border px-4 py-2">
+                                @if($vacancy->is_created==1)
+                                    <span class="text-green-600">Wel gepubliceerd</span>
+                                @else
+                                    <span class="text-red-600">Niet gepubliceerd</span>
+                                @endif
+                            </td>
+                            <td class="border px-4 py-2 text-center space-x-8-0">
+                                <form action="{{ route('vacancies.toggle', $vacancy) }}" method="POST">
+                                    @csrf
+                                    @method('POST')
+                                    <button type="submit"
+                                            class="bg-primary-violet text-white rounded-full px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
+                                        Toggle publicatie
+                                    </button>
+                                </form>
+
                                 {{-- Bekijk knop --}}
                                 <a href="{{ route('vacancies.show', $vacancy->id) }}"
                                    class="bg-primary-violet text-white rounded-full px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200 inline-block">

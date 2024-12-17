@@ -31,7 +31,8 @@ class VacancyFactory extends Factory
             // i asked this through chat gpt because i got an error for contrained key. This resolved the issue. If we ever want to use dummy data from another table
             // We can use this way to create a "fake" id
             'location' => fake()->address(),
-            'working_hours' => fake()->numberBetween(1, 100)
+            'working_hours' => fake()->numberBetween(1, 100),
+            'is_created' => 1  // Voeg dit toe om 'is_created' altijd op 1 te zetten
         ];
     }
 }

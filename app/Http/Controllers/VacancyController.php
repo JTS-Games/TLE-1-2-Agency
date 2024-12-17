@@ -26,6 +26,7 @@ class VacancyController extends Controller
 
         // Begin de query op het Vacancy-model
         $vacancy = Vacancy::query();
+        $vacancy->where('is_created', 1);
 
         // Als er een zoekopdracht is, pas het filter toe op 'name', 'paycheck' en 'location'
 //        if (isset($search) || isset($qualificationSearch)) {
@@ -134,7 +135,10 @@ class VacancyController extends Controller
             'contract_term' => 'required|string|max:100',
             'working_hours' => 'required|string|max:100',
             'qualifications' => 'required', 'min:1',
+//            'company_id' => 'required|string|max:100',
         ]);
+
+
 
         $vacancy->job_title = $request->input('job_title');
         $vacancy->description = $request->input('description');
@@ -148,20 +152,39 @@ class VacancyController extends Controller
         $vacancy->contract_term = $request->input('contract_term');
         $vacancy->company_id = $company->id;
 
+        $vacancy->is_created = 0;
         $vacancy->save();
 
         $qualifications = $request->input('qualifications');
         $vacancy->qualifications()->attach($qualifications);
 
-        return redirect()->route('company.dashboard');
+
+        return redirect()->route('preview-vacancy', ['vacancyId' => $vacancy->id]);
+
+    }
+    public function preview($vacancyId, Company $company)
+    {
+        $vacancy = Vacancy::find($vacancyId);
+        $company = $vacancy->company;
+        return view('preview-vacancy', compact('vacancy', 'company'));
+    }
+    public function confirmCreation($vacancyId)
+    {
+        $vacancy = Vacancy::find($vacancyId);
+        $vacancy->is_created = 1;
+        $vacancy->save();
+
+        return redirect()->route('vacancies.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Vacancy $vacancy)
+    public function show(Vacancy $vacancy, Company $company)
     {
-
+        if ($vacancy->is_created != 1) {
+            abort(404);
+        }
         $alreadyRegistered = Registration::where('user_id', auth()->id())->where('vacancy_id', $vacancy->id)->exists();
 
         $company = Company::find($vacancy->company_id);
@@ -171,28 +194,28 @@ class VacancyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Vacancy $vacancy)
+    public function edit(Vacancy $vacancy, Qualification $qualification )
     {
-        // Load the details from the form
-        // request the old information and put it in the form
-
-        // Dit weergeeft een object van het bedrijf dat is ingelogd ?
-        $company = Auth::guard('company')->user();
-        // Dit moet nog aangepast worden naar auth->company ...
-        // Gebruiker moet nog ingelogd worden.
-        if (($company->id === $vacancy->company_id)) {
-            return view('edit-vacancy', compact('vacancy'));
-        } else {
-            return redirect()->route('index');
+        if ($vacancy->company_id !== Auth::guard('company')->user()->id) {
+            return redirect()->route('vacancies.index')->withErrors(['message' => 'Je hebt geen toestemming om deze vacature te bewerken.']);
         }
-
+        $qualifications = Qualification::all();
+        return view('edit-vacancy', compact('vacancy', 'qualifications'));
     }
+
+
+
+
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Vacancy $vacancy)
     {
+        if ($vacancy->company_id !== Auth::guard('company')->user()->id) {
+            return redirect()->route('vacancies.index')->withErrors(['message' => 'Je hebt geen toestemming om deze vacature te bewerken.']);
+        }
 
         request()->validate(
         // Rules for the requested key.
@@ -217,26 +240,42 @@ class VacancyController extends Controller
 
         $vacancy->job_title = $request->input('job_title');
         $vacancy->description = $request->input('description');
-        $vacancy->paycheck = $request->input('paycheck');
-        $vacancy->contract_term = $request->input('contract_term');
         $vacancy->location = $request->input('location');
+        $vacancy->paycheck = $request->input('paycheck');
         $vacancy->working_hours = $request->input('working_hours');
+        $vacancy->contract_term = $request->input('contract_term');
 
-        // De company id moet hier nog aangepast met authorisatie.
+        // Handle image upload (only if a new image is provided)
+        if ($request->hasFile('image')) {
+            // Delete the old image if it exists
+            if ($vacancy->image && file_exists(storage_path('app/public/' . $vacancy->image))) {
+                unlink(storage_path('app/public/' . $vacancy->image));
+            }
 
-
-        $file = $request->file('image');
-        if (isset($file)) {
-            $originalName = $file->getClientOriginalName();
-            $path = $file->storeAs('images', $originalName, 'public');
+            $file = $request->file('image');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('images', $fileName, 'public');
             $vacancy->image = $path;
+        }
+        if ($vacancy->is_created != 1) {
+            $vacancy->is_created = 1;
         }
 
 
         $vacancy->update();
 
+        // Update the qualifications
+        $qualifications = $request->input('qualifications');
+        $vacancy->qualifications()->sync($qualifications); // Use sync() to ensure the qualifications are correctly updated
 
-        return redirect()->route('vacancies.index');
+
+        return redirect()->route('vacancies.index')->with('success', 'Vacancy updated successfully!');
+    }
+    public function togglePublication(Vacancy $vacancy) {
+        $vacancy->is_created = !$vacancy->is_created;
+        $vacancy->save();
+        return redirect()->route('company.dashboard')->with('success', 'Vacature status gewijzigd');
+
     }
 
     /**
@@ -259,5 +298,4 @@ class VacancyController extends Controller
 
         abort(401);
     }
-
 }

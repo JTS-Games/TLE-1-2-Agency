@@ -9,6 +9,7 @@ use App\Http\Controllers\InspirationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
 use App\Models\Registration;
+use App\Models\Vacancy;
 use Illuminate\Support\Facades\Route;
 use App\Mail\TestEmail;
 use Illuminate\Support\Facades\Mail;
@@ -37,11 +38,18 @@ Route::resource('/screenings', AdminController::class);
 
 // This one could be used for the employee and employers, the vacancies controller.
 Route::resource('/vacancies', VacancyController::class);
+//Route::get('/vacancies', [FilterController::class, 'index'])->name('vacancies.index');
+//Route::get('/vacancies/{qualification?}', [FilterController::class, 'genreFilter'])->name('vacancies.index');
+Route::get('/vacancy/preview/{vacancyId}', [VacancyController::class, 'preview'])->name('preview-vacancy');
+Route::post('/vacancies/confirm/{vacancyId}', [VacancyController::class, 'confirmCreation'])->name('vacancies.confirm');
 //Route::get('/vacancies', [VacancyController::class, 'index'])->name('vacancies.index');
+Route::post('/vacancies/{vacancy}/toggle', [VacancyController::class, 'togglePublication'])->name('vacancies.toggle');
 
 Route::get('/appointment/{appointment}/accept', [AppointmentController::class, 'accept'])
     ->name('appointment.accept');
 
+Route::get('/vacancies/{vacancy}/aanmelden', [VacancyController::class, 'registrationForVacancy'])->name('vacancies.registration');
+Route::post('/aanmelden-vacature/{vacancy}', [VacancyController::class, 'storeVacancyRegistration'])->name('vacancies.registration.store');
 //employer registration route
 Route::get('/companies', [EmployerController::class, 'index'])->name('company.registration');
 Route::get('/company/login', [EmployerController::class, 'showLoginForm'])->name('company.login.form');
@@ -57,10 +65,6 @@ Route::prefix('company')->middleware(['auth:company'])->group(function () {
 });
 
 Route::post('appointments/store/{vacancy}', [AppointmentController::class, 'store'])->name('appointments.store');
-
-Route::get('/appointment/{appointment}', [AppointmentController::class, 'show'])->name('appointment.show');
-Route::post('/appointment/{appointment}/accept', [AppointmentController::class, 'accept'])->name('appointment.accept');
-
 
 // User Controllers
 Route::get('/about', [AboutUsController::class, 'about'])->name('about');
