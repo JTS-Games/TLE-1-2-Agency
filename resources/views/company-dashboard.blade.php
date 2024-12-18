@@ -60,7 +60,34 @@
                             @endif
 
                             <td class="border px-4 py-2 text-center space-x-8-0">
-                                <!-- Add action buttons here -->
+                                <form action="{{ route('vacancies.toggle', $vacancy) }}" method="POST">
+                                    @csrf
+                                    @method('POST')
+                                    <button type="submit"
+                                            class="bg-primary-violet text-white rounded-full px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
+                                        Toggle publicatie
+                                    </button>
+                                </form>
+
+                                {{-- Bekijk knop --}}
+                                <a href="{{ route('vacancies.show', $vacancy->id) }}"
+                                   class="bg-primary-violet text-white rounded-full px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200 inline-block">
+                                    Bekijk
+                                </a>
+
+                                {{-- Bewerken knop --}}
+                                <a href="{{ route('vacancies.edit', $vacancy) }}"
+                                   class="bg-primary-violet text-white rounded-full px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200 inline-block">
+                                    Bewerken
+                                </a>
+                                <form action="{{ route('vacancies.destroy', $vacancy) }}" method="POST" style="display: inline;" onsubmit="return confirm('Weet jij zeker of jij deze vacature wil verwijderen?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            class="bg-primary-violet text-white rounded-full px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200 inline-block">
+                                        Verwijder vacature
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
