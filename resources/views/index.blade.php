@@ -48,47 +48,35 @@
 
                 <!-- Employer Card -->
                 <div class="bg-white rounded-lg shadow p-4 text-center">
-                    <div class="h-20 bg-gray-100 flex items-center justify-center rounded-lg mb-4">
-                        <img src="logo-csu.png" alt="CSU Logo" class="h-12">
+                    <div class="bg-gray-100 flex items-center justify-center rounded-lg mb-4">
+                        <img src="{{asset('images/csu-logo.webp')}}" alt="CSU Logo" class="object-cover object-top w-full h-40">
                     </div>
                     <p class="text-lg font-semibold text-gray-800">CSU</p>
                     <p class="text-sm text-gray-500 mb-4">Schoonmaak - Ouddorp</p>
-                    <a href="#"
-                       class="bg-primary-violet text-white rounded-full px-4 py-2 text-sm hover:bg-primary-violet_hover">
-                        Lees meer
-                    </a>
                 </div>
 
                 <!-- Employer Card -->
                 <div class="bg-white rounded-lg shadow p-4 text-center">
-                    <div class="h-20 bg-gray-100 flex items-center justify-center rounded-lg mb-4">
-                        <img src="logo-ah.png" alt="AH Logo" class="h-12">
+                    <div class="bg-gray-100 flex items-center justify-center rounded-lg mb-4">
+                        <img src="{{asset('images/ah-logo.jpeg')}}" alt="AH Logo" class="object-cover object-center w-full h-40">
                     </div>
                     <p class="text-lg font-semibold text-gray-800">Albert Heijn - Marketplaza</p>
                     <p class="text-sm text-gray-500 mb-4">Retail - Bruinisse</p>
-                    <a href="#"
-                       class="bg-primary-violet text-white rounded-full px-4 py-2 text-sm hover:bg-primary-violet_hover">
-                        Lees meer
-                    </a>
                 </div>
 
                 <!-- Employer Card -->
                 <div class="bg-white rounded-lg shadow p-4 text-center">
-                    <div class="h-20 bg-gray-100 flex items-center justify-center rounded-lg mb-4">
-                        <img src="logo-valk.png" alt="Van der Valk Logo" class="h-12">
+                    <div class="bg-gray-100 flex items-center justify-center rounded-lg mb-4">
+                        <img src="{{asset('images/vdv-logo.jpg')}}" alt="Van der Valk Logo" class="object-cover object-center w-full h-40">
                     </div>
                     <p class="text-lg font-semibold text-gray-800">Van der Valk - Groningen</p>
                     <p class="text-sm text-gray-500 mb-4">Horeca - Eelderwolde</p>
-                    <a href="#"
-                       class="bg-primary-violet text-white rounded-full px-4 py-2 text-sm hover:bg-primary-violet_hover">
-                        Lees meer
-                    </a>
                 </div>
             </div>
-            <div class="text-center mt-8">
-                <a href="#"
-                   class="bg-gray-100 border border-gray-400 rounded-full px-6 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">
-                    Alle werkgevers bekijken
+            <div class="text-center mt-8 py-6">
+                <a href="{{route('vacancies.index')}}"
+                   class="bg-primary-violet text-white rounded-full px-6 py-4 text-base hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
+                    Bekijk alle vacatures
                 </a>
             </div>
         </section>

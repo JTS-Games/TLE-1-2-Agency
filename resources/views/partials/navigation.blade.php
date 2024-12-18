@@ -6,24 +6,24 @@
         </a>
 
         <a href="{{route('vacancies.index')}}"
-           class="bg-primary-violet text-white rounded-full px-6 py-2 text-base hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
+           class="bg-primary-violet text-white rounded-full px-6 py-4 text-base hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
             Alle vacatures
         </a>
 
         <a href="{{route('inspiration')}}"
-           class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
+           class="bg-primary-violet text-white rounded-full px-6 py-4 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
             Inspiratie
         </a>
 
         <a href="{{route('contact')}}"
-           class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
+           class="bg-primary-violet text-white rounded-full px-6 py-4 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
             Contact
         </a>
 
         @if(auth('web')->check())
             <div class="relative group block">
                 <a href="{{route('dashboard')}}"
-                   class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow
+                   class="bg-primary-violet text-white rounded-full px-6 py-4 text-sm hover:bg-primary-yellow
                    hover:text-primary-violet hover:duration-200">
                     Mijn Profiel
                 </a>
@@ -33,7 +33,7 @@
                         @csrf
 
                         <button type="submit"
-                                class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
+                                class="bg-primary-violet text-white rounded-full px-6 py-4 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
                             Log uit
                         </button>
                     </form>
@@ -41,16 +41,16 @@
             </div>
         @elseif(Auth::guard('company')->user())
             <a href="{{route('company.dashboard')}}"
-               class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
+               class="bg-primary-violet text-white rounded-full px-6 py-4 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
                 Werkgevers Profiel
             </a>
         @else
             <div class="flex flex-col md:flex-row justify-evenly items-center">
                 <a href="{{ route('login') }}"
-                   class="bg-primary-violet text-white rounded-full rounded-r-none px-6 py-2 text-sm transition-all ease-in-out hover:scale-110">Log In als Gebruiker
+                   class="bg-primary-violet text-white rounded-full rounded-r-none px-6 py-4 text-sm transition-all ease-in-out hover:scale-110">Log In als Gebruiker
                 </a>
                 <a href="{{ route('company.login.form') }}"
-                   class="bg-primary-yellow text-primary-violet rounded-full rounded-l-none px-6 py-2 text-sm transition-all ease-in-out hover:scale-110">Log In als Bedrijf
+                   class="bg-primary-yellow text-primary-violet rounded-full rounded-l-none px-6 py-4 text-sm transition-all ease-in-out hover:scale-110">Log In als Bedrijf
                 </a>
             </div>
         @endif
