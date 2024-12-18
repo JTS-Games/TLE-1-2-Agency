@@ -33,39 +33,26 @@
                         @csrf
 
                         <button type="submit"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full">
+                                class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
                             Log uit
                         </button>
                     </form>
-
                 </div>
             </div>
         @elseif(Auth::guard('company')->user())
             <a href="{{route('company.dashboard')}}"
-               class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow
-            hover:text-primary-violet hover:duration-200">
+               class="bg-primary-violet text-white rounded-full px-6 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
                 Werkgevers Profiel
             </a>
         @else
-            <div class="relative group block">
-                <a href="#"
-                   class="bg-primary-violet text-white rounded-full px-6 py-2 text-lg hover:bg-primary-yellow hover:text-primary-violet duration-500 hover:duration-200">
-                    Inloggen
+            <div class="flex flex-col md:flex-row justify-evenly items-center">
+                <a href="{{ route('login') }}"
+                   class="bg-primary-violet text-white rounded-full rounded-r-none px-6 py-2 text-sm transition-all ease-in-out hover:scale-110">Log In als Gebruiker
                 </a>
-
-                <div
-                    class="absolute hidden group-hover:block right-1 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-                    <a href="{{ route('login') }}"
-                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        Log In als Gebruiker
-                    </a>
-                    <a href="{{ route('company.login.form') }}"
-                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        Log In als Bedrijf
-                    </a>
-                </div>
+                <a href="{{ route('company.login.form') }}"
+                   class="bg-primary-yellow text-primary-violet rounded-full rounded-l-none px-6 py-2 text-sm transition-all ease-in-out hover:scale-110">Log In als Bedrijf
+                </a>
             </div>
         @endif
-
     </div>
 </nav>
