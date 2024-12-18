@@ -27,6 +27,15 @@
     font-family: 'RadikalTrial', sans-serif;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+}
+
+body>nav, body>main {
+    flex: 1;
+}
 
 /*h2 {*/
 /*    text-align: center;*/

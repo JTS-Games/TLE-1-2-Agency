@@ -5,7 +5,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmployerController;
-use App\Http\Controllers\InspirationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
 use App\Models\Registration;
@@ -18,18 +17,6 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/dashboard', function () {
-    $userRegistration = Registration::where('user_id', auth()->id())->get();
-    return view('dashboard', compact('userRegistration'));
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-
 Route::get('/index', function () {
     return view('index');
 })->name('index');
@@ -37,6 +24,17 @@ Route::get('/index', function () {
 Route::get('/inspiratie', function () {
     return view('inspiration');
 })->name('inspiration');
+
+Route::get('/dashboard', function () {
+    $userRegistration = Registration::where('user_id', auth()->id())->get();
+    return view('dashboard', compact('userRegistration'));
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profiel', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profiel', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profiel', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 Route::resource('/screenings', AdminController::class);
 
@@ -71,10 +69,6 @@ Route::prefix('company')->middleware(['auth:company'])->group(function () {
 
 Route::post('appointments/store/{vacancy}', [AppointmentController::class, 'store'])->name('appointments.store');
 
-
-// User Controllers
-Route::get('/about', [AboutUsController::class, 'about'])->name('about');
-Route::get('/inspiration', [InspirationController::class, 'inspiration'])->name('inspiration');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 Route::get('/test-email', function () {

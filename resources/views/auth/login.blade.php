@@ -1,10 +1,10 @@
 <x-layout title="Log in">
-    <div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="flex items-center justify-center py-10">
         <form method="POST" action="{{ route('login') }}"
-              class="bg-white p-8 border border-gray-300 rounded-lg shadow-lg w-full max-w-md">
+              class="bg-white p-8 border border-gray-300 rounded-lg shadow-lg max-w-lg">
             @csrf
 
-            <h1 class="text-2xl font-bold mb-6 text-center">Log in</h1>
+            <h1 class="text-2xl text-[#2F4F4F] font-bold mb-6 text-center">Log in</h1>
 
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')"/>
@@ -21,7 +21,7 @@
 
             <!-- Password -->
             <div class="mb-4">
-                <x-input-label for="password" :value="__('Password')" class="text-sm font-medium text-gray-700"/>
+                <x-input-label for="password" :value="__('Wachtwoord')" class="text-sm font-medium text-gray-700"/>
                 <x-text-input id="password"
                               class="mt-1 p-2 block w-full shadow-sm border border-gray-300 rounded-md bg-white focus:border-primary-violet"
                               type="password" name="password" required autocomplete="current-password"/>
@@ -34,7 +34,7 @@
                     <input id="remember_me" type="checkbox"
                            class="rounded border-gray-300 text-primary-violet shadow-sm focus:ring-primary-violet"
                            name="remember">
-                    <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                    <span class="ms-2 text-sm text-gray-600">{{ __('Onthoud mij') }}</span>
                 </label>
             </div>
 

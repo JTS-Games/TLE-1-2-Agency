@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open Hiring</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
 <x-layout title="index">
-    <body class="bg-[#f1f9f6] font-sans">
-
     <!-- Header -->
     <div class="bg-[#2F4F4F] text-white py-6 text-center">
         <h1 class="text-6xl py-8 font-bold">Registreer uw bedrijf</h1>
@@ -95,6 +85,4 @@
 
         </form>
     </div>
-
-    </body>
 </x-layout>
