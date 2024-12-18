@@ -36,6 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profiel', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/inspiratie', function () {
+    return view('inspiration');
+})->name('inspiration');
+
 Route::resource('/screenings', AdminController::class);
 
 // This one could be used for the employee and employers, the vacancies controller.

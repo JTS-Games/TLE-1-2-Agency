@@ -74,6 +74,7 @@ class AppointmentController extends Controller
 
     public function accept(Appointment $appointment)
     {
+
         $appointment->verified = 1; // Mark the appointment as accepted
         $appointment->save();
 
