@@ -11,7 +11,9 @@
 </head>
 <body class="bg-basic-cream">
 @include('partials.navigation')
-{{$slot}}
+<main>
+    {{$slot}}
+</main>
 @include('partials.footer')
 </body>
 </html>
