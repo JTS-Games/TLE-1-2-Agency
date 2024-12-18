@@ -2,7 +2,7 @@
     <div class="container mx-auto px-4 py-16 space-y-12">
         <!-- Header Section -->
         <div class="text-center">
-            <h1 class="text-4xl font-extrabold text-gray-800 mb-4">Contact Ons</h1>
+            <h1 class="text-4xl font-extrabold text-gray-800 mb-4">Contacteer Ons</h1>
             <p class="text-lg text-gray-600 leading-relaxed">
                 Ga je starten met Open Hiring, ben je al begonnen of heb je een totaal andere vraag?
                 We helpen je graag verder. Hier vind je onze contactgegevens.
