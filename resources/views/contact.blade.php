@@ -29,43 +29,5 @@
                 </ul>
             </div>
         </div>
-
-        <!-- Contact Form Section -->
-        <div>
-            <h2 class="text-2xl font-semibold text-gray-800 mb-6">Stuur ons een bericht</h2>
-            <form action="#" method="POST" class="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8">
-                <!-- Name Field -->
-                <div class="mb-6">
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Naam</label>
-                    <input type="text" id="name" name="name" required
-                           class="shadow-sm border rounded-lg w-full py-3 px-4 text-gray-700 focus:ring focus:ring-blue-200 focus:outline-none focus:ring-opacity-50"
-                           placeholder="Je naam">
-                </div>
-
-                <!-- Email Field -->
-                <div class="mb-6">
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">E-mail</label>
-                    <input type="email" id="email" name="email" required
-                           class="shadow-sm border rounded-lg w-full py-3 px-4 text-gray-700 focus:ring focus:ring-blue-200 focus:outline-none focus:ring-opacity-50"
-                           placeholder="Je e-mail">
-                </div>
-
-                <!-- Message Field -->
-                <div class="mb-6">
-                    <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Bericht</label>
-                    <textarea id="message" name="message" required
-                              class="shadow-sm border rounded-lg w-full py-3 px-4 text-gray-700 focus:ring focus:ring-blue-200 focus:outline-none focus:ring-opacity-50"
-                              rows="4" placeholder="Je bericht"></textarea>
-                </div>
-
-                <!-- Submit Button -->
-                <div class="flex justify-center">
-                    <button type="submit"
-                            class="inline-block w-1/2 bg-primary-yellow text-primary-violet font-semibold py-3 px-6 rounded-md hover:bg-primary-violet transition hover:text-white duration-200">
-                        Verstuur
-                    </button>
-                </div>
-            </form>
-        </div>
     </div>
 </x-layout>
