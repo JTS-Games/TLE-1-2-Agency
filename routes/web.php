@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/index', function () {
+    return view('index');
+})->name('index');
+
 Route::get('/inspiratie', function () {
     return view('inspiration');
 })->name('inspiration');
@@ -27,15 +31,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profiel', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profiel', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profiel', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-
-Route::get('/index', function () {
-    return view('index');
-})->name('index');
 
 Route::resource('/screenings', AdminController::class);
 
@@ -69,9 +68,6 @@ Route::prefix('company')->middleware(['auth:company'])->group(function () {
 
 Route::post('appointments/store/{vacancy}', [AppointmentController::class, 'store'])->name('appointments.store');
 
-
-// User Controllers
-Route::get('/about', [AboutUsController::class, 'about'])->name('about');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 Route::get('/test-email', function () {
