@@ -7,6 +7,7 @@ use App\Models\Registration;
 use App\Models\Vacancy;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -16,6 +17,11 @@ class AppointmentController extends Controller
 {
     public function store(Request $request, Vacancy $vacancy)
     {
+        $request->validate([
+            'date' => 'required|date|date_format:Y-m-d\TH:i',
+            'description'=> 'required',
+        ]);
+
         if (!Auth::guard('company')->user() || Auth::guard('company')->user()->id !== $vacancy->company_id) {
             return redirect()->route('company.dashboard')->with('error', 'U kunt geen kandidaten uitnodigen voor een ander bedrijf.');
         }
@@ -72,11 +78,26 @@ class AppointmentController extends Controller
         ]);
     }
 
-    public function accept(Appointment $appointment)
+    public function accept(Appointment $appointment, Request $request)
     {
+        $currentStartDate = Carbon::parse($appointment->date);
+
+        $validatedData = $request->validate([
+            'date' => 'required|date|after_or_equal:' . $currentStartDate->format('Y-m-d H:i:s'),
+        ]);
+
+
+        $appointment->date = $validatedData['date'];
         $appointment->verified = 1; // Mark the appointment as accepted
         $appointment->save();
 
         return redirect()->route('appointment.show', $appointment->id)->with('success', 'Uitnodiging succesvol geaccepteerd!');
     }
+
+    public function deleteAppointment(Appointment $appointment){
+
+        $appointment-> delete();
+        return redirect()->route('index')->with('success', 'Afspraak succesvol verwijderd.');
+    }
+
 }
