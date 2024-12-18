@@ -53,6 +53,7 @@ Route::post('/vacancies/{vacancy}/toggle', [VacancyController::class, 'togglePub
 
 Route::get('/appointment/{appointment}', [AppointmentController::class, 'show'])->name('appointment.show');
 Route::post('/appointment/{appointment}/accept', [AppointmentController::class, 'accept'])->name('appointment.accept');
+Route::delete('/appointment/{appointment}', [AppointmentController::class, 'deleteAppointment'])->name('appointment.destroy');
 
 Route::get('/vacancies/{vacancy}/aanmelden', [VacancyController::class, 'registrationForVacancy'])->name('vacancies.registration');
 Route::post('/aanmelden-vacature/{vacancy}', [VacancyController::class, 'storeVacancyRegistration'])->name('vacancies.registration.store');
