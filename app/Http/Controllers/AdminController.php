@@ -12,11 +12,11 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        if (!$request->user()){
+        if (!$request->user()) {
             abort(401);
         }
 
-        if (!$request->user()->isAdmin()){
+        if (!$request->user()->isAdmin() || $request->user()->admin !== 1) {
             abort(403);
         }
 
@@ -46,11 +46,11 @@ class AdminController extends Controller
      */
     public function show(string $id, Request $request)
     {
-        if (!$request->user()){
+        if (!$request->user()) {
             abort(401);
         }
 
-        if (!$request->user()->isAdmin()){
+        if (!$request->user()->isAdmin()) {
             abort(403);
         }
         $company = Company::find($id);
@@ -68,14 +68,14 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(string $id,Request $request)
+    public function update(string $id, Request $request)
     {
 
-        if (!$request->user()){
+        if (!$request->user()) {
             abort(401);
         }
 
-        if (!$request->user()->isAdmin()){
+        if (!$request->user()->isAdmin()) {
             abort(403);
         }
         $company = Company::find($id);
@@ -91,11 +91,11 @@ class AdminController extends Controller
     public function destroy(string $id, Request $request)
     {
 
-        if (!$request->user()){
+        if (!$request->user()) {
             abort(401);
         }
 
-        if (!$request->user()->isAdmin()){
+        if (!$request->user()->isAdmin()) {
             abort(403);
         }
 

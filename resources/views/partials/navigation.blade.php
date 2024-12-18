@@ -20,7 +20,7 @@
             Contact
         </a>
 
-        @if(auth('web')->check())
+        @if(auth('web')->check() && auth('web')->user()->admin == 0)
             <div class="relative group block">
                 <a href="{{route('dashboard')}}"
                    class="bg-primary-violet text-white rounded-full px-6 py-4 text-sm hover:bg-primary-yellow
@@ -44,13 +44,28 @@
                class="bg-primary-violet text-white rounded-full px-6 py-4 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
                 Werkgevers Profiel
             </a>
+        @elseif(auth()->check() && Auth::guard('web')->user()->admin)
+            <a href="{{route('screenings.index')}}"
+               class="bg-primary-violet text-white rounded-full px-6 py-4 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
+                Zie alle screenings
+            </a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+
+                <button type="submit"
+                        class="bg-primary-violet text-white rounded-full px-6 py-4 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
+                    Log uit
+                </button>
+            </form>
         @else
             <div class="flex flex-col md:flex-row justify-evenly items-center">
                 <a href="{{ route('login') }}"
-                   class="bg-primary-violet text-white rounded-full rounded-r-none px-6 py-4 text-sm transition-all ease-in-out hover:scale-110">Log In als Gebruiker
+                   class="bg-primary-violet text-white rounded-full rounded-r-none px-6 py-4 text-sm transition-all ease-in-out hover:scale-110">Log
+                    In als Gebruiker
                 </a>
                 <a href="{{ route('company.login.form') }}"
-                   class="bg-primary-yellow text-primary-violet rounded-full rounded-l-none px-6 py-4 text-sm transition-all ease-in-out hover:scale-110">Log In als Bedrijf
+                   class="bg-primary-yellow text-primary-violet rounded-full rounded-l-none px-6 py-4 text-sm transition-all ease-in-out hover:scale-110">Log
+                    In als Bedrijf
                 </a>
             </div>
         @endif
