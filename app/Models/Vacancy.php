@@ -42,4 +42,9 @@ class Vacancy extends Model
     {
         return $this->belongsToMany(Qualification::class, 'qualification_vacancy');
     }
+
+    public function verifiedAppointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class)->where('verified', 1);
+    }
 }

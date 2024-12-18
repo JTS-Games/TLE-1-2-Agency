@@ -94,12 +94,15 @@ class EmployerController extends Controller
                 'appointments' => function ($query) {
                     $query->whereNotNull('id'); // Ensure appointments are counted correctly
                 },
+                'verifiedAppointments' => function ($query) {
+                    $query->where('verified', 1); // Only count verified appointments
+                },
             ])
             ->get();
 
-
         return view('company-dashboard', compact('company', 'vacancies'));
     }
+
 
 
     public function show(Request $request, Company $company)
