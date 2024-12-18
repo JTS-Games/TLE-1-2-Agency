@@ -91,7 +91,7 @@ class AppointmentController extends Controller
         $appointment->verified = 1; // Mark the appointment as accepted
         $appointment->save();
 
-        return redirect()->route('appointment.show', $appointment->id)->with('success', 'Uitnodiging succesvol geaccepteerd!');
+        return redirect()->route('index', $appointment->id)->with('success', 'Uitnodiging succesvol geaccepteerd!');
     }
 
     public function deleteAppointment(Appointment $appointment){
