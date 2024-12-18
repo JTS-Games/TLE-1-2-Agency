@@ -11,7 +11,7 @@
                     {{-- Card 1 --}}
                     <div class="border border-gray-200 p-4 rounded-md bg-white shadow-md">
                         <div class="flex items-center">
-                            <img src="{{ asset('images/face-1.png') }}" class="w-16 h-16 bg-gray-300 rounded-full mr-4" alt="Amanda">
+                            <img src="{{ asset('images/face-1.png') }}" class="w-16 h-16 bg-gray-300 rounded-full mr-4 object-cover" alt="Amanda">
                             <h3 class="text-xl font-semibold">Amanda</h3>
                         </div>
                         <p class="text-gray-600 mt-2">
@@ -22,7 +22,7 @@
                     {{-- Card 2 --}}
                     <div class="border border-gray-200 p-4 rounded-md bg-white shadow-md">
                         <div class="flex items-center">
-                            <img src="{{ asset('images/face-2.png') }}" class="w-16 h-16 bg-gray-300 rounded-full mr-4" alt="Marieke van der Kleij">
+                            <img src="{{ asset('images/face-2.png') }}" class="w-16 h-16 bg-gray-300 rounded-full mr-4 object-cover" alt="Marieke van der Kleij">
                             <h3 class="text-xl font-semibold">Marieke van der Kleij</h3>
                         </div>
                         <p class="text-gray-600 mt-2">
@@ -33,7 +33,7 @@
                     {{-- Card 3 --}}
                     <div class="border border-gray-200 p-4 rounded-md bg-white shadow-md">
                         <div class="flex items-center">
-                            <img src="{{ asset('images/face-3.png') }}" class="w-16 h-16 bg-gray-300 rounded-full mr-4" alt="Bart Dikkeschei">
+                            <img src="{{ asset('images/face-3.png') }}" class="w-16 h-16 bg-gray-300 rounded-full mr-4 object-cover" alt="Bart Dikkeschei">
                             <h3 class="text-xl font-semibold">Bart Dikkeschei</h3>
                         </div>
                         <p class="text-gray-600 mt-2">
