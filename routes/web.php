@@ -1,5 +1,7 @@
 <?php
 
+$test = 'test';
+
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
