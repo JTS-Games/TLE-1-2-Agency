@@ -58,36 +58,43 @@
                                 <td>{{$vacancy->registrations_count <= 0 ? 'Geen registraties' : 'U heeft al een kandidaat uitgenodigd'}}</td>
                             @endif
 
-                            <td class="border px-4 py-2 text-center space-x-8-0">
-                                <form action="{{ route('vacancies.toggle', $vacancy) }}" method="POST">
-                                    @csrf
-                                    @method('POST')
-                                    <button type="submit"
-                                            class="bg-primary-violet text-white rounded-full px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
-                                        Toggle publicatie
-                                    </button>
-                                </form>
-
-                                {{-- Bekijk knop --}}
-                                <a href="{{ route('vacancies.show', $vacancy->id) }}"
-                                   class="bg-primary-violet text-white rounded-full px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200 inline-block">
-                                    Bekijk
-                                </a>
-
-                                {{-- Bewerken knop --}}
-                                <a href="{{ route('vacancies.edit', $vacancy) }}"
-                                   class="bg-primary-violet text-white rounded-full px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200 inline-block">
-                                    Bewerken
-                                </a>
-                                <form action="{{ route('vacancies.destroy', $vacancy) }}" method="POST" style="display: inline;" onsubmit="return confirm('Weet jij zeker of jij deze vacature wil verwijderen?');">
-                                    @csrf
-                                    @method('DELETE')
+                            <td class="border px-4 py-2 text-center space-y-4">
+                                <div>
+                                    <form action="{{ route('vacancies.toggle', $vacancy) }}" method="POST">
+                                        @csrf
+                                        @method('POST')
                                         <button type="submit"
-                                                class="bg-primary-violet text-white rounded-full px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200 inline-block">
+                                                class="bg-primary-violet text-white rounded-full w-full px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
+                                            Toggle publicatie
+                                        </button>
+                                    </form>
+                                </div>
+                                <div>
+                                    {{-- Bekijk knop --}}
+                                    <a href="{{ route('vacancies.show', $vacancy->id) }}"
+                                       class="bg-primary-violet text-white rounded-full container mx-auto px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
+                                        Bekijk
+                                    </a>
+                                </div>
+                                <div>
+                                    {{-- Bewerken knop --}}
+                                    <a href="{{ route('vacancies.edit', $vacancy) }}"
+                                       class="bg-primary-violet text-white rounded-full w-full px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
+                                        Bewerken
+                                    </a>
+                                </div>
+                                <div>
+                                    <form action="{{ route('vacancies.destroy', $vacancy) }}" method="POST" style="display: inline;" onsubmit="return confirm('Weet jij zeker of jij deze vacature wil verwijderen?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                                class="bg-primary-violet text-white rounded-full w-full px-4 py-2 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
                                             Verwijder vacature
                                         </button>
-                                </form>
+                                    </form>
+                                </div>
                             </td>
+
                         </tr>
                     @endforeach
                     </tbody>
