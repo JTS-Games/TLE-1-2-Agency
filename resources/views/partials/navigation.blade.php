@@ -10,6 +10,11 @@
             Alle vacatures
         </a>
 
+        <a href="{{route('companies.index')}}"
+           class="bg-primary-violet text-white rounded-full px-6 py-4 text-base hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
+            Alle companies
+        </a>
+
         <a href="{{route('inspiration')}}"
            class="bg-primary-violet text-white rounded-full px-6 py-4 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
             Inspiratie
