@@ -38,7 +38,6 @@ class VacancyController extends Controller
             });
         }
 
-
         if (isset($qualificationSearch)) {
             $vacancy->whereHas('qualifications', function ($qualificationQuery) use ($qualificationSearch) {
                 $qualificationQuery->where('qualification_id', $qualificationSearch);
@@ -139,7 +138,6 @@ class VacancyController extends Controller
         ]);
 
 
-
         $vacancy->job_title = $request->input('job_title');
         $vacancy->description = $request->input('description');
         $vacancy->location = $request->input('location');
@@ -162,12 +160,14 @@ class VacancyController extends Controller
         return redirect()->route('preview-vacancy', ['vacancyId' => $vacancy->id]);
 
     }
+
     public function preview($vacancyId, Company $company)
     {
         $vacancy = Vacancy::find($vacancyId);
         $company = $vacancy->company;
         return view('preview-vacancy', compact('vacancy', 'company'));
     }
+
     public function confirmCreation($vacancyId)
     {
         $vacancy = Vacancy::find($vacancyId);
@@ -194,7 +194,7 @@ class VacancyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Vacancy $vacancy, Qualification $qualification )
+    public function edit(Vacancy $vacancy, Qualification $qualification)
     {
         if ($vacancy->company_id !== Auth::guard('company')->user()->id) {
             return redirect()->route('vacancies.index')->withErrors(['message' => 'Je hebt geen toestemming om deze vacature te bewerken.']);
@@ -202,10 +202,6 @@ class VacancyController extends Controller
         $qualifications = Qualification::all();
         return view('edit-vacancy', compact('vacancy', 'qualifications'));
     }
-
-
-
-
 
 
     /**
@@ -257,7 +253,7 @@ class VacancyController extends Controller
             $path = $file->storeAs('images', $fileName, 'public');
             $vacancy->image = $path;
         }
-        if ($vacancy->is_created != 1) {
+        if (!$vacancy->is_created) {
             $vacancy->is_created = 1;
         }
 
@@ -271,7 +267,9 @@ class VacancyController extends Controller
 
         return redirect()->route('vacancies.index')->with('success', 'Vacancy updated successfully!');
     }
-    public function togglePublication(Vacancy $vacancy) {
+
+    public function togglePublication(Vacancy $vacancy)
+    {
         $vacancy->is_created = !$vacancy->is_created;
         $vacancy->save();
         return redirect()->route('company.dashboard')->with('success', 'Vacature status gewijzigd');

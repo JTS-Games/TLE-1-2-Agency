@@ -20,7 +20,7 @@
             Contact
         </a>
 
-        @if(auth('web')->check() && auth('web')->user()->admin == 0)
+        @if(auth('web')->check() && !Auth::guard('web')->user()->admin)
             <div class="relative group block">
                 <a href="{{route('dashboard')}}"
                    class="bg-primary-violet text-white rounded-full px-6 py-4 text-sm hover:bg-primary-yellow

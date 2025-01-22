@@ -18,7 +18,7 @@ export default {
                 primary: {
                     violet: '#AA0160',
                     violet_hover: '#8e014f',
-                    violet_dark: '#7C1A51', // Correct color code if different
+                    violet_dark: '#7C1A51',
                     yellow: '#FAEC02',
                     moss_medium: '#92AA83',
                     moss_light: '#E2ECC8',
