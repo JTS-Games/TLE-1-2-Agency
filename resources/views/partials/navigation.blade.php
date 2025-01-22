@@ -27,6 +27,13 @@
             Contact
         </a>
 
+        @if(auth('web')->check() && Auth::guard('web')->user()->isAdmin())
+            <a href="{{ route('screenings.index') }}"
+               class="bg-primary-violet text-white rounded-full px-6 py-4 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
+                Zie alle screenings
+            </a>
+        @endif
+
         <!-- Gebruikerssectie -->
         @if(auth('web')->check() && !Auth::guard('web')->user()->isAdmin())
             <div class="relative group block">
@@ -63,12 +70,6 @@
 
             <!-- Adminsectie -->
         @elseif(Auth::guard('web')->check() && Auth::guard('web')->user()->isAdmin())
-            <!-- Admin Exclusieve Links -->
-            <a href="{{ route('screenings.index') }}"
-               class="bg-primary-violet text-white rounded-full px-6 py-4 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
-                Zie alle screenings
-            </a>
-
             <!-- Extra functie voor Admin -->
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
