@@ -107,7 +107,7 @@ class EmployerController extends Controller
         if (!$company->verified) {
             abort(404);
         }
-        $isAdmin = $request->user() && $request->user()->admin === '1';
+        $isAdmin = $request->user() && $request->user()->admin == '1';
         $isCompany = Auth::guard('company')->user();
         $isOwner = false;
         if ($isCompany) {
