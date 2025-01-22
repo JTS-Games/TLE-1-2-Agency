@@ -25,7 +25,7 @@
             Contact
         </a>
 
-        @if(auth('web')->check() && !Auth::guard('web')->user()->admin)
+        @if(auth('web')->check() && !Auth::guard('web')->user()->isAdmin())
             <div class="relative group block">
                 <a href="{{route('dashboard')}}"
                    class="bg-primary-violet text-white rounded-full px-6 py-4 text-sm hover:bg-primary-yellow
@@ -55,7 +55,7 @@
                     Werkgevers Profiel
                 </a>
             </div>
-        @elseif(auth()->check() && Auth::guard('web')->user()->admin)
+        @elseif(Auth::guard('web')->user()->isAdmin())
             <a href="{{route('screenings.index')}}"
                class="bg-primary-violet text-white rounded-full px-6 py-4 text-sm hover:bg-primary-yellow hover:text-primary-violet hover:duration-200">
                 Zie alle screenings
