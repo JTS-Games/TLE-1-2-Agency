@@ -126,15 +126,13 @@ class VacancyController extends Controller
 
         $company = Auth::guard('company')->user();
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'image' => 'required|image',
             'job_title' => 'required|string|max:255',
             'description' => 'required|string|max:500',
             'location' => 'required|string|max:255',
             'paycheck' => 'required|string|max:100',
             'contract_term' => 'required|string|max:100',
-            'working_hours' => 'required|string|max:100',
-            'qualifications' => 'required', 'min:1',
-//            'company_id' => 'required|string|max:100',
+            'working_hours' => 'required|string|max:100'
         ]);
 
 
@@ -218,15 +216,12 @@ class VacancyController extends Controller
             [
                 'job_title' => 'required|string|max:100',
                 'description' => 'required',
-                'paycheck' => 'required|numeric',
                 'contract_term' => 'required|string|max:255',
             ],
             [
                 'job_title.required' => 'Please enter a job title',
                 'job_title.max' => 'Title can\'t be longer than 100 characters',
                 'description.required' => 'Please enter a job description',
-                'paycheck.required' => 'Please enter a paycheck',
-                'paycheck.numeric' => 'Paycheck must be a number, you can\'t put any letters',
                 'contract_term.required' => 'Please enter a contract term',
                 'contract_term.max' => 'Contract term can\'t be longer than 255 characters',
 
